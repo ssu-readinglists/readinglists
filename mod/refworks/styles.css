@@ -1,0 +1,463 @@
+/*
+ * �2009 The Open University
+ * GNU Public License
+ */
+ #refcontent #left-column {
+    display:inline-block;
+    float:left;
+    width: 199px;
+}
+#refcontent #middle-column {
+    /*padding-right:170px;*/
+    padding-top:6px;
+    padding-bottom:10px;
+    margin-left:250px;
+}
+
+#refcontent #sidemenu .block ul{
+    padding: 0;
+    margin: 0;
+    line-height: 1.8em;
+}
+
+#refcontent #sidemenu .block li{
+    list-style-type: none;
+}
+
+#refcontent #sidemenu .block .folder{
+    padding-left: 20px;
+    background-image: url([[pix:f/folder]]);
+    background-position: middle left;
+    background-repeat: no-repeat;
+}
+#refcontent #sidemenu .block .folder a{
+    /*font-style: italic;*/
+}
+
+#refcontent #sidemenu .block .account{
+    padding-left: 20px;
+    background-image: url([[pix:mod_refworks|group]]);
+    background-position: middle left;
+    background-repeat: no-repeat;
+}
+
+#refcontent #sidemenu .block .teamlogout{
+    font-weight: bold;
+}
+
+#refcontent #sidemenu .block li a{
+    text-decoration: none;
+    color: #000;
+}
+#refcontent #sidemenu .block li a:hover{
+    border-bottom: 1px #000 solid;
+}
+#refcontent #sidemenu .block li .current{
+    font-weight:bold;
+}
+
+#refcontent .mform div.fdescription{
+    clear:none;
+}
+
+#refcontent .main-title{
+    padding:0;
+    margin:0;
+    font-size: 1.4em;
+    /*color: #003366;*/
+    margin-top: -3px;
+    margin-bottom:1em;
+}
+
+#refcontent .box{
+    clear: none;
+    margin-top:1em;
+}
+
+/*Invite feedback*/
+#refcontent .sa_donesomething{
+    margin-left:1em;
+    margin-right:1em;
+    text-align:left;
+    padding:.5em;
+    border:1px solid #000;
+}
+
+
+.refworkslogo{
+    padding-top:5px;
+    margin-left:2px;
+}
+
+/*instructions*/
+#refcontent .instructions p{
+    line-height:1.5em;
+    margin-bottom:1em;
+}
+#refcontent .instructions table{
+    width:65%;
+    margin-left:10%;
+    margin-right:auto;
+    position: relative;
+}
+#refcontent .instructions table, #refcontent .instructions table th, #refcontent .instructions table td{
+    border: 0;
+    border-collapse: separate;
+    padding-bottom:.5em;
+}
+
+/*pagination*/
+#refcontent #topopt{
+    text-align: center;
+    margin-top:1.5em;
+    margin-bottom: 1em;
+}
+#refcontent #topopt form{
+    display:inline;
+}
+#refcontent #topopt label{
+    margin-right:.5em;
+}
+#refcontent #pagelist{
+    display:inline;
+    margin-left:2em;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+#refcontent #pagelist .pagelist_selected{
+    font-weight:bold;
+}
+#refcontent #pagelist .pagelist_all{
+
+}
+#refcontent #pagelist .pagelist_pages{
+    margin-left:2em;
+}
+#refcontent #pagelist .pagelist_pages a{
+    margin-left:.5em;
+}
+#refcontent #pagelist .pagelist_pageflip{
+    margin-left:1em;
+    color: #ccc;
+}
+#refcontent #pagelist .pagelist_pageflip a{
+    color: #003366;
+}
+/*folder items*/
+#refcontent .folder_list{
+    display: inline-block;
+    position:relative;
+    width:100%;
+}
+
+#refcontent .folder_list table{
+    margin-top: 1em;
+    margin-left: 1em;
+    /*margin-right: 1em;*/
+    border-spacing: 0;
+    border-collapse: separate;
+    width:70%;
+}
+
+#refcontent .folder_list table thead th, #refcontent .folder_list table caption{
+    display: none;
+}
+
+#refcontent .foldercontainer_item{
+    padding-top: .1em;
+    position: relative;
+    padding-left: 20px;
+    padding-right:1em;
+    background-image: url([[pix:f/folder]]);
+    background-position: middle left;
+    background-repeat: no-repeat;
+    padding-bottom: 1em;
+}
+
+#refcontent .folder_list table .flditemcontainer_opts{
+    text-align: center;
+    width: 80px;
+}
+#refcontent .folder_list table .flditemcontainer_opts input{
+    padding-right: 10px;
+}
+#refcontent .folder_list table .foldercontainer_sel{
+    text-align: center;
+    width:80px;
+}
+
+
+/*Reference items*/
+#refcontent .ref_list{
+    display: inline-block;
+    position:relative;
+    width:100%;
+}
+
+#refcontent .ref_list table{
+    margin-top: 1em;
+    margin-left: 1em;
+    /*margin-right: 1em;*/
+    border-spacing: 0;
+    border-collapse: separate;
+    width:97%;
+}
+#refcontent .ref_list table thead th, #refcontent .ref_list table caption{
+    display: none;
+}
+/*#refcontent .ref_list table td, #refcontent .ref_list table th{
+    border: 1px solid #B8D8FF;
+}*/
+#refcontent .ref_list table .itemcontainer_item{
+    padding-left: 1em;
+    padding-right: 1em;
+    text-align: left;
+    font-weight: normal;
+}
+#refcontent .ref_list table .itemcontainer_item_fld{
+    width: 7em;
+    padding-left:1em;
+    padding-right: 1em;
+}
+#refcontent .ref_list table .itemcontainer_opts{
+    text-align: center;
+    width: 150px;
+}
+#refcontent .ref_list table .itemcontainer_sel{
+    text-align: center;
+    width:80px;
+}
+#refcontent .itemcontainer_item_title{
+    font-size: 1.2em;
+}
+#refcontent .itemcontainer_item_author{
+
+}
+#refcontent .itemcontainer_item_pub{
+    font-size: .9em;
+}
+
+#refcontent .itemcontainer_item_fld p{
+    padding-left: 20px;
+    background-image: url([[pix:f/folder]]);
+    background-position: middle left;
+    background-repeat: no-repeat;
+}
+#refcontent .itemcontainer_opts form{
+    display: inline;
+}
+#refcontent .itemcontainer_opts input{
+    margin-right:1em;
+}
+#refcontent .itemcontainer_opts a{
+    margin-right:1em;
+}
+#refcontent .itemcontainer_item_attachment a img{
+    text-decoration:none;
+    margin-right:.5em;
+}
+
+/* Export menu */
+.ie #refcontent #mform1 fieldset .felement{
+    padding-left: 0;
+}
+
+.refexportmenu .fitem input[type=image]{
+            float:left;
+            margin-left:15px;
+            margin-right:10px;
+}
+.refexportmenu .fitem .exportDetails{
+            float:left;
+            padding-bottom:10px;
+            width:85%;
+}
+.refexportmenu .fitem .exportDetails div{
+            font-size:110%;
+            font-weight:bold;
+}
+
+/*FORMS*/
+#refcontent #mform1 input[type=text], #refcontent #mform1 select, #refcontent #mform1 textarea{
+    width: 85%;
+}
+#refcontent .foldercontainer form input{
+    display:inline;
+    padding-right: 5px;
+    padding-left: 5px;
+}
+#refcontent #sidemenu .folder span, #refcontent #sidemenu .account span{
+    word-break: break-all;
+    word-wrap: break-word;
+}
+#refcontent .foldercontainer_item{
+    word-wrap: break-word;
+}
+table .sharefolderstable{
+    margin-top: 1em;
+    margin-left: 1em;
+    border-spacing: 0;
+    border-collapse: separate;
+    width:97%;
+}
+.sharefolderstable tr{
+    /* border-spacing: 0; */
+    /* border-collapse:separate; */
+}
+.sharefolderstable tr td{
+    /* border-spacing: 0; */
+    /* border-collapse:separate; */
+}
+.sharefolderstable form,
+.sharefolderstable form input,
+.sharefolderstable a{
+    padding:0px;
+}
+.sharefolderstable .foldercontainer td.ref_cell1{
+    min-width: 64%;
+    padding-left:2px;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+.sharefolderstable .foldercontainer td.ref_cell2{
+    width: 18%;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+.sharefolderstable .foldercontainer td.ref_cell3{
+    width: 18%;
+    padding-right:2px;
+    margin-top:3px;
+    margin-bottom:3px;
+}
+#refcontent #folder_list table thead th,
+#refcontent #folder_list table caption{
+    display: none;
+}
+#refcontent #mform1 .fitem #id_do, #refcontent #mform1 .fitem #id_sn{
+    width: 85%;
+}
+.safari #refcontent #mform1 .fitem #id_do, .safari #refcontent #mform1 .fitem #id_sn{
+    width: 150%;
+}
+
+#refcontent #mform1 img{
+    margin-right:.5em;
+}
+
+/* Hide 'hidden' items */
+#refcontent #sidemenu .hidden{ 
+	display: none;
+}
+
+/* SHARED ACCOUNTS */
+
+div.shared_accounts_line_div a,
+div.shared_accounts_line_div form,
+div.shared_accounts_line_div input,
+#dormant_accounts_table a,
+#dormant_accounts_table form,
+#dormant_accounts_table input{
+    margin:5px;
+    display:inline;
+}
+.sharedaccountstable caption,
+#dormant_accounts_table th{
+    display:none;
+}
+.sharedaccountstable th,
+.sharedaccountstable td{
+    border:1px solid;
+    border-spacing: 0;
+    border-collapse: separate;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.sharedaccountstable td.shared_account_action{
+    width:154px;
+}
+#dormant_accounts_table th,
+#dormant_accounts_table td{
+    border:1px solid;
+    border-top:none;
+    border-spacing: 0;
+    border-collapse: separate;
+    padding-left: 1em;
+    padding-right: 1em;
+}
+div #view_dormant_switch{
+    padding-top:1em;
+    padding-bottom:1em;
+}
+#dormant_accounts_table{
+    /*border-spacing: 0;*/
+    border-collapse:inherit;
+}
+#dormant_accounts_table td.dormant_td_name{
+    border-right:none;
+    /*background-color:yellow;*/
+}
+#dormant_accounts_table td.dormat_td_action{
+    border-left:none;
+    /*background-color:green;*/
+}
+#dormant_accounts_table{
+    border:1px solid;
+    border-top-width:1px;
+
+}
+#dormant_accounts_table caption{
+    display:none;
+}
+/*Bit of a hack for IE6*/
+#refcontent .citation_list em, #refcontent .citation_list strong, #refcontent .citation_list u{
+    display:inline;
+}
+#refcontent .report em, #refcontent .report strong, #refcontent .report u{
+    display:inline;
+}
+
+/*REPORTS*/
+#refcontent #report_reportlist fieldset{
+    padding-bottom:1em;
+}
+#refcontent #report_reportlist fieldset label{
+    display:block;
+    padding-top:.5em;
+    padding-bottom:.5em;
+}
+
+#refcontent .report_resourcepagetype_column{
+    margin-left: 30px;
+    margin-right: 200px;
+    width: 513px;
+    margin-bottom: 10px;
+}
+
+#refcontent .report_sctype_column{
+    margin-top: 5px;
+    padding-top:5px;
+    text-align: left;
+    text-indent: 0;
+    line-height: 1.5;
+}
+#refcontent .report_sctype_subcolumn a,
+.report_sctype_subcolumn a img.sc_image{
+    display: inline;
+}
+
+/* PRINT STYLES */
+@media print{
+         #ouheader, #fsvlemenu, #ou-footerf{
+         display:none;
+     }
+
+     #refcontent #left-column{
+         display:none;
+     }
+
+    #refcontent #middle-column.has-left-column {
+         margin-left: 0px;
+     }
+}

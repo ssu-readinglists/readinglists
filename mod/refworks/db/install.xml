@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="mod/refworks/db" VERSION="20100129" COMMENT="XMLDB file for Moodle mod/refworks"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="../../../lib/xmldb/xmldb.xsd"
+>
+  <TABLES>
+    <TABLE NAME="refworks" COMMENT="Main table for refworks module. Used to store info for module instances." NEXT="refworks_collab_accs">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="course"/>
+        <FIELD NAME="course" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Course refworks activity belongs to" PREVIOUS="id" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="true" DEFAULT="RefWorks" SEQUENCE="false" ENUM="false" COMMENT="name field for moodle instances" PREVIOUS="course" NEXT="timecreated"/>
+        <FIELD NAME="timecreated" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="name" NEXT="timemodified"/>
+        <FIELD NAME="timemodified" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" PREVIOUS="timecreated" NEXT="autopopfolder"/>
+        <FIELD NAME="autopopfolder" TYPE="char" LENGTH="26" NOTNULL="true" SEQUENCE="false" ENUM="false" COMMENT="Folder name that you want to put auto populated refs into" PREVIOUS="timemodified" NEXT="autopopdata"/>
+        <FIELD NAME="autopopdata" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Reference data to be auto populated into a users acc" PREVIOUS="autopopfolder"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+      <INDEXES>
+        <INDEX NAME="course" UNIQUE="false" FIELDS="course"/>
+      </INDEXES>
+    </TABLE>
+    <TABLE NAME="refworks_collab_accs" COMMENT="Table of collaborative accounts that have been created by users" PREVIOUS="refworks" NEXT="refworks_collab_users">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="name"/>
+        <FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="Account name shown to users" PREVIOUS="id" NEXT="login"/>
+        <FIELD NAME="login" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" ENUM="false" COMMENT="The login name used to access the account." PREVIOUS="name" NEXT="password"/>
+        <FIELD NAME="password" TYPE="char" LENGTH="255" NOTNULL="false" DEFAULT="Pa$$w0rd" SEQUENCE="false" ENUM="false" COMMENT="The password required to access the account." PREVIOUS="login" NEXT="created"/>
+        <FIELD NAME="created" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="When the account was created." PREVIOUS="password" NEXT="lastlogin"/>
+        <FIELD NAME="lastlogin" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="Last time anyone accessed account." PREVIOUS="created" NEXT="datedeleted"/>
+        <FIELD NAME="datedeleted" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="date account was made dormant" PREVIOUS="lastlogin"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+      </KEYS>
+    </TABLE>
+    <TABLE NAME="refworks_collab_users" COMMENT="Every user that has access to an account." PREVIOUS="refworks_collab_accs">
+      <FIELDS>
+        <FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" ENUM="false" NEXT="userid"/>
+        <FIELD NAME="userid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="their moodle user id" PREVIOUS="id" NEXT="accid"/>
+        <FIELD NAME="accid" TYPE="int" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" ENUM="false" COMMENT="account id (match collab_accs)" PREVIOUS="userid" NEXT="owner"/>
+        <FIELD NAME="owner" TYPE="int" LENGTH="1" NOTNULL="true" UNSIGNED="true" DEFAULT="0" SEQUENCE="false" ENUM="false" COMMENT="Whether this user is an owner of this account." PREVIOUS="accid"/>
+      </FIELDS>
+      <KEYS>
+        <KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="userid"/>
+        <KEY NAME="userid" TYPE="foreign" FIELDS="userid" REFTABLE="user" REFFIELDS="id" COMMENT="Ties userid to moodle user id" PREVIOUS="primary" NEXT="accid"/>
+        <KEY NAME="accid" TYPE="foreign" FIELDS="accid" REFTABLE="refworks_collab_accs" REFFIELDS="id" PREVIOUS="userid"/>
+      </KEYS>
+    </TABLE>
+  </TABLES>
+</XMLDB>

@@ -1,0 +1,16 @@
+.refexportmenu .fitem input {
+    float: left;
+    margin-left: 15px;
+    margin-right: 10px;
+}
+
+.refexportmenu .fitem .exportDetails {
+    float: left;
+    padding-bottom: 10px;
+    width: 85%;
+}
+
+.refexportmenu .fitem .exportDetails div {
+    font-size: 110%;
+    font-weight: bold;
+}
