@@ -50,10 +50,12 @@ class apibib extends rwapi{
         $return = "";
 		//kill any previous api sessions
 		parent::destroy_session();
-		
-		if (!parent::check_session('','[local data - shared team account username]','[local data - shared team account password]')) {
+		$rwun = references_lib::get_setting('tempun');
+        $rwpw = references_lib::get_setting('temppw');
+        if (!parent::check_session('',$rwun,$rwpw)) {
 			//failed
-			return false;
+            $return .= "Unable to authenticate for RefWorks temp account";
+            return $return;
 		}
 
         // Get all references and look for those older than an hour
@@ -153,7 +155,9 @@ class apibib extends rwapi{
         }
 
         //try and make a temp session
-        if (!parent::check_session('','[local data - shared team account username]','[local data - shared team account password]')) {
+        $rwun = references_lib::get_setting('tempun');
+        $rwpw = references_lib::get_setting('temppw');
+        if (!parent::check_session('',$rwun,$rwpw)) {
             //failed
 			error_log("Failed to start session with RefWorks temp login");
             return false;

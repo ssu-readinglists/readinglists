@@ -38,6 +38,16 @@ if ($hassiteconfig) {//Stops errors when tree not available
                 get_string('config_groupcode_desc', 'local_references'), '');
     $configpage->add($groupcode);
 
+    //Temp Refworks account username
+    $tempun = new admin_setting_configtext('local_references/tempun', get_string('config_tempun', 'local_references'),
+                get_string('config_tempun_desc', 'local_references'), '');
+    $configpage->add($tempun);
+
+    //Temp Refworks account username
+    $temppw = new admin_setting_configtext('local_references/temppw', get_string('config_temppw', 'local_references'),
+                get_string('config_temppw_desc', 'local_references'), '');
+    $configpage->add($temppw);
+
     //Athens Group id
     $groupid = new admin_setting_configtext('local_references/groupid', get_string('config_groupid', 'local_references'),
                 get_string('config_groupid_desc', 'local_references'), '');

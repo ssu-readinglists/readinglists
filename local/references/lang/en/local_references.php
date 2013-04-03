@@ -19,6 +19,12 @@ $string['config_secretkey_desc'] = 'The secret key provided by RefWorks';
 $string['config_groupcode'] = 'Group code';
 $string['config_groupcode_desc'] = 'The group code that is used in RefWorks to identify your institution';
 
+$string['config_tempun'] = 'RefWorks "temp" account username';
+$string['config_tempun_desc'] = 'The username for a RefWorks account where references can be stored temporarily for processing';
+
+$string['config_temppw'] = 'RefWorks "temp" account password';
+$string['config_temppw_desc'] = 'The password for a RefWorks account where references can be stored temporarily for processing';
+
 $string['config_groupid'] = 'Athens Group ID';
 $string['config_groupid_desc'] = 'OU only setting for when RefWorks accounts are created using Athens authentication (do NOT set if otherwise or else account creation will break). Set to the group id that is present in all account names. Account names follow format: "PUID-UNIQUEID:GROUPID".';
 
