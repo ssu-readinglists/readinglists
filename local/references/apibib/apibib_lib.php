@@ -112,7 +112,7 @@ class apibib extends rwapi{
             $resxml->loadXML($result);
             $folderlist = $resxml->getElementsByTagName('Folders');
             $folders = array();
-            // Only interested in folders that have references in them
+            // Only interested in folders that have no references in them
             for ($a=0, $max=$folderlist->length; $a<$max; $a++) {
                 if ($folderlist->item($a)->getAttribute('type') == 'user' && $folderlist->item($a)->getAttribute('nRefs') == '0') {
                     $folders[] = $folderlist->item($a)->nodeValue;
