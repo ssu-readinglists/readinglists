@@ -16,18 +16,7 @@ $usejs = array('no' => 'Use original filter, no javascript', 'yes' => 'Use javas
 $settings->add(new admin_setting_configselect('filter_refshares_usejs', get_string('usejs', 'filter_refshares'), 
 											get_string('usejsconfig', 'filter_refshares'), 'no', $usejs));
 
-/* Not yet implemented 
-$earliestcron = array('00:00' => 'Midnight', '01:00' => '01:00', '02:00' => '02:00', '03:00' => '03:00', '04:00' => '04:00',
-					  '05:00' => '05:00', '06:00' => '06:00', '07:00' => '07:00', '08:00' => '08:00', '09:00' => '09:00',
-					  '10:00' => '10:00', '11:00' => '11:00', '12:00' => 'Midday', '13:00' => '13:00', '14:00' => '14:00',
-					  '15:00' => '15:00', '16:00' => '16:00', '17:00' => '17:00', '18:00' => '18:00', '19:00' => '19:00',
-					  '20:00' => '20:00', '21:00' => '21:00', '22:00' => '22:00', '23:00' => '23:00', 'none' => 'No restriction');
-$settings->add(new admin_setting_configselect('filter_refshares_earliestcron', get_string('earliestcron', 'filter_refshares'), 
-											get_string('earliestcronconfig', 'filter_refshares'), 'none', $earliestcron));
-*/
-// Support only binary option at the moment
-$cronwindow = array('1' => 'Always run','0' => 'Never run');
-//$cronwindow = array('0' => 'Never run', '900' => '15 minutes', '1800' => '30 minutes', '3600' => '1 hour', '7200' => '2 hours','10800' => '3 hours','14400' => '4 hours', '18000' => '5 hours', '21600' => '6 hours', '43200' => '12 hours');
+$cronwindow = array('1' => 'Run once a day, at approx 1am','0' => 'Never run');
 $settings->add(new admin_setting_configselect('filter_refshares_cronwindow', get_string('cronwindow', 'filter_refshares'), 
 											get_string('cronwindowconfig', 'filter_refshares'), 'none', $cronwindow));
 
