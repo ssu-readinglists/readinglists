@@ -40,6 +40,11 @@ class apibib extends rwapi{
         }
     }
 
+    /**
+     * Removes all references from temp Refworks account that have not been modified for 30 minutes
+     * Then removes all empty folders
+     * Used by cron to clear down RefWorks temp account
+     */
     public static function cleartemp() {
 		GLOBAL $SESSION;
         $return = "";
