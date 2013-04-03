@@ -304,27 +304,6 @@ class apibib extends rwapi{
             }
         }
 
-        //clear temp folder from RefWorks account
-        $params = array('pgnum'=>1,'pgsize'=>999,'style'=>-1,'search'=>$folder);
-        $result = parent::call_api('retrieve','folder',$params);
-        if ($result!==false) {
-            $resxml=new domDocument();
-            $resxml->loadXML($result);
-            //get xml element that contains the references
-            $ids=$resxml->getElementsByTagName('id');
-            $xml = '<RWRequest class="reference" method="delete">';
-
-            foreach ($ids as $id) {
-                $xml .= '<id>'.$id->nodeValue.'</id>';
-            }
-
-            $xml .= '</RWRequest>';
-            $result = parent::call_api('reference','delete','',$xml);
-            if ($result!==false) {
-                parent::call_api('folders','delete',array('oldValue'=>$folder));
-            }
-        }
-
         parent::destroy_session();
 
         //return array
