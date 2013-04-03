@@ -261,7 +261,7 @@ function update_ref_form_fields(select, mform, update){
 	//check first if we have are refreshing page only because we are using getdata from and doi or an isbn and if we are then return(exit).
 	var checkgetdata = check_if_getdata();
 	if(checkgetdata==true){
-		if(typeof(createrefstateindicator)!='undefined' && createrefstateindicator=='recommended'){
+		if(typeof(createrefstateindicator)!='undefined' && createrefstateindicator=='all'){
 				update_create_ref_display()
 		}
 		//clear hidden trigger fields
