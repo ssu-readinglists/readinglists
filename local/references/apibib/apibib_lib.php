@@ -61,11 +61,16 @@ class apibib extends rwapi{
             //get xml element that contains the references
             $referencelist = $resxml->getElementsByTagName('reference');
             $references = array();
+            // Ugly time hack required because RW returns US Eastern Time converted to "epoch time" rather than actual epoch time
+            $dt = new DateTime(NULL, new DateTimeZone('America/New_York'));
+            $rwclockoff = $dt->getOffset();
             for ($a=0, $max=$referencelist->length; $a<$max; $a++) {
                 $modifiedtime = $referencelist->item($a)->getElementsByTagName('md')->item(0)->nodeValue;
                 $id = $referencelist->item($a)->getAttribute('id');
-                $age = microtime(true) - ($modifiedtime/1000);
-                if($age > 3600) {
+                $mod_time = $modifiedtime/1000+$rwclockoff;
+                $timer = microtime(true);
+                $age = $timer-$mod_time;
+                if($age > 1800) {
                     $ids[] = $id;
                 }
             }
