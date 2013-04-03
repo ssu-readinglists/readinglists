@@ -41,6 +41,7 @@ The Filter also has an option that can be set (via Manage Filters in Moodle admi
 1 hour
 1 day
 1 week
+52 weeks
 
 If this amount of time has passed since the cached version was last updated, when the cache is requested it will attempt to update it.
 If the cache cannot be updated at that time (e.g. the RefWorks API does not respond, or the RSS feed cannot be retrieved) the existing 
@@ -57,13 +58,10 @@ In both cases this refreshes the cache for all RefShares included in the page.
 Cron
 ----
 
-A cron job can be run regularly to update the cached versions. 
-As (in Moodle 1.9.x) Filters do not have their own cron, this has to be called from /local/cron.php
-To do this add the following lines to /local/cron.php (create this file if it doesn't already exist):
-#########
-require_once($CFG->dirroot.'/filter/refshares/cron.php');
-refshares_cron();
-########
+A cron job can be run to update the cached versions.
+There are two settings for the cron job - either to run once a day (approx. 1am), or to never run.
+
+Never running the cron increases the chances of slow loading lists in the UI as it increases the chances of a user requesting a list for which the cache has expired.
 
 The refshares_cron function does the following:
 1) retrieves all cached filters
