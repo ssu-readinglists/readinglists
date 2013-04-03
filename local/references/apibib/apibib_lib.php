@@ -42,50 +42,82 @@ class apibib extends rwapi{
 
     public static function cleartemp() {
 		GLOBAL $SESSION;
+        $return = "";
 		//kill any previous api sessions
 		parent::destroy_session();
 		
 		if (!parent::check_session('','[local data - shared team account username]','[local data - shared team account password]')) {
 			//failed
-			error_log("Failed to start session with RefWorks temp login to cleartemp");
 			return false;
 		}
-			
-		$allfolders = parent::get_user_foldernames();
-		
-		if ($allfolders == false) {
-			$allfolders = array();
-		}
-		$return = "";
-		
-		// Need to decide how to approach this
-		// Would be best to get all references that are 'older' (last updated) than certain time (e.g. a day)
-		// Then delete them, then retrieve all folders with zero members and delete those folders
-		// However, not clear if possible to know when a reference last updated
-		// Need to look at XML retrieved using references/get method (or other)
-		
-		foreach ($allfolders as $folder) {
-			$params = array('pgnum'=>1,'pgsize'=>999,'style'=>-1,'search'=>$folder);
-	        $result = parent::call_api('retrieve','folder',$params);
-			// What if $result is false?
-	        if ($result!==false) {
-	            $resxml=new domDocument();
-	            $resxml->loadXML($result);
-	            //get xml element that contains the references
-	            $ids=$resxml->getElementsByTagName('id');
-	            $xml = '<RWRequest class="reference" method="get">';
-	
-	            foreach ($ids as $id) {
-	                $xml .= '<id>'.$id->nodeValue.'</id>';
-	            }
 
-	            $xml .= '</RWRequest>';
-				$return .= $xml;
-	            if ($result!==false) {
-	            //    parent::call_api('folders','delete',array('oldValue'=>$folder));
-	            }
-	        }
-		}
+        // Get all references and look for those older than an hour
+        $params = array('pgnum'=>1,'pgsize'=>1000,'style'=>0);
+        $result = parent::call_api('retrieve','all',$params);
+        // What if $result is false?
+        if ($result!==false) {
+            $resxml=new domDocument();
+            $resxml->loadXML($result);
+            //get xml element that contains the references
+            $referencelist = $resxml->getElementsByTagName('reference');
+            $references = array();
+            for ($a=0, $max=$referencelist->length; $a<$max; $a++) {
+                $modifiedtime = $referencelist->item($a)->getElementsByTagName('md')->item(0)->nodeValue;
+                $id = $referencelist->item($a)->getAttribute('id');
+                $age = microtime(true) - ($modifiedtime/1000);
+                if($age > 3600) {
+                    $ids[] = $id;
+                }
+            }
+            // Create XML of reference IDs for deletion
+            $xml = '';
+            if (count($ids) > 0) {
+                $xml .= '<RWRequest class="reference" method="get">';
+                foreach ($ids as $id) {
+                    $xml .= '<id>'.$id.'</id>';
+                }
+                $xml .= '</RWRequest>';
+            }
+
+            if (strlen($xml) > 0) {
+                //    Need to send this xml for deletion
+                $result = parent::call_api('reference','delete','',$xml);
+                if ($result!==false) {
+                    $return .= "Deleted ".count($ids)." references."; 
+                } else {
+                    $return .= "Could not delete references.";
+                }
+            } else {
+                $return .= "Did not find any references to delete";
+            }
+            // Now have deleted references older than one day, time to clean up any empty folders
+            // Get all folders
+            $result = parent::call_api('folders','all',array('pgnum'=>1,'pgsize'=>1000));
+            if (!$result) {
+                return false;
+            }
+            $resxml=new domDocument();
+            $resxml->loadXML($result);
+            $folderlist = $resxml->getElementsByTagName('Folders');
+            $folders = array();
+            // Only interested in folders that have references in them
+            for ($a=0, $max=$folderlist->length; $a<$max; $a++) {
+                if ($folderlist->item($a)->getAttribute('type') == 'user' && $folderlist->item($a)->getAttribute('nRefs') == '0') {
+                    $folders[] = $folderlist->item($a)->nodeValue;
+                }
+            }
+
+            if ($folders == false) {
+                $folders = array();
+            }
+            
+            foreach ($folders as $folder) {
+                parent::call_api('folders','delete',array('oldValue'=>$folder));
+            }
+            $return .= "Tried to delete ".count($folders)." empty folders";
+        } else {
+            $return .= "Could not retrieve any references from RefWorks temp account";
+        }
 	return $return;
 	}
 
