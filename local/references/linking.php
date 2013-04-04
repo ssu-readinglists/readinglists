@@ -233,8 +233,10 @@ class linking{
             }
         }
         // Create SID based on host name of Moodle install
-        $sid = str_replace("http://","",$CFG->wwwroot);
-        $URL .= "&amp;rfr_id=info:sid/$sid]%3A$idname";
+        // Create SID based on host name of Moodle install
+        global $CFG;
+        $sid = parse_url($CFG->wwwroot, PHP_URL_HOST);
+        $URL .= "&amp;rfr_id=info:sid/$sid%3A$idname";
 
         // Document Genre
         if ($DocType == 0) { $URL .= "&amp;rft.genre=article"; }
