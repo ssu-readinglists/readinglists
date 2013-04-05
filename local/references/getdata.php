@@ -515,12 +515,9 @@ class references_getdata{
 				self::$retrievedarray['a1']='';
 				for($i=0;$i<count($tempcontribs);$i++){
 					if($i>0){
-						self::$retrievedarray['a1'].=' ';   
+						self::$retrievedarray['a1'].='; ';   
 					}
 					self::$retrievedarray['a1'].= trim($tempcontribs[$i]);
-                    if ($i+1<count($tempcontribs)) {
-                        self::$retrievedarray['a1'].=';';
-                    }
 				} 
 			}
 			return true;
