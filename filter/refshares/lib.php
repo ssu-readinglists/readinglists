@@ -5,17 +5,20 @@ function filter_refshares_cron() {
 	$timenow = time();
 	// Check if cron has run in last 23 hours, if so skip it
 	if ($timenow < $modconfig->lastcron + 23*60*60) {
-        mtrace("Skipping filter_reshares cron as already run today");
+        mtrace("Skipping filter_reshares cron as already run in last 24 hours");
 		return;
     } else {
-		mtrace("Cron not yet run today");
+		mtrace("filter_refshares cron not run for atleaset 24 hours");
 	}
 	// Check if it's before 1am (most recent midnight + 3600 seconds), if so skip it
     if ($timenow < strtotime('00:00') + 3600) {
         mtrace("Skipping filter_reshares cron as not after 1am");
 		return;
+	} elseif ($timenow > strtotime('00:00') + 3660) {
+		mtrace("Skipping filter_reshares cron as it is after 2am");
+		return;
 	} else {
-		mtrace("It is after 1am today so cron can run");
+		mtrace("It is after 1am and before 2am today so cron can run");
 	}
 	// Cron hasn't run for at least 23 hours, and it's after 1am, so run cron, unless it's set to never run
 	global $CFG, $DB;
@@ -64,7 +67,7 @@ function filter_refshares_cron() {
 		} else {
 			mtrace("No cached RefShares needed updating");
 		}
-	}
 	// Update the lastcron time
 	set_config('lastcron', $timenow, 'filter_refshares');
+	}
 }
