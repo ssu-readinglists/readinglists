@@ -437,8 +437,7 @@ class references_getdata{
             //$fieldarray = array();
            
             foreach($primotags as $primotag){
-                $tempsurname = array();
-                $tempgivenname = array();
+                $tempcontribs = array();
                 
                 $isbntags = $xml->getElementsByTagName('isbn');
                 foreach($isbntags as $isbntag){
@@ -464,14 +463,14 @@ class references_getdata{
 				foreach($pubtags as $pubtag){
 					self::$retrievedarray['pb']=$pubtag->nodeValue;
 				}
-				$surnametags = $xml->getElementsByTagName('aulast');
-				foreach($surnametags as $surnametag){
-					$tempsurname[]=$surnametag->nodeValue;  
-				}
-				$givennametags = $xml->getElementsByTagName('aufirst');
-				foreach($givennametags as $givennametag){
-					$tempgivenname[]=$givennametag->nodeValue;
-				}
+                $creatortags = $xml->getElementsByTagName('creator');
+                foreach($creatortags as $creatortag){
+                    $tempcontribs[] = $creatortag->nodeValue;
+                }
+                $contributortags = $xml->getElementsByTagName('contributor');
+                foreach($contributortags as $contributortag){
+                    $tempcontribs[] = $contributortag->nodeValue;
+                }
 				$editiontags = $xml->getElementsByTagName('edition');
 				foreach($editiontags as $editiontag){
 					$edition = $editiontag->nodeValue;
@@ -514,16 +513,14 @@ class references_getdata{
 					self::$retrievedarray['u5']=$linkback;
 				}
 				self::$retrievedarray['a1']='';
-				for($i=0;$i<count($tempsurname);$i++){
+				for($i=0;$i<count($tempcontribs);$i++){
 					if($i>0){
 						self::$retrievedarray['a1'].=' ';   
 					}
-					self::$retrievedarray['a1'].= trim($tempsurname[$i]);      
-					if($tempgivenname[$i]!=null && $tempgivenname[$i]!=''){
-						$tempgivenname[$i] = ', '.trim($tempgivenname[$i]);
-						self::$retrievedarray['a1'].= $tempgivenname[$i];
-						self::$retrievedarray['a1'].=';';       
-					}   
+					self::$retrievedarray['a1'].= trim($tempcontribs[$i]);
+                    if ($i+1<count($tempcontribs)) {
+                        self::$retrievedarray['a1'].=';';
+                    }
 				} 
 			}
 			return true;
