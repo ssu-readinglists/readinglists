@@ -491,7 +491,9 @@ class refworks_display {
         //icon for type?
 
         //title
+
         $nodeval=self::get_element_value($refnode,'t1');
+        $rt = self::get_element_value($refnode,'rt');
         if ($nodeval!==false || $nodeval=='') {
             //if empty?
             if ($nodeval == '') {
@@ -502,6 +504,13 @@ class refworks_display {
                 } else {
                     $nodeval = '&nbsp;';
                 }
+            }
+            $t2 = self::get_element_value($refnode,'t2');
+            if ($t2 && $rt=="Book, Section") {
+                $nodeval .= " (in ".$t2.")";
+            }
+            if ($rt=="Journal Article") {
+                $nodeval .= " (in ".self::get_element_value($refnode,'jf').")";
             }
             $output .= '<p class="itemcontainer_item_title">'.$nodeval.'</p>';
         } else {
