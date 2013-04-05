@@ -200,6 +200,10 @@ $string['form_wt'] = 'Website title';
 // SSU require 'lk' field for APA references. owen@ostephens.com 28th March 2012
 $string['form_lk'] = 'Links';
 
+//Lookup messages
+$string['isbn_primo'] = 'Tried checking ISBN on Primo.';
+$string['isbn_worldcat'] = 'Tried checking ISBN on WorldCat.';
+
 //Auto Notes
 $string['autonote_1'] = 'Digitised material';
 $string['autonote_2'] = 'Ebook - printed version also available';
