@@ -178,6 +178,7 @@ $doivalue = optional_param('do','',PARAM_TEXT);
 $snvalue = optional_param('sn','',PARAM_TEXT);
 $hiddensnvalue = optional_param('hiddensn','',PARAM_TEXT);
 $hiddendoivalue = optional_param('hiddendoi','',PARAM_TEXT);
+$rtvalue = optional_param('rt','',PARAM_TEXT);
 //test to see which no_submit button been pressed if one has been pressed?
 $nosubmitpressed = '';
 foreach ($form->_noSubmitButtons as $nosubmitbutton) {
@@ -201,7 +202,17 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
                 $snvalue = $hiddensnvalue; //contingency for browsers with javascript disabled
             }
             if ($snvalue!=='') {
-                $getreffromisbn = references_getdata::call_worldcat_api($snvalue);
+                $getrefattempts = '';
+                $getreffromisbn = false;
+                // Try using Primo first (http://www.exlibrisgroup.com/category/PrimoOverview)
+                // Added 05/04/2013 owen@ostephens.com
+                $getreffromisbn = references_getdata::call_primo_api($snvalue,'isbn',$rtvalue);
+                $getrefattempts .= get_string('isbn_primo','refworks').' ';
+                // If Primo fails, try WorldCat
+                if ($getreffromisbn === false) {
+                    $getreffromisbn = references_getdata::call_worldcat_api($snvalue);
+                    $getrefattempts .= get_string('isbn_worldcat','refworks');
+                }
                 if ($getreffromisbn) {
                     foreach (refworks_managerefs_form::$reffields as $field) {
                         //keep the DOI
