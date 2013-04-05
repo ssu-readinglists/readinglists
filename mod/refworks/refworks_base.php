@@ -204,9 +204,14 @@ class refworks_base {
 
         self::$hasleftmenu = true;
         echo('<div id="left-column">');
-        global $CFG, $PAGE;
+        global $CFG, $PAGE, $SESSION;
 
         $refworkslink = isset(self::$config->refworks_link)? self::$config->refworks_link : '';
+        if(isset($SESSION->rwlogin)) {
+            $ac_details = refworks_collab_lib::get_account_details_bylogin($SESSION->rwlogin)->name." (".get_string('team_account','refworks').")";
+        } elseif (isset($SESSION->rwuser)) {
+            $ac_details = $SESSION->rwuser." (".get_string('personal_account','refworks').")";
+        }
 
         //div for module side menu (needs own css rules)
         echo('<div id="sidemenu">');
@@ -216,6 +221,13 @@ class refworks_base {
          * item assoc array - title:link text, link:url, reqcap:comma sep list of capabilities needed to show item, style:string class of item
          */
         $menuarray = array(
+        array(
+            'title' => get_string('current_login','refworks'),
+            'reqcap' => 'mod/refworks:connect',
+            'items' => array(
+        array('title' => $ac_details)
+        )
+        ),
         array(
             'title' => get_string('references','refworks'),
             'reqcap' => 'mod/refworks:connect',
@@ -263,31 +275,31 @@ class refworks_base {
 
         //Add in an extra support link
         if (get_string('access_libnews_link', 'refworks') != '') {
-            array_push($menuarray[4]['items'], array('title' => get_string('access_libnews','refworks'), 'link' => get_string('access_libnews_link', 'refworks'))
+            array_push($menuarray[5]['items'], array('title' => get_string('access_libnews','refworks'), 'link' => get_string('access_libnews_link', 'refworks'))
             );
         }
 
         //Add user folders to folder block
         refworks_folder_api::update_folder_list();
         for ($max=count(refworks_folder_api::$folders)-1;$max>-1;$max--) {
-            array_unshift($menuarray[1]['items'], array('title' => self::return_foldername(refworks_folder_api::$folders[$max]['name'],true), 'link' => 'viewfolder.php?folder='.urlencode(refworks_folder_api::$folders[$max]['name']), 'style' => 'folder'));
+            array_unshift($menuarray[2]['items'], array('title' => self::return_foldername(refworks_folder_api::$folders[$max]['name'],true), 'link' => 'viewfolder.php?folder='.urlencode(refworks_folder_api::$folders[$max]['name']), 'style' => 'folder'));
         }
 
         if (self::check_capabilities('mod/refworks:collaboration')) {
             global $USER, $SESSION;
             //Collaboration - Check if user can access any accounts + add to menu
             if (count(refworks_collab_lib::get_user_accounts($USER->id))>0) {
-                array_push($menuarray[2]['items'], array('title' => get_string('team_login','refworks')));
-				array_push($menuarray[2]['items'], array('title' => 'Filter:', 'input' => 'ac-input', 'type' => 'text'));
+                array_push($menuarray[3]['items'], array('title' => get_string('team_login','refworks')));
+				array_push($menuarray[3]['items'], array('title' => 'Filter:', 'input' => 'ac-input', 'type' => 'text'));
                 foreach (refworks_collab_lib::$accsavail as $acc) {
-                    array_push($menuarray[2]['items'], array('title' => stripslashes($acc->name), 'link'=>'collab/collab_login.php?accid='.$acc->id, 'style'=>'account'));
+                    array_push($menuarray[3]['items'], array('title' => stripslashes($acc->name), 'link'=>'collab/collab_login.php?accid='.$acc->id, 'style'=>'account'));
                 }
             }
             //If user is logged in to an account - present them with a logout option
             if (isset($SESSION->rwteam)) {
-                array_push($menuarray[2]['items'], array('title' => get_string('team_logout','refworks'), 'link'=>'collab/collab_logout.php'));
+                array_push($menuarray[3]['items'], array('title' => get_string('team_logout','refworks'), 'link'=>'collab/collab_logout.php'));
                 //In a shared account, add publish link to folder menu
-                array_push($menuarray[1]['items'], array('title' => get_string('share_folder','refworks'), 'link' => 'sharefolders.php'));
+                array_push($menuarray[2]['items'], array('title' => get_string('share_folder','refworks'), 'link' => 'sharefolders.php'));
                 $cursharedacct = 'collab/collab_login.php?accid='.$SESSION->rwteam;
             }
         }

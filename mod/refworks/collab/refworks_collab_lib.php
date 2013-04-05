@@ -220,6 +220,18 @@ class refworks_collab_lib {
         global $DB;
         return $DB->get_record('refworks_collab_accs', array('id' => $accid));
     }
+
+    /**
+     * Returns the record for the account
+     * @param $acclogin
+     * @return record object
+     */
+
+    public static function get_account_details_bylogin($acclogin) {
+        global $DB;
+        return $DB->get_record('refworks_collab_accs', array('login' => $acclogin));
+    }
+
     /**
      * Rename an account
      * @param $id int: account id

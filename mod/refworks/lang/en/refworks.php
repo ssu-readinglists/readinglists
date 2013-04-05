@@ -44,6 +44,9 @@ $string['refworks:export_collab'] = 'Export Collaborative activities (Moodle Fil
 $string['refworks:allow_url_override'] = 'Allow manual URL entry in references';
 $string['refworks:migrate_collab_accs'] = 'Access migrate collaborative accounts page';
 //menus
+$string['current_login'] = 'Current Login';
+$string['personal_account'] = 'Personal account';
+
 $string['references'] = 'References';
 $string['view_all_refs'] = 'View all references';
 $string['create_ref'] = 'Create reference';
@@ -210,6 +213,7 @@ $string['autonote_2'] = 'Ebook - printed version also available';
 $string['autonote_3'] = 'Ebook only';
 
 //Collaborative accounts
+$string['team_account'] = 'Shared account';
 $string['team_accounts'] = 'Shared accounts';
 $string['team_createacc'] = 'Create shared account';
 $string['team_manageacc'] = 'Manage shared accounts';
