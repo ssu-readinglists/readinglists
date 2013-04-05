@@ -137,7 +137,7 @@ class references_getdata{
                         }
                         $issntags = $xml->getElementsByTagName('issn');
                         foreach ($issntags as $issntag) {
-                            self::$retrievedarray['do']=$issntag->nodeValue;
+                            self::$retrievedarray['sn']=$issntag->nodeValue;
                         }
                         $journaltags = $xml->getElementsByTagName('journal_title');
                         foreach ($journaltags as $journaltag) {
