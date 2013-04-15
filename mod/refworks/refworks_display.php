@@ -42,6 +42,9 @@ class refworks_display {
         self::$imagepaths->delfolder = $OUTPUT->pix_url('delfolder', 'mod_refworks');
         self::$imagepaths->group = $OUTPUT->pix_url('group', 'mod_refworks');
         self::$imagepaths->source = $OUTPUT->pix_url('source_16', 'local_references');
+        self::$imagepaths->digidoclink = $OUTPUT->pix_url('f/writer-24');
+        self::$imagepaths->z3988link = $OUTPUT->pix_url('sfx', 'mod_refworks');
+        self::$imagepaths->otherlink = $OUTPUT->pix_url('url', 'mod_refworks');
         self::$imagepaths->rss = $OUTPUT->pix_url('i/rss');
         return self::$imagepaths;
     }
@@ -463,13 +466,13 @@ class refworks_display {
             switch($actiontype) {
                 case self::viewaction:
                     $output .= self::create_ref_folderdisplay($refs->item($a));
-                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a]["url"]);
+                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a]);
                     break;
                 case self::folderviewaction:
                     //get folder name (must be within folder param in page)
                     $fldname = optional_param('folder','',PARAM_TEXT);
                     $fldname = refworks_base::return_foldername($fldname);
-                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a]["url"],$fldname);
+                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a],$fldname);
                     break;
                 case self::selectaction:
                     $output .= self::create_ref_select($refs->item($a));
@@ -682,7 +685,8 @@ class refworks_display {
     public static function create_ref_opts_renderer($refnode, $link, $folder='') {
         GLOBAl $CFG;
         $output = '<td class="itemcontainer_opts">';
-
+        $url = $link['url'];
+        $linktype = $link['type'];
         //get id of ref
         if ($id=self::get_element_value($refnode,'id')) {
             $reftitle = ' '.self::get_element_value($refnode,'t1');
@@ -725,9 +729,9 @@ class refworks_display {
         }
 
         //get link to source
-        if ($link!='') {
+        if ($url!='') {
 			// Modified for SSU to open in a new window. owen@ostephens.com. 28th March 2012
-            $output .= '<a target="_blank" href="'.$link.'"><img src="'.self::get_image_paths()->source.'" alt="'.get_string('ref_sourcelink','refworks').$reftitle.'" title="'.get_string('ref_sourcelink','refworks').$reftitle.'"/></a>';
+            $output .= '<a target="_blank" href="'.$url.'"><img src="'.self::get_image_paths()->$linktype.'" alt="'.get_string('ref_sourcelink','refworks').$reftitle.'" title="'.get_string('ref_sourcelink','refworks').$reftitle.'"/></a>';
         }
 
         return $output.'</td>';
