@@ -192,15 +192,18 @@ class linking{
      * @param $doc array
      * @param $DocType string
      * @param $people array
-     * @return string
+     * @return array
      */
     private static function get_openurl($doc, $DocType, $people) {
         global $COURSE;
         //check if u5 field/tag has been used for a weblink override and if so use address to instead of openurl
         if (isset($doc["Override"])) {
             if ($doc["Override"] != '' && strtolower($doc["Override"]) != 'none') {
-                if (preg_match("|^http(s)??://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i",$doc["Override"])) {
-                    return $doc["Override"];
+                if (preg_match("|^http://smile.solent.ac.uk/digidocs/live(/.*)?$|i",$doc["Override"])) {
+                    return array("url"=>$doc["Override"],"type"=>"digidoc");
+                }
+                else if (preg_match("|^http(s)??://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i",$doc["Override"])) {
+                    return array("url"=>$doc["Override"],"type"=>"override");
                 }
             }else if (strtolower($doc["Override"]) == 'none') {
                 return false;
@@ -355,7 +358,7 @@ class linking{
         if (!isset(self::$openurlprefix)) {
             self::$openurlprefix = references_lib::get_setting('openurl');
         }
-        return self::$openurlprefix.$URL.self::$openurlsuffix;
+        return array("url"=>self::$openurlprefix.$URL.self::$openurlsuffix,"type"=>"z39.88");
     }
 }
 ?>

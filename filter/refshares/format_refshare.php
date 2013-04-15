@@ -296,7 +296,7 @@ function format_refshare($refshare_url, $refshare_style) {
 			$desc = clean_text($noteval, FORMAT_HTML).'<br>';
 		}
 		
-		$weblink=$linking[0];
+		$weblink=$linking[0]["url"];
 		
 		$formatted_refs .= '<span class="reference">';
 		if (isset($weblink)) {

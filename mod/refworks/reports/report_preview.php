@@ -78,7 +78,7 @@ class refworks_report_preview extends refworks_report{
                     $refidval = $refid->item(0)->nodeValue;
                     $id = clean_param($refidval, PARAM_INT);
                 }
-                $weblink = $linking[$a];
+                $weblink = $linking[$a]["url"];
 
                 //create "reference" item
                 self::add_ref_item($title,$weblink,$desc,$id,$reporttype);

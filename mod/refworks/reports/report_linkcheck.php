@@ -148,11 +148,13 @@ class refworks_report_linkcheck extends refworks_report{
 
         $sfxapi = false;
         //create curl object for each link (null if not link)
-        foreach ($linkarray as $url) {
+        foreach ($linkarray as $link) {
+            $url = $link["url"];
             if ($url == null || $url=='') {
                 $curls[] = null;
             } else {
                 //check for sfx:
+                //could replace this with a check for link type
                 if (stripos($url,linking::$openurlprefix)!==false && stripos($url,'sfx')!=false) {
                     //Add URL into array will be checked later to create an api call which will populate a curl obj in its place
                     $curls[] = $url;

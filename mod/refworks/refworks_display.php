@@ -463,13 +463,13 @@ class refworks_display {
             switch($actiontype) {
                 case self::viewaction:
                     $output .= self::create_ref_folderdisplay($refs->item($a));
-                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a]);
+                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a]["url"]);
                     break;
                 case self::folderviewaction:
                     //get folder name (must be within folder param in page)
                     $fldname = optional_param('folder','',PARAM_TEXT);
                     $fldname = refworks_base::return_foldername($fldname);
-                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a],$fldname);
+                    $output .= self::create_ref_opts($refs->item($a),$linksarray[$a]["url"],$fldname);
                     break;
                 case self::selectaction:
                     $output .= self::create_ref_select($refs->item($a));

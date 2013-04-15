@@ -102,10 +102,10 @@ XMLSTRING;
         $data = new DOMDocument('1.0','utf-8');
         $data->loadXML($refstring);
         $result = linking::create_link($data,'TEST');
-        $this->assertEqual($result[0],null,'Linking: Test book creates no link');
-        $this->assertPattern("/www.open.ac.uk/",$result[1],'Linking: Test ul link');
-        $this->assertPattern("/TEST/",$result[1],'Linking: Test course gets passed');
-        $this->assertEqual($result[2],'http://www.open.ac.uk','Linking: Test u5 field override');
+        $this->assertEqual($result[0]["url"],null,'Linking: Test book creates no link');
+        $this->assertPattern("/www.open.ac.uk/",$result[1]["url"],'Linking: Test ul link');
+        $this->assertPattern("/TEST/",$result[1]["url"],'Linking: Test course gets passed');
+        $this->assertEqual($result[2]["url"],'http://www.open.ac.uk','Linking: Test u5 field override');
 
         //if thorough then check url from linking is valid
         $thorough=optional_param('thorough', false, PARAM_BOOL);//check if user selected a comprehensive test
