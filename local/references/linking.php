@@ -200,10 +200,10 @@ class linking{
         if (isset($doc["Override"])) {
             if ($doc["Override"] != '' && strtolower($doc["Override"]) != 'none') {
                 if (preg_match("|^http://smile.solent.ac.uk/digidocs/live(/.*)?$|i",$doc["Override"])) {
-                    return array("url"=>$doc["Override"],"type"=>"digidoc");
+                    return array("url"=>$doc["Override"],"type"=>"digidoclink");
                 }
                 else if (preg_match("|^http(s)??://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i",$doc["Override"])) {
-                    return array("url"=>$doc["Override"],"type"=>"override");
+                    return array("url"=>$doc["Override"],"type"=>"otherlink");
                 }
             }else if (strtolower($doc["Override"]) == 'none') {
                 return false;
@@ -358,7 +358,7 @@ class linking{
         if (!isset(self::$openurlprefix)) {
             self::$openurlprefix = references_lib::get_setting('openurl');
         }
-        return array("url"=>self::$openurlprefix.$URL.self::$openurlsuffix,"type"=>"z39.88");
+        return array("url"=>self::$openurlprefix.$URL.self::$openurlsuffix,"type"=>"z3988link");
     }
 }
 ?>
