@@ -202,6 +202,9 @@ class linking{
                 if (preg_match("|^http://smile.solent.ac.uk/digidocs/live(/.*)?$|i",$doc["Override"])) {
                     return array("url"=>$doc["Override"],"type"=>"digidoclink");
                 }
+                else if (preg_match("|^http://catalogue.solent.ac.uk/primo_library(/.*)?$|i",$doc["Override"])) {
+                    return array("url"=>$doc["Override"],"type"=>"primolink");
+                }
                 else if (preg_match("|^http(s)??://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i",$doc["Override"])) {
                     return array("url"=>$doc["Override"],"type"=>"otherlink");
                 }

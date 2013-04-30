@@ -43,6 +43,7 @@ class refworks_display {
         self::$imagepaths->group = $OUTPUT->pix_url('group', 'mod_refworks');
         self::$imagepaths->source = $OUTPUT->pix_url('source_16', 'local_references');
         self::$imagepaths->digidoclink = $OUTPUT->pix_url('f/writer-24');
+        self::$imagepaths->primolink = $OUTPUT->pix_url('primo-24', 'mod_refworks');
         self::$imagepaths->z3988link = $OUTPUT->pix_url('sfx', 'mod_refworks');
         self::$imagepaths->otherlink = $OUTPUT->pix_url('url', 'mod_refworks');
         self::$imagepaths->rss = $OUTPUT->pix_url('i/rss');
