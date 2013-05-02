@@ -170,7 +170,8 @@ class refworks_folder_api extends rwapi{
      */
     public static function add_refshares($folder = '') {
         global $USER;
-        $email = '[local data - email address]';
+        // Default email is same as that used for shared account creation
+        $email = get_config('mod_refworks')->refworks_collabacemail;
         if (isset($USER->email)) {
             $email = $USER->email;
         }
