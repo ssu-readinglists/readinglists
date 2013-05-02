@@ -493,14 +493,22 @@ class references_getdata{
 				$locationtags = $xml->getElementsByTagName('lds07');
 				foreach($locationtags as $locationtag) {
 					if ($primo_linkback === references_lib::get_setting('primoplinkback')) {
+                        $location = $locationtag->nodeValue;
 						// Primo locations use a code for each library rather than name
 						// Decoding is site specific
-						// Replace lines 500 and 501 with your own sub-library codes and names
-						// LJS 12.03.2013
-						$librarycodes = array('/; [SLCODE1]/','/; [SLCODE2]/');
-		    	 		$librarynames = array('; [Sub-library name 1]','; [Sub-library name 2]');
-						$location = $locationtag->nodeValue;
-		                $location = preg_replace($librarycodes,$librarynames,$location);		                
+                        // Make setting into JSON (as long as setting formatted correctly)
+                        $primolibs_json = "{".references_lib::get_setting('primolibs')."}";
+                        $librarynames = json_decode($primolibs_json);
+                        switch (json_last_error()) {
+                            case JSON_ERROR_NONE:
+                                foreach ($librarynames as $librarycode => $libraryname) {
+                                    $location = preg_replace('/; '.$librarycode.'/','; '.$libraryname,$location);
+                                }
+                            break;
+                            default:
+                                error_log("Please check the 'primolibs' setting is formatted correctly");
+                            break;
+                        }
 						self::$retrievedarray['no'] = 'Location: '.$location;
 					} elseif ($primo_linkback === references_lib::get_setting('primoolinkback')) {
 						self::$retrievedarray['no'] = 'Ebook';

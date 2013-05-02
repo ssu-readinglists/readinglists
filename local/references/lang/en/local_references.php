@@ -58,6 +58,9 @@ $string['config_primoplinkback'] = 'Linkback syntax to Primo for print items';
 $string['config_primoplinkback_desc'] = 'Path for forming linkback to Primo for print items. The Primo DocID will be appended to the end of this to form the link';
 $string['config_primoolinkback'] = 'Linkback syntax to Primo for online items';
 $string['config_primoolinkback_desc'] = 'Path for forming linkback to Primo for online items. The Primo DocID will be appended to the end of this to form the link';
+$string['config_primolibs'] = 'Map abbreviated library names used by Primo to full names';
+$string['config_primolibs_desc'] = 'A comma separated list of mappings. Each mapping should be of the form: "Abbrevation":"Full name". e.g. "BL":"British Library","NLW":"National Library of Wales"';
+
 
 
 //Plugin strings (from 1.9 version)
@@ -103,4 +106,4 @@ $string['clipboardcopy'] = 'Copy to clipboard';
 $string['refexport_rwxml']='RefWorks XML';
 $string['refexport_rwxmldesc']='Download the references in XML file format.<br/>This format can be imported into a RefWorks/MyReferences account.';
 
-$string['linktorefworks'] = 'http://library.open.ac.uk/find/databases/linking.cfm?id=252624';
+$string['linktorefworks'] = '[http://refworks.com]';

@@ -109,7 +109,10 @@ if ($hassiteconfig) {//Stops errors when tree not available
 	$primoolinkback = new admin_setting_configtext('local_references/primoolinkback', get_string('config_primoolinkback', 'local_references'),
                 get_string('config_primoolinkback_desc', 'local_references'), '');
     $configpage->add($primoolinkback);
-
+    //Primo Library Abbrevations
+    $primolibs = new admin_setting_configtext('local_references/primolibs', get_string('config_primolibs', 'local_references'),
+                get_string('config_primolibs_desc', 'local_references'), '');
+    $configpage->add($primolibs);
 
     $ADMIN->add('localplugins', $configpage);
 
