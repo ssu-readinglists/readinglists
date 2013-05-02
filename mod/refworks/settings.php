@@ -11,3 +11,6 @@ $settings->add(new admin_setting_configtext('mod_refworks/refworks_styles', get_
 
 $settings->add(new admin_setting_configcheckbox('mod_refworks/refworks_shownewlogin', get_string('refworks_shownewlogin', 'refworks'),
                     get_string('refworks_shownewlogin_desc', 'refworks'), 0));
+
+$settings->add(new admin_setting_configtext('mod_refworks/refworks_collabacemail', get_string('refworks_collabacemail', 'refworks'),
+                    get_string('refworks_collabacemail_desc', 'refworks'), 0));

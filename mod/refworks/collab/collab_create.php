@@ -93,7 +93,7 @@ if ($fromform=$mform->get_data()) {
         $ownerlist .= '</ul>';
         refworks_base::write_error(get_string('team_createacc_exists','refworks',$ownerlist));
     } else {
-        $result = rwapi::create_account(htmlspecialchars($login),$pass,'Shared team account','[local data - shared team account email]',5);
+        $result = rwapi::create_account(htmlspecialchars($login),$pass,'Shared team account',get_config('mod_refworks')->refworks_collabacemail,5);
         //give feedback, if ok store to db, show link to permission manage and then exit
         if (!$result) {
             refworks_base::write_error(get_string('team_createacc_error','refworks'));

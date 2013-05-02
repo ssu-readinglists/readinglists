@@ -22,6 +22,9 @@ $string['refworks_link_desc'] = 'URL to RefWorks.';
 $string['refworks_shownewlogin'] = 'Show new account details';
 $string['refworks_shownewlogin_desc'] = 'When creating a RefWorks account via Moodle show the login & password details.';
 
+$string['refworks_collabacemail'] = 'Shared account email address';
+$string['refworks_collabacemail_desc'] = 'Email address used as the email address for all shared accounts';
+
 $string['refworks_autopopfolder_info'] = 'Using Auto populated reference data';
 $string['refworks_autopopfolder_info_help'] = '<p>Auto populated folder name: If you fill in this field and select a file in the <em>Auto populated reference data</em> field this will enable auto-populating of references for this instance.
 This means that anyone accessing this instance will have a folder created in their account named the value specified in the field. The folder will be populated with the reference data uploaded. Reference data must be in RefWorks XML format.
