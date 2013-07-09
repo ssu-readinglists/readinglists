@@ -35,8 +35,7 @@ $capabilities = array(
             'user' => CAP_ALLOW,
         )
     ),
-//AMNEDMENT
-//ADDED CODE
+
 	'mod/readinglist:edit' => array(
         'captype' => 'write',
         'contextlevel' => CONTEXT_MODULE,
@@ -45,17 +44,6 @@ $capabilities = array(
 			'manager' => CAP_ALLOW
         )
     ),
-//END ADDED CODE
-//REMOVED CODE
-	/*'mod/readinglist:edit' => array(
-        'captype' => 'write',
-        'contextlevel' => CONTEXT_MODULE,
-        'archetypes' => array(
-            'editingteacher' => CAP_ALLOW,
-        )
-    ),*/
-//END REMOVED CODE
-//END AMENDMENT
 	
 		'mod/readinglist:manage' => array(
         'captype' => 'write',
