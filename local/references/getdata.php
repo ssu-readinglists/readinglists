@@ -514,6 +514,16 @@ class references_getdata{
 						self::$retrievedarray['no'] = 'Ebook';
 					}
 				}
+                $linktags = $xml->getElementsByTagName('linktorsrc');
+                foreach($linktags as $linktag) {
+                    // TODO Check for  "Click here for more information about"
+                    $link = $linktag->nodeValue;
+                    if (preg_match('/Click here for more information about (.*)$/',$link, $matches) > 0) {
+                        $link = $matches[1];
+                        self::$retrievedarray['db'] = $link;
+                        break;
+                    }
+                }
 				$idtags = $xml->getElementsByTagName('recordid');
 				foreach($idtags as $idtag){
 					// Build link back to Primo
