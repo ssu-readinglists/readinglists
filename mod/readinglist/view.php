@@ -88,6 +88,8 @@ if ($inpopup and $readinglist->display == RESOURCELIB_DISPLAY_POPUP) {
 if($refresh) {
 	// If so, force refresh of all RefShares
 	refresh_refshares($readinglist->content);
+    // Update time last updated - uncommented if wanted
+    // $readinglist->timemodified = time();
 }
 
 if (!empty($options['printintro'])) {

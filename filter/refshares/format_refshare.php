@@ -310,6 +310,9 @@ function format_refshare($refshare_url, $refshare_style) {
 		}
 		$formatted_refs .= '</span><br><span class="reference_note">'.$desc.'</span><br>';
 	}
+	// If we want to include as 'last modified' date, uncomment the below
+	//$strlastmodified = get_string("lastmodified");
+	//$formatted_refs .= '<span class="modified">$strlastmodified'.date("F j, Y, g:i a").'</span><br>';
 	$formatted_refs .= '</span>';
 
 	// Going to return the html we are looking for....
