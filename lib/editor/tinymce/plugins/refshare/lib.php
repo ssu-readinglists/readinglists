@@ -29,7 +29,18 @@ class tinymce_refshare extends editor_tinymce_plugin {
     protected function update_init_params(array &$params, context $context,
             array $options = null) {
         global $OUTPUT;
-
+        // Only show button if filter is active
+        if ($this->get_config('requirerefshares', 1)) {
+            // If RefShares filter is disabled, do not add button.
+            $filters = filter_get_active_in_context($context);
+            if (!array_key_exists('filter/refshares', $filters)) {
+                return;
+            }
+        }
+        // Only show button if users have permssion to edit reading lists
+        if (!has_capability('mod/readinglist:edit',$context)){
+            return;
+        }
         // Add button after 'image' in advancedbuttons3.
         $this->add_button_after($params, 3, 'refshare', 'image');
 
