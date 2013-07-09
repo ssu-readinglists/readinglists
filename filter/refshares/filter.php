@@ -84,9 +84,9 @@ class filter_refshares extends moodle_text_filter {
 			$refshare_div = "refshare-".$refshare_key;
 
 			$load_icon_url = $CFG->wwwroot."/filter/refshares/loading.gif";
-			$loading_msg = get_string('userloadingmsg','filter_refsharesjs').'<img src="'.$load_icon_url.'">';
-			$error_msg = get_string('usererrormsg','filter_refsharesjs');
-			$javascriptoff_msg = get_string('javascriptoff','filter_refsharesjs');
+			$loading_msg = get_string('userloadingmsg','filter_refshares').'<img src="'.$load_icon_url.'">';
+			$error_msg = get_string('usererrormsg','filter_refshares');
+			$javascriptoff_msg = get_string('javascriptoff','filter_refshares');
 			
 			// Initialise javascript with appropriate module and parameters
 			$jsmodule = array(
