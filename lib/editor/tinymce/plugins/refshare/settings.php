@@ -15,15 +15,15 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Strings for Moodle emoticon plugin.
+ * Emoticon integration settings.
  *
- * @package   tinymce_refshare
+ * @package   tinymce_moodleemoticon
  * @license   http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
-$string['pluginname'] = 'Insert RefShare';
-$string['requirerefshare'] = 'Require RefShare filter';
-$string['requirerefshare_desc'] = 'If enabled the Insert RefShare button is visible only when the RefShare filter is enabled in the editor context.';
+defined('MOODLE_INTERNAL') || die;
 
-/* All lang strings used from TinyMCE JavaScript code must be named 'pluginname:stringname', no need to create langs/en_dlg.js */
-$string['refshare:desc'] = 'Insert a Reading List section';
+if ($ADMIN->fulltree) {
+    $settings->add(new admin_setting_configcheckbox('tinymce_refshare/requirerefshare',
+        get_string('requirerefshare', 'tinymce_refshare'), get_string('requirerefshare_desc', 'tinymce_refshare'), 1));
+}
