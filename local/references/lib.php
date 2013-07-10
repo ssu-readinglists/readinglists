@@ -3,8 +3,14 @@
 function local_references_cron() {
 	$modconfig = get_config('local_references');
 	$timenow = time();
+	if (property_exists($modconfig,'lastcroncompleted')) {
+		$lastrun = $modconfig->lastcroncompleted;
+	} else {
+		set_config('lastcroncompleted', 0, 'local_references');
+		$lastrun = 0;
+	}
 	// Check if cron has run in last 23 hours, if so skip it
-	if ($timenow < $modconfig->lastcron + 23*60*60) {
+	if ($timenow < $lastrun + 23*60*60) {
         mtrace("Skipping local_references cron as already run in last 24 hours");
 		return;
     } else {
@@ -27,7 +33,9 @@ function local_references_cron() {
 		mtrace($cleartemp);
 	} else {
 		mtrace('Unable to run clear temp successfully');
+		return;
 	}
 	// Update the lastcron time
-	set_config('lastcron', $timenow, 'local_references');
+	set_config('lastcroncompleted', $timenow, 'local_references');
+	mtrace('Updated time for last successful completion of local references cron');
 }
