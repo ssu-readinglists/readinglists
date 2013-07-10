@@ -511,6 +511,7 @@ class references_getdata{
                         }
 						self::$retrievedarray['no'] = 'Location: '.$location;
 					} elseif ($primo_linkback === references_lib::get_setting('primoolinkback')) {
+                        self::$retrievedarray['av'] = 'Online';
 						self::$retrievedarray['no'] = 'Ebook';
 					}
 				}
