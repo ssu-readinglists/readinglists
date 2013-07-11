@@ -19,7 +19,7 @@ refworks_base::init();
 $returnedstyle = optional_param('refstyleselect','',PARAM_TEXT);
 
 //get if optional sorting param set by user
-$sorting = optional_param('sort',9,PARAM_INT);
+$sorting = optional_param('sort',0,PARAM_INT);
 //see what page we are on or if we are all (from optional params)
 $showall = optional_param('all',false,PARAM_BOOL);
 $curpage = optional_param('page',1,PARAM_INT);

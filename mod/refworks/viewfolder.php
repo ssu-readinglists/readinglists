@@ -20,7 +20,7 @@ $fld = required_param('folder',PARAM_TEXT);
 $sorting = optional_param('sort',7,PARAM_INT);
 if ($sorting===7) {
     $fld = refworks_base::return_foldername($fld);
-    $sorting = 9;
+    $sorting = 0;
 } else {
     $fld = urldecode($fld);
 }
