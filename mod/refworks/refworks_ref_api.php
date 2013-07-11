@@ -198,7 +198,7 @@ class refworks_ref_api extends rwapi{
      * @param $sorting
      * @return xmlstring (from api result, should include reference tags) or sequence of ids if style=-1
      */
-    public static function get_all_refs($curpage, $numperpage, $sorting = 9, $style = -1, $format='html', $folder='') {
+    public static function get_all_refs($curpage, $numperpage, $sorting = 0, $style = -1, $format='html', $folder='') {
         $params = array(
             'pgnum'=>$curpage,
             'pgsize'=>$numperpage,
