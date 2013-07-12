@@ -192,7 +192,7 @@ try{
 	if(submitbutton){//Create reference button
 		submitbutton.onclick=function(){
 			if(snfield){
-				var f = document.getElementsByName("hiddendsn");
+				var f = document.getElementsByName("hiddensn");
 				f[0].value = snfield.value;
 				snfield.value="";
 			}
