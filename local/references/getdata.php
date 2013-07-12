@@ -33,6 +33,7 @@ class references_getdata{
         $url='http://www.crossref.org/openurl/?';
         $username = references_lib::get_setting('crossrefuser');
         $password = references_lib::get_setting('crossrefpwd');
+        self::$retrievedarray['do']=$doi;
 
         if ($password != '') {
             $querystring = 'pid='.$username.':'.$password.'&id=doi:'.$doi.'&noredirect=true';
