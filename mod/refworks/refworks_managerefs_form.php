@@ -108,22 +108,34 @@ class refworks_managerefs_form extends moodleform {
 
                 //DOI array
 
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_doi">');
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchdoi">');
                 $mform->registerNoSubmitButton('get_data');
-                $doiarray=array();
-                $doiarray[] =& $mform->createElement('text', 'do', get_string('form_doi', 'refworks'));
-                $doiarray[] =& $mform->createElement('submit','get_data',get_string('form_doi_get', 'refworks'));
-                $mform->addGroup($doiarray, 'doiarray', get_string('form_doi', 'refworks'), '', false);
-                $mform->setType('do', PARAM_TEXT);
+                $searchdoiarray=array();
+                $searchdoiarray[] =& $mform->createElement('text', 's_do', get_string('form_s_doi', 'refworks'));
+                $searchdoiarray[] =& $mform->createElement('submit','get_data',get_string('form_doi_get', 'refworks'));
+                $mform->addGroup($searchdoiarray, 'searchdoiarray', get_string('form_s_doi', 'refworks'), '', true);
+                $mform->setType('s_do', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
 
                  //ISBN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_isbn">');
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchisbn">');
                 $mform->registerNoSubmitButton('get_data_isbn');
-                $isbnarray=array();
-                $isbnarray[] =& $mform->createElement('text', 'sn', get_string('form_isbn', 'refworks'));
-                $isbnarray[] =& $mform->createElement('submit','get_data_isbn',get_string('form_isbn_get', 'refworks'));
-                $mform->addGroup($isbnarray, 'isbnarray', get_string('form_isbn', 'refworks'), '', false);
+                $searchisbnarray=array();
+                $searchisbnarray[] =& $mform->createElement('text', 's_sn', get_string('form_s_isbn', 'refworks'));
+                $searchisbnarray[] =& $mform->createElement('submit','get_data_isbn',get_string('form_isbn_get', 'refworks'));
+                $mform->addGroup($searchisbnarray, 'searchisbnarray', get_string('form_s_isbn', 'refworks'), '', true);
+                $mform->setType('s_sn', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
+
+                //DOI (do)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_doi">');
+                $mform->addElement('text', 'do', get_string('form_doi', 'refworks'));
+                $mform->setType('do', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
+
+                //ISBN/ISSN (sn)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_sn">');
+                $mform->addElement('text', 'sn', get_string('form_isbn', 'refworks'));
                 $mform->setType('sn', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
 

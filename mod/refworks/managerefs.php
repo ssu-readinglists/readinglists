@@ -215,16 +215,15 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
                 }
                 if ($getreffromisbn) {
                     foreach (refworks_managerefs_form::$reffields as $field) {
-                        //keep the DOI
-                        if ($field!='sn' && $field!='do') {
-                            if (isset(references_getdata::$retrievedarray[$field])) {
-                                $form->setConstant($field,references_getdata::$retrievedarray[$field]);
-                            } else {
-                                $form->setConstant($field,'');
-                            }
-                        }else if ($field=='do') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant($field,'');
+                        }
+                        if ($field=='do') {
                             if (isset(references_getdata::$retrievedarray[$field])) {
                                 $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
+                                $form->setConstant('searchdoiarray',array('s_do'=>references_getdata::$retrievedarray[$field]));
                             } else {
                                 $form->setConstant('hiddendoi','');
                             }
@@ -243,18 +242,23 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
                 $getreffromdoi = references_getdata::call_crossref_api($doivalue);
                 if ($getreffromdoi) {
                     foreach (refworks_managerefs_form::$reffields as $field) {
-                        //keep the DOI
-                        if ($field!='do'&& $field!='sn') {
-                            if (isset(references_getdata::$retrievedarray[$field])) {
-                                $form->setConstant($field,references_getdata::$retrievedarray[$field]);
-                            } else {
-                                $form->setConstant($field,'');
-                            }
-                        }else if ($field=='sn') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant($field,'');
+                        }
+                        if ($field=='sn') {
                             if (isset(references_getdata::$retrievedarray[$field])) {
                                 $form->setConstant('hiddensn',references_getdata::$retrievedarray[$field]);
+                                $form->setConstant('searchisbnarray',array('s_sn'=>references_getdata::$retrievedarray[$field]));
                             } else {
                                 $form->setConstant('hiddensn','');
+                            }
+                        }
+                        if ($field=='do') {
+                            if (isset(references_getdata::$retrievedarray[$field])) {
+                                $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
+                                $form->setConstant('searchdoiarray',array('s_do'=>references_getdata::$retrievedarray[$field]));
                             }
                         }
                     }
