@@ -19,11 +19,11 @@ class search_base {
     // Maybe have an array defining order for searching?
     public static $search_sources = array('worldcat','crossref','primo');
 
-    function search_worldcat {
+    function search_worldcat() {
 
     }
 
-    function search_crossref {
+    function search_crossref() {
 	// How to pass search params?
 	// Just assume that we know the types that can be passed?
 	// e.g. only pass doi to crossref?
@@ -31,43 +31,35 @@ class search_base {
 
     }
 
-    function search_primo {
+    function search_primo() {
 
+    }
+
+    public static function search_form() {
+        global $OUTPUT;
+        require_once(dirname(__FILE__).'/search_form.php');
+        $doi_s_form = new search_doi_form();
+        $isbn_s_form = new search_isbn_form();
+        $issn_s_form = new search_issn_form();
+
+        // Show header
+
+        echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
+
+        echo '<div id="searchfields">';
+        echo '<div id="searchdoi">';
+        $doi_s_form->display();
+        echo '</div><div id="searchisbn">';
+        $isbn_s_form->display();
+        echo '</div><div id="searchissn">';
+        $issn_s_form->display();
+        echo '</div>';
+        print_r(references_getdata::$retrievedarray);
+        echo $OUTPUT->box_end();
     }
 
     
 }
-// may want this class in separate file
-class search_form extends moodle_form {
-	public $_formref;
-	function definition($array_of_identifiers) {
-		// Form for searching - i.e. place to enter DOI, ISSN, ISBN, System Number ....
-		// Should present at top of page
-		// $array_of_identifiers is e.g. [issn->1234-5678,doi->12123424.124,isbn->1234567890]
-		// use array to populate form if these values already exist?
-		// alternatively pass each value and list out?
-		$mform =& $this->_form;
-        $this->_formref =& $this->_form;
-        // need to have a form to display search fields and buttons. Maybe list fields in array and then spit out each one in turn?
-        $mform->addElement('html', '<div class="mrefformcontainer" id="container_doi">');
-        $mform->registerNoSubmitButton('get_data');
-        $doiarray=array();
-        $doiarray[] =& $mform->createElement('text', 'do', get_string('form_doi', 'refworks'));
-        $doiarray[] =& $mform->createElement('submit','get_data',get_string('form_doi_get', 'refworks'));
-        $mform->addGroup($doiarray, 'doiarray', get_string('form_doi', 'refworks'), '', false);
-        $mform->setType('do', PARAM_TEXT);
-        $mform->addElement('html', '</div>');
 
-         //ISBN array
-        $mform->addElement('html', '<div class="mrefformcontainer" id="container_isbn">');
-        $mform->registerNoSubmitButton('get_data_isbn');
-        $isbnarray=array();
-        $isbnarray[] =& $mform->createElement('text', 'sn', get_string('form_isbn', 'refworks'));
-        $isbnarray[] =& $mform->createElement('submit','get_data_isbn',get_string('form_isbn_get', 'refworks'));
-        $mform->addGroup($isbnarray, 'isbnarray', get_string('form_isbn', 'refworks'), '', false);
-        $mform->setType('sn', PARAM_TEXT);
-        $mform->addElement('html', '</div>');
-	}
-}
 
 ?>
