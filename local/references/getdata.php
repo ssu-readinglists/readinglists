@@ -519,7 +519,7 @@ class references_getdata{
                 foreach($linktags as $linktag) {
                     // TODO Check for  "Click here for more information about"
                     $link = $linktag->nodeValue;
-                    if (preg_match('/Click here for more information about (.*)$/',$link, $matches) > 0) {
+                    if (preg_match('/more information about (.*)$/',$link, $matches) > 0) {
                         $link = $matches[1];
                         self::$retrievedarray['db'] = $link;
                         break;
