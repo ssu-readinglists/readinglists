@@ -1,3 +1,4 @@
+
 <?php
 /**
  * Reference fields form
@@ -18,25 +19,13 @@ class search_doi_form extends moodleform {
                 $this->_formref =& $this->_form;
 
                 //DOI array
-
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchdoi">');
                 $searchdoiarray=array();
-                $searchdoiarray[] =& $mform->createElement('text', 's_do', get_string('form_s_doi', 'refworks'));
+                $searchdoiarray[] =& $mform->createElement('text', 's_doi', get_string('form_s_doi', 'refworks'));
                 $searchdoiarray[] =& $mform->createElement('submit','get_doi',get_string('form_doi_get', 'refworks'));
                 $mform->addGroup($searchdoiarray, 'searchdoiarray', get_string('form_s_doi', 'refworks'), '', false);
-                $mform->setType('s_do', PARAM_TEXT);
+                $mform->setType('s_doi', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
-/*
-                 //ISBN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchisbn">');
-                $mform->registerNoSubmitButton('get_data_isbn');
-                $searchisbnarray=array();
-                $searchisbnarray[] =& $mform->createElement('text', 's_sn', get_string('form_s_isbn', 'refworks'));
-                $searchisbnarray[] =& $mform->createElement('submit','get_data_isbn',get_string('form_isbn_get', 'refworks'));
-                $mform->addGroup($searchisbnarray, 'searchisbnarray', get_string('form_s_isbn', 'refworks'), '', false);
-                $mform->setType('s_sn', PARAM_TEXT);
-                $mform->addElement('html', '</div>');
-*/
             }
 }
 
@@ -50,12 +39,11 @@ class search_isbn_form extends moodleform {
 
                  //ISBN array
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchisbn">');
-                $mform->registerNoSubmitButton('get_data_isbn');
                 $searchisbnarray=array();
-                $searchisbnarray[] =& $mform->createElement('text', 's_sn', get_string('form_s_isbn', 'refworks'));
+                $searchisbnarray[] =& $mform->createElement('text', 's_isbn', get_string('form_s_isbn', 'refworks'));
                 $searchisbnarray[] =& $mform->createElement('submit','get_isbn',get_string('form_isbn_get', 'refworks'));
                 $mform->addGroup($searchisbnarray, 'searchisbnarray', get_string('form_s_isbn', 'refworks'), '', false);
-                $mform->setType('s_sn', PARAM_TEXT);
+                $mform->setType('s_isbn', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
             }
 }
@@ -68,14 +56,13 @@ class search_issn_form extends moodleform {
                 $mform    =& $this->_form;
                 $this->_formref =& $this->_form;
 
-                 //ISBN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchisbn">');
-                $mform->registerNoSubmitButton('get_data_issn');
+                 //ISSN array
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchissn">');
                 $searchissnarray=array();
-                $searchissnarray[] =& $mform->createElement('text', 's_sn', get_string('form_s_issn', 'refworks'));
+                $searchissnarray[] =& $mform->createElement('text', 's_issn', get_string('form_s_issn', 'refworks'));
                 $searchissnarray[] =& $mform->createElement('submit','get_issn',get_string('form_issn_get', 'refworks'));
-                $mform->addGroup($searchissnarray, 'searchissnarray', get_string('form_s_isbn', 'refworks'), '', false);
-                $mform->setType('s_sn', PARAM_TEXT);
+                $mform->addGroup($searchissnarray, 'searchissnarray', get_string('form_s_issn', 'refworks'), '', false);
+                $mform->setType('s_issn', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
             }
 }

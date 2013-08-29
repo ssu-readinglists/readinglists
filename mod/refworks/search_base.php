@@ -37,6 +37,7 @@ class search_base {
 
     public static function search_form() {
         global $OUTPUT;
+        require_once(dirname(__FILE__).'/../../local/references/getdata.php');
         require_once(dirname(__FILE__).'/search_form.php');
         $doi_s_form = new search_doi_form();
         $isbn_s_form = new search_isbn_form();
@@ -54,7 +55,6 @@ class search_base {
         echo '</div><div id="searchissn">';
         $issn_s_form->display();
         echo '</div>';
-        print_r(references_getdata::$retrievedarray);
         echo $OUTPUT->box_end();
     }
 

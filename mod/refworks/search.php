@@ -39,9 +39,13 @@ if ($refer == '') {
 
 //check if get data button has been pressed
 $getdata = optional_param('get_data','none',PARAM_TEXT);
+$getisbn = optional_param('get_isbn','none',PARAM_TEXT);
+$getdoi = optional_param('get_doi','none',PARAM_TEXT);
 $doivalue = optional_param('s_do','',PARAM_TEXT);
 $snvalue = optional_param('s_sn','',PARAM_TEXT);
-error_log($getdata);
+error_log("getdata param:".$getdata);
+error_log("getisbn param:".$getisbn);
+error_log("getdoi param:".$getdoi);
 if($doivalue) {
 	$getref = references_getdata::call_crossref_api($doivalue);
 }

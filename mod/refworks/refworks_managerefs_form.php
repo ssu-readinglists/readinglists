@@ -107,7 +107,7 @@ class refworks_managerefs_form extends moodleform {
                 }
 
                 //DOI array
-
+/*
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchdoi">');
                 $mform->registerNoSubmitButton('get_data');
                 $searchdoiarray=array();
@@ -126,7 +126,7 @@ class refworks_managerefs_form extends moodleform {
                 $mform->addGroup($searchisbnarray, 'searchisbnarray', get_string('form_s_isbn', 'refworks'), '', true);
                 $mform->setType('s_sn', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
-
+*/
                 //DOI (do)
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_doi">');
                 $mform->addElement('text', 'do', get_string('form_doi', 'refworks'));
