@@ -44,7 +44,6 @@ class search_base {
         $issn_s_form = new search_issn_form();
 
         // Show header
-        error_log("Displaying search form");
         echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
 
         echo '<div id="searchfields">';
