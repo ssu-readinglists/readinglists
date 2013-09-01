@@ -165,6 +165,8 @@ $primorid_s_form = new search_primorid_form();
 
 require_once(dirname(__FILE__).'/refworks_managerefs_form.php');
 
+//set flag to create the holding div for the display fields control link to true
+refworks_managerefs_form::$showtoggle = true;
 $mform = new refworks_managerefs_form();
 $form=$mform->_formref;
 //create hidden elements for ibsn and doi retrieval handling
@@ -213,9 +215,8 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
             $getreffromdoi = references_getdata::call_crossref_api($search_doi);
             if ($getreffromdoi) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    //keep the DOI entered
-                    // Amended to keep Reference Type entered for SSU. owen@ostephens.com 28th March 2012
-                    if($field!='do' && $field!='sn' && $field!='rt'){
+                    // Keep Reference type
+                    if($field!='rt'){
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
                         } else {
@@ -257,8 +258,8 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
             }
             if ($getreffromisbn) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                //keep the ISBN entered
-                    if ($field!='sn' && $field!='do' && $field!='rt') {
+                // Keep reference type
+                    if ($field!='rt') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
                         } else {
@@ -287,7 +288,7 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
             // If Primo fails, no other attempts currently
             if ($getreffromissn) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    // Keep Reference Type
                     if ($field!='rt') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
@@ -316,7 +317,7 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
             error_log("Get ref from Primo Record ID ".$getreffromprimorid);
             if ($getreffromprimorid) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    // Keep Reference Type
                     if ($field!='rt') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
