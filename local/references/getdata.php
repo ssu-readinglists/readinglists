@@ -385,6 +385,9 @@ class references_getdata{
                 $identifier = preg_replace($patterns, $replacements, $identifier);
                 $index = 'issn';
             break;
+            case 'recordid':
+                $index = 'rid';
+            break;
             default:; 
         }
 

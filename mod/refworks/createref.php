@@ -70,6 +70,7 @@ if (refworks_base::check_capabilities('mod/refworks:upload_attachments')) {
 $search_doi = optional_param('s_doi','',PARAM_TEXT);
 $search_isbn = optional_param('s_isbn','',PARAM_TEXT);
 $search_issn = optional_param('s_issn','',PARAM_TEXT);
+$search_primosys = optional_param('s_primosys','',PARAM_TEXT);
 
 $doivalue = optional_param('do','',PARAM_TEXT);
 $snvalue = optional_param('sn','',PARAM_TEXT);
@@ -79,7 +80,7 @@ $rtvalue = optional_param('rt','',PARAM_TEXT);
 
 //test to see if we are dealing with a get_data request
 
-if ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been pressed
+if ($search_doi || $search_isbn || $search_issn || $search_primosys) { // 'Get data' button has been pressed
     error_log("Got a search");
     if ($search_doi) {
         error_log("Doing DOI search");
@@ -186,6 +187,27 @@ if ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been
                 }
             } else if ($getreffromissn === false) {
                 refworks_base::write_error(get_string('issn_getref_empty','refworks').' '.$getrefattempts);
+            }
+        }
+    } elseif ($search_primosys) {
+        error_log("Doing Primo System Number search");
+        if ($search_primosys!=='') {
+            $getreffromprimosys = false;
+            $getreffromprimosys = references_getdata::call_primo_api($search_primosys,'recordid',$rtvalue);
+            error_log("Get ref from Primo system number ".$getreffromprimosys);
+            if ($getreffromprimosys) {
+                foreach (refworks_managerefs_form::$reffields as $field) {
+                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    if ($field!='rt') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant($field,'');
+                        }
+                    }
+                }
+            } elseif ($getreffromprimosys == false) {
+                refworks_base::write_error(get_string('primosys_getref_empty','refworks'));
             }
         }
     }
@@ -297,7 +319,7 @@ if (refworks_base::check_capabilities('mod/refworks:folders')) {
 
 $mform->add_action_buttons(false,get_string('create_ref','refworks'));
 
-if (!$search_doi && !$search_isbn && !$search_issn) { //ie retrieval of reference using DOI, ISBN or ISSN not instigated
+if (!$search_doi && !$search_isbn && !$search_issn && !$search_primosys) { //ie retrieval of reference using DOI, ISBN, ISSN or Primo Sys No not instigated
     //always set the fields in the form to empty (makes sure form is empty on submit)
     foreach (refworks_managerefs_form::$reffields as $field) {
         //keep the previous type

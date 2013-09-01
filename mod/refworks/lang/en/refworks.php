@@ -359,6 +359,8 @@ $string['doi_getref_empty'] = 'No reference data was found at <a href=\"http://w
 $string['isbn_getref_empty'] = 'No reference data was found for this ISBN.';
 //Retrieval of Ref using ISSN
 $string['issn_getref_empty'] = 'No reference data was found for this ISSN.';
+//Retrieval of Ref using Primo System Number
+$string['primosys_getref_empty'] = 'No reference data was found for this Primo System Number.';
 
 //Reports
 $string['reports'] = 'Reference reports';
