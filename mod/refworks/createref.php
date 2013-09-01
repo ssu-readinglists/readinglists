@@ -92,12 +92,10 @@ if ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get d
             if ($getreffromdoi) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
                     // Keep Reference Type as set - doesn't currently work as RT not passed to search
-                    if($field!='rt'){
-                        if (isset(references_getdata::$retrievedarray[$field])) {
-                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
-                        } else {
-                            $form->setConstant($field,'');
-                        }
+                    if (isset(references_getdata::$retrievedarray[$field])) {
+                        $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                    } else {
+                        $form->setConstant($field,'');
                     }
                     // Set Hidden ISBN/ISSN - probably not needed - for review
                     if ($field=='sn') {
@@ -136,13 +134,10 @@ if ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get d
             }
             if ($getreffromisbn) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
-                    if ($field!='rt') {
-                        if (isset(references_getdata::$retrievedarray[$field])) {
-                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
-                        } else {
-                            $form->setConstant($field,'');
-                        }
+                    if (isset(references_getdata::$retrievedarray[$field])) {
+                        $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                    } else {
+                        $form->setConstant($field,'');
                     }
                     // Set Hidden DOI - probably not needed - for review
                     if ($field=='do') {
@@ -168,13 +163,10 @@ if ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get d
             // If Primo fails, no other attempts currently
             if ($getreffromissn) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
-                    if ($field!='rt') {
-                        if (isset(references_getdata::$retrievedarray[$field])) {
-                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
-                        } else {
-                            $form->setConstant($field,'');
-                        }
+                    if (isset(references_getdata::$retrievedarray[$field])) {
+                        $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                    } else {
+                        $form->setConstant($field,'');
                     }
                     // Set Hidden DOI - probably not needed - for review
                     if ($field=='do') {
@@ -197,13 +189,10 @@ if ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get d
             error_log("Get ref from Primo Record ID ".$getreffromprimorid);
             if ($getreffromprimorid) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
-                    if ($field!='rt') {
-                        if (isset(references_getdata::$retrievedarray[$field])) {
-                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
-                        } else {
-                            $form->setConstant($field,'');
-                        }
+                    if (isset(references_getdata::$retrievedarray[$field])) {
+                        $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                    } else {
+                        $form->setConstant($field,'');
                     }
                 }
             } elseif ($getreffromprimorid == false) {
