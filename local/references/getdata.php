@@ -460,6 +460,9 @@ class references_getdata{
                         case 'BOOK':
                             self::$retrievedarray['rt']='5';
                         break;
+                        case 'JOUR':
+                            self::$retrievedarray['rt']='14';
+                        break;
                         case 'VIDEO':
                             error_log("VIDEO");
                             self::$retrievedarray['rt']='29';
