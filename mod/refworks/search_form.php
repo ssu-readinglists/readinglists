@@ -66,7 +66,7 @@ class search_issn_form extends moodleform {
                 $mform->addElement('html', '</div>');
             }
 }
-class search_primosys_form extends moodleform {
+class search_primorid_form extends moodleform {
     public $_formref;
 
             function definition() {
@@ -75,12 +75,12 @@ class search_primosys_form extends moodleform {
                 $this->_formref =& $this->_form;
 
                  //ISSN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchprimosys">');
-                $searchprimosysarray=array();
-                $searchprimosysarray[] =& $mform->createElement('text', 's_primosys', get_string('form_s_primosys', 'refworks'));
-                $searchprimosysarray[] =& $mform->createElement('submit','get_primosys',get_string('form_primosys_get', 'refworks'));
-                $mform->addGroup($searchprimosysarray, 'searchprimosysarray', get_string('form_s_primosys', 'refworks'), '', false);
-                $mform->setType('s_primosys', PARAM_TEXT);
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchprimorid">');
+                $searchprimoridarray=array();
+                $searchprimoridarray[] =& $mform->createElement('text', 's_primorid', get_string('form_s_primorid', 'refworks'));
+                $searchprimoridarray[] =& $mform->createElement('submit','get_primorid',get_string('form_primorid_get', 'refworks'));
+                $mform->addGroup($searchprimoridarray, 'searchprimoridarray', get_string('form_s_primorid', 'refworks'), '', false);
+                $mform->setType('s_primorid', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
             }
 }

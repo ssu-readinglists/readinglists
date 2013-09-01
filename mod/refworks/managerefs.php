@@ -161,7 +161,7 @@ require_once(dirname(__FILE__).'/search_form.php');
 $doi_s_form = new search_doi_form();
 $isbn_s_form = new search_isbn_form();
 $issn_s_form = new search_issn_form();
-$primosys_s_form = new search_primosys_form();
+$primorid_s_form = new search_primorid_form();
 
 require_once(dirname(__FILE__).'/refworks_managerefs_form.php');
 
@@ -429,7 +429,7 @@ $mform->set_data($existvals);
 $doi_s_form->_formref->addElement('hidden','refid', $rid);
 $isbn_s_form->_formref->addElement('hidden','refid', $rid);
 $issn_s_form->_formref->addElement('hidden','refid', $rid);
-$primosys_s_form->_formref->addElement('hidden','refid', $rid);
+$primorid_s_form->_formref->addElement('hidden','refid', $rid);
 
 // Add reference elements to Reference details form
 if (refworks_base::$isinstance) {
@@ -450,8 +450,8 @@ echo '</div><div id="searchisbn">';
 $isbn_s_form->display();
 echo '</div><div id="searchissn">';
 $issn_s_form->display();
-echo '</div><div id="searchprimosys">';
-$primosys_s_form->display();
+echo '</div><div id="searchprimorid">';
+$primorid_s_form->display();
 echo '</div>';
 echo $OUTPUT->box_end();
 

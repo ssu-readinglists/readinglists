@@ -188,7 +188,7 @@ $string['form_s_isbn'] = 'Search <acronym title="International Standard Book Num
 $string['form_s_issn'] = 'Search <acronym title="International Standard Serial Number">ISSN</acronym>';
 $string['form_doi'] = '<acronym title="Digital Object Identifier">DOI</acronym>';
 $string['form_s_doi'] = 'Search <acronym title="Digital Object Identifier">DOI</acronym>';
-$string['form_s_primosys'] = 'Search Primo System Number';
+$string['form_s_primorid'] = 'Search Primo Record ID';
 $string['form_url'] = 'Web address (URL)';
 $string['form_OU'] = 'OU Course Material';
 $string['form_u1'] = 'Module code';
@@ -197,7 +197,7 @@ $string['form_u3'] = 'Unit number';
 $string['form_doi_get'] = 'Get data (DOI)';
 $string['form_isbn_get'] = 'Get data (ISBN)';
 $string['form_issn_get'] = 'Get data (ISSN)';
-$string['form_primosys_get'] = 'Get data (Primo System Number)';
+$string['form_primorid_get'] = 'Get data (Primo Record ID)';
 $string['form_av'] = 'Availability';
 $string['form_db'] = 'Database';
 $string['form_jo'] = 'Journal Abbreviation';
@@ -359,8 +359,8 @@ $string['doi_getref_empty'] = 'No reference data was found at <a href=\"http://w
 $string['isbn_getref_empty'] = 'No reference data was found for this ISBN.';
 //Retrieval of Ref using ISSN
 $string['issn_getref_empty'] = 'No reference data was found for this ISSN.';
-//Retrieval of Ref using Primo System Number
-$string['primosys_getref_empty'] = 'No reference data was found for this Primo System Number.';
+//Retrieval of Ref using Primo Record ID
+$string['primorid_getref_empty'] = 'No reference data was found for this Primo Record ID.';
 
 //Reports
 $string['reports'] = 'Reference reports';
