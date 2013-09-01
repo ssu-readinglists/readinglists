@@ -64,11 +64,6 @@ class references_getdata{
              //build from xml
             $xml = new DOMDocument('1.0','utf-8');
             $xml->loadXML($page);
-            //$document=DOMDocument::loadXML($xml);
-
-            $document=DOMDocument::loadXML($page);
-            $xpath=new DOMXPath($document);
-            $queryxml = $xpath->query('//*');
 
              //build from xml
             $doitags = $xml->getElementsByTagName('doi');
@@ -248,8 +243,7 @@ class references_getdata{
                 return false;
             }
 
-            $document=DOMDocument::loadXML($page);
-            $xpath=new DOMXPath($document);
+            $xpath=new DOMXPath($xml);
             $queryxml = $xpath->query('//*');
 
             $editors=''; //set variables
@@ -444,9 +438,6 @@ class references_getdata{
             if($primotags->length==0){
                 return false;
             }
-
-            $document=DOMDocument::loadXML($page);
-            $xpath=new DOMXPath($document);
        
             //create an array of values from the returned xml which are to populate the reference form
             //$fieldarray = array();
