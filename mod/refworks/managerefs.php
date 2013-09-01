@@ -183,6 +183,7 @@ if (refworks_base::check_capabilities('mod/refworks:upload_attachments')) {
 $search_doi = optional_param('s_doi','',PARAM_TEXT);
 $search_isbn = optional_param('s_isbn','',PARAM_TEXT);
 $search_issn = optional_param('s_issn','',PARAM_TEXT);
+$search_primorid = optional_param('s_primorid','',PARAM_TEXT);
 
 
 //get DOI/ISBN retrive variables
@@ -201,7 +202,7 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
     redirect($refer, '', 0);
     refworks_base::write_footer();
     exit;
-} elseif ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been pressed
+} elseif ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get data' button has been pressed
     error_log("Got a search");
     if ($search_doi) {
         error_log("Doing DOI search");
@@ -277,7 +278,57 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
         }
     } elseif ($search_issn) {
         error_log("Doing ISSN search");
-        
+        if ($search_issn!=='') {
+            $getrefattempts = '';
+            $getreffromissn = false;
+            $getreffromissn = references_getdata::call_primo_api($search_issn,'issn',$rtvalue);
+            error_log("Get ref from ISSN ".$getreffromissn);
+            $getrefattempts .= get_string('issn_primo','refworks').' ';
+            // If Primo fails, no other attempts currently
+            if ($getreffromissn) {
+                foreach (refworks_managerefs_form::$reffields as $field) {
+                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    if ($field!='rt') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant($field,'');
+                        }
+                    }
+                    // Set Hidden DOI - probably not needed - for review
+                    if ($field=='do') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant('hiddendoi','');
+                        }
+                    }
+                }
+            } else if ($getreffromissn === false) {
+                refworks_base::write_error(get_string('issn_getref_empty','refworks').' '.$getrefattempts);
+            }
+        }
+    } elseif ($search_primorid) {
+        error_log("Doing Primo Record ID search");
+        if ($search_primorid!=='') {
+            $getreffromprimorid = false;
+            $getreffromprimorid = references_getdata::call_primo_api($search_primorid,'recordid',$rtvalue);
+            error_log("Get ref from Primo Record ID ".$getreffromprimorid);
+            if ($getreffromprimorid) {
+                foreach (refworks_managerefs_form::$reffields as $field) {
+                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    if ($field!='rt') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant($field,'');
+                        }
+                    }
+                }
+            } elseif ($getreffromprimorid == false) {
+                refworks_base::write_error(get_string('primorid_getref_empty','refworks'));
+            }
+        }
     }
 }else if ($fromform=$mform->get_data()) {
     //this branch is where you process validated data.
