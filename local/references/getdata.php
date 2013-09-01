@@ -106,7 +106,7 @@ class references_getdata{
                         self::$retrievedarray['rt']='8';
                     break;
                     default:
-                        self::$retrievedarray['rt']='11';
+                        self::$retrievedarray['rt']='11'; //Defaults to 'Generic'
 
                 }
                 //work out titles
@@ -472,7 +472,7 @@ class references_getdata{
                             }
                         break;
                         default:
-                            self::$retrievedarray['rt']='5';
+                            self::$retrievedarray['rt']='11'; //Defaults to 'Generic'
                     }
                 }
                 
