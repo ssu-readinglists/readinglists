@@ -453,6 +453,25 @@ class references_getdata{
            
             foreach($primotags as $primotag){
                 $tempcontribs = array();
+                $ristypetags = $xml->getElementsByTagName('ristype');
+                foreach($ristypetags as $ristypetag) {
+                    $ristype = $ristypetag->nodeValue;
+                    switch($ristype) {
+                        case 'BOOK':
+                            self::$retrievedarray['rt']='5';
+                        break;
+                        case 'VIDEO':
+                            error_log("VIDEO");
+                            self::$retrievedarray['rt']='29';
+                            $risdatetags = $xml->getElementsByTagName('risdate');
+                            foreach($risdatetags as $risdatetag) {
+                                self::$retrievedarray['fd'] = trim($risdatetag->nodeValue,".");
+                            }
+                        break;
+                        default:
+                            self::$retrievedarray['rt']='5';
+                    }
+                }
                 
                 $isbntags = $xml->getElementsByTagName('isbn');
                 foreach($isbntags as $isbntag){
