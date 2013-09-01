@@ -42,6 +42,7 @@ class search_base {
         $doi_s_form = new search_doi_form();
         $isbn_s_form = new search_isbn_form();
         $issn_s_form = new search_issn_form();
+        $primosys_s_form = new search_primosys_form();
 
         // Show header
         echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
@@ -53,6 +54,8 @@ class search_base {
         $isbn_s_form->display();
         echo '</div><div id="searchissn">';
         $issn_s_form->display();
+        echo '</div><div id="searchprimosys">';
+        $primosys_s_form->display();
         echo '</div>';
         echo $OUTPUT->box_end();
     }

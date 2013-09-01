@@ -310,7 +310,7 @@ function update_ref_form_fields(select, mform, update){
 			{"name":"Conference Proceedings","t2":"Conference Title"}	);
 	
 	var masterarray = [];
-	var searcharray = ['container_searchdoi','container_searchissn','container_searchisbn'];
+	var searcharray = ['container_searchdoi','container_searchissn','container_searchisbn','container_searchprimosys'];
 	// In following section, push a reference type to masterarray, followed by pushing the related list of 'recommended' fields
 	// to reccomendedarray (sic)
 	var reccomendedarray = new Array(); //array of div containers relating to masterarray

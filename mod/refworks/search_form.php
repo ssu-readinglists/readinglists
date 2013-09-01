@@ -66,4 +66,22 @@ class search_issn_form extends moodleform {
                 $mform->addElement('html', '</div>');
             }
 }
+class search_primosys_form extends moodleform {
+    public $_formref;
+
+            function definition() {
+                require_once(dirname(__FILE__).'/search_base.php');
+                $mform    =& $this->_form;
+                $this->_formref =& $this->_form;
+
+                 //ISSN array
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchprimosys">');
+                $searchprimosysarray=array();
+                $searchprimosysarray[] =& $mform->createElement('text', 's_primosys', get_string('form_s_primosys', 'refworks'));
+                $searchprimosysarray[] =& $mform->createElement('submit','get_primosys',get_string('form_primosys_get', 'refworks'));
+                $mform->addGroup($searchprimosysarray, 'searchprimosysarray', get_string('form_s_primosys', 'refworks'), '', false);
+                $mform->setType('s_primosys', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
+            }
+}
 ?>
