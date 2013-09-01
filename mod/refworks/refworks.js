@@ -310,88 +310,102 @@ function update_ref_form_fields(select, mform, update){
 			{"name":"Conference Proceedings","t2":"Conference Title"}	);
 	
 	var masterarray = [];
+	var searcharray = ['container_searchdoi','container_searchissn','container_searchisbn'];
 	// In following section, push a reference type to masterarray, followed by pushing the related list of 'recommended' fields
 	// to reccomendedarray (sic)
 	var reccomendedarray = new Array(); //array of div containers relating to masterarray
 	//book, whole
 	masterarray.push('Book, Whole');
 	reccomendedarray[0]=['createref_container_toggle','container_authors','container_title','container_year','container_edition',
-							'container_publisher','container_placepub','container_isbn',
+							'container_publisher','container_placepub','container_sn',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5', 'container_no'];
+	reccomendedarray[0] = reccomendedarray[0].concat(searcharray);
 	//book, section
 	masterarray.push('Book, Section');
 	reccomendedarray[1]=['createref_container_toggle','container_authors','container_title','container_editor','container_title2',
-							'container_year','container_edition','container_publisher','container_placepub','container_isbn',
+							'container_year','container_edition','container_publisher','container_placepub','container_sn',
 							'container_page','container_otherpage',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5','container_no'];
+	reccomendedarray[1] = reccomendedarray[1].concat(searcharray);
 	//book edited
 	masterarray.push('Book, Edited');
 	reccomendedarray[2]=['createref_container_toggle','container_title','container_authors','container_year','container_edition',
-							'container_publisher','container_placepub','container_isbn',
+							'container_publisher','container_placepub','container_sn',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5', 'container_no'];
+	reccomendedarray[2] = reccomendedarray[2].concat(searcharray);
 	//journal article
 	masterarray.push('Journal Article');
 	reccomendedarray[3]=['createref_container_toggle','container_authors','container_title','container_periodical','container_year',
-							'container_volume','container_issue','container_page','container_otherpage','container_isbn',
+							'container_volume','container_issue','container_page','container_otherpage','container_sn',
 							'container_doi',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5','container_no'];
+	reccomendedarray[3] = reccomendedarray[3].concat(searcharray);
 	// web pages
 	masterarray.push('Web Page');
 	reccomendedarray[4]=['createref_container_toggle','container_authors','container_title','container_year','container_edition',
 							'container_volume','container_issue',
 							'container_u5','container_no'];
+	reccomendedarray[4] = reccomendedarray[4].concat(searcharray);
 	//newspaper article
 	masterarray.push('Newspaper Article');
 	reccomendedarray[5]=['createref_container_toggle','container_authors','container_title','container_periodical','container_year',
 							'container_pub_date_free','container_issue','container_page','container_otherpage','container_doi',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5','container_no'];
+	reccomendedarray[5] = reccomendedarray[5].concat(searcharray);
 	//magazine article
 	masterarray.push('Magazine Article');
 	reccomendedarray[6]=['createref_container_toggle','container_authors','container_title','container_periodical','container_year',
 							'container_pub_date_free','container_issue','container_page','container_otherpage','container_doi',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5','container_no'];
+	reccomendedarray[6] = reccomendedarray[6].concat(searcharray);
 	//Video/DVD
 	masterarray.push('Video/DVD');
 	reccomendedarray[7]=['createref_container_toggle','container_authors','container_title','container_year',
 							'container_pub_date_free','container_publisher','container_placepub',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5', 'container_no'];
+	reccomendedarray[7] = reccomendedarray[7].concat(searcharray);
 	//Dissertation/Thesis
 	masterarray.push('Dissertation/Thesis');
 	reccomendedarray[8]=['createref_container_toggle','container_authors','container_title','container_year','container_edition',
-							'container_publisher','container_placepub','container_isbn',
+							'container_publisher','container_placepub','container_sn',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5', 'container_no'];
+	reccomendedarray[8] = reccomendedarray[8].concat(searcharray);
 	//Conference Proceedings
 	masterarray.push('Conference Proceedings');
 	reccomendedarray[9]=['createref_container_toggle','container_authors','container_title','container_editor','container_title2',
-							'container_year','container_publisher','container_placepub','container_isbn',
+							'container_year','container_publisher','container_placepub','container_doi','container_sn',
 							'container_page','container_otherpage',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5','container_no'];
+	reccomendedarray[9] = reccomendedarray[9].concat(searcharray);
 	//Online Discussion Forum/Blogs
 	masterarray.push('Online Discussion Forum/Blogs');
 	reccomendedarray[10]=['createref_container_toggle','container_authors','container_title','container_periodical',
 							'container_year','container_pub_date_free',
 							'container_av','container_lk','container_retrieved',
 							'container_u5', 'container_no'];
+	reccomendedarray[10] = reccomendedarray[10].concat(searcharray);
 	//Artwork
 	masterarray.push('Artwork');
 	reccomendedarray[11]=['createref_container_toggle','container_authors','container_title','container_year','container_k1',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5', 'container_no'];
+	reccomendedarray[11] = reccomendedarray[11].concat(searcharray);
 	//generic
 	masterarray.push('Generic');
 	reccomendedarray[12]=['createref_container_toggle','container_authors','container_title','container_year','container_publisher',
-							'container_placepub','container_page','container_otherpage','container_edition','container_isbn',
+							'container_placepub','container_page','container_otherpage','container_edition','container_sn',
 							'container_av','container_lk','container_db','container_retrieved',
 							'container_u5','container_no']; 
+	reccomendedarray[12] = reccomendedarray[12].concat(searcharray);
 	//End of creation of recommended fields lists
 
 	//create the containers array from the current document

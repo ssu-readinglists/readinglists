@@ -90,15 +90,16 @@ if ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been
             $getreffromdoi = references_getdata::call_crossref_api($search_doi);
             if ($getreffromdoi) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                    //keep the DOI entered
-                    // Amended to keep Reference Type entered for SSU. owen@ostephens.com 28th March 2012
-                    if($field!='do' && $field!='sn' && $field!='rt'){
+                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    if($field!='rt'){
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
                         } else {
                             $form->setConstant($field,'');
                         }
-                    } else if ($field=='sn') {
+                    }
+                    // Set Hidden ISBN/ISSN - probably not needed - for review
+                    if ($field=='sn') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant('hiddensn',references_getdata::$retrievedarray[$field]);
                         } else {
@@ -115,6 +116,7 @@ if ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been
             }
         }
     } elseif ($search_isbn) {
+        error_log("Doing ISBN search");
        if ($search_isbn!=='') {
            //$search_isbn = $hiddensnvalue; //contingency for browsers with javascript disabled
        }
@@ -133,14 +135,16 @@ if ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been
             }
             if ($getreffromisbn) {
                 foreach (refworks_managerefs_form::$reffields as $field) {
-                //keep the ISBN entered
-                    if ($field!='sn' && $field!='do' && $field!='rt') {
+                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    if ($field!='rt') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
                         } else {
                             $form->setConstant($field,'');
                         }
-                    } else if ($field=='do') {
+                    }
+                    // Set Hidden DOI - probably not needed - for review
+                    if ($field=='do') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
                         } else {
@@ -153,7 +157,37 @@ if ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been
             }
         }
     } elseif ($search_issn) {
-        
+        error_log("Doing ISSN search");
+        if ($search_issn!=='') {
+            $getrefattempts = '';
+            $getreffromissn = false;
+            $getreffromissn = references_getdata::call_primo_api($search_issn,'issn',$rtvalue);
+            error_log("Get ref from ISSN ".$getreffromissn);
+            $getrefattempts .= get_string('issn_primo','refworks').' ';
+            // If Primo fails, no other attempts currently
+            if ($getreffromissn) {
+                foreach (refworks_managerefs_form::$reffields as $field) {
+                    // Keep Reference Type as set - doesn't currently work as RT not passed to search
+                    if ($field!='rt') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant($field,references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant($field,'');
+                        }
+                    }
+                    // Set Hidden DOI - probably not needed - for review
+                    if ($field=='do') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant('hiddendoi','');
+                        }
+                    }
+                }
+            } else if ($getreffromissn === false) {
+                refworks_base::write_error(get_string('issn_getref_empty','refworks').' '.$getrefattempts);
+            }
+        }
     }
 } elseif ($fromform=$mform->get_data()) {//this branch is where you process validated data.
     //build up xml string of reference changes
@@ -263,11 +297,11 @@ if (refworks_base::check_capabilities('mod/refworks:folders')) {
 
 $mform->add_action_buttons(false,get_string('create_ref','refworks'));
 
-if (!$search_doi && !$search_isbn) { //ie retrieval of reference using DOI or ISBN not instigated
+if (!$search_doi && !$search_isbn && !$search_issn) { //ie retrieval of reference using DOI, ISBN or ISSN not instigated
     //always set the fields in the form to empty (makes sure form is empty on submit)
     foreach (refworks_managerefs_form::$reffields as $field) {
         //keep the previous type
-        if ($field!='rt'&& $field!='do' && $field!='sn') {
+        if ($field!='rt') {
             $form->setConstant($field,'');
         }
     }
@@ -280,7 +314,7 @@ echo '<p>Once you have saved a reference you can alter the information you enter
 
 // Add search form
 search_base::search_form();
-//Set Generic as the default type
+//Set Book, Whole as the default type
 $form->setDefault('rt',array_search('Book, Whole', refworks_managerefs_form::$reftypes));
 
 echo '<div id="referencedetail">';

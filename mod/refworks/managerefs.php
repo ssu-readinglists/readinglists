@@ -17,6 +17,7 @@
 
 require_once(dirname(__FILE__).'/refworks_base.php');
 require_once(dirname(__FILE__).'/refworks_ref_api.php');
+require_once(dirname(__FILE__).'/search_base.php');
 require_once(dirname(__FILE__).'/../../local/references/getdata.php');
 global $CFG, $OUTPUT;
 require_once($CFG->libdir.'/filelib.php');
@@ -156,6 +157,11 @@ function getcurref($rid) {
     return $result;
 }
 
+require_once(dirname(__FILE__).'/search_form.php');
+$doi_s_form = new search_doi_form();
+$isbn_s_form = new search_isbn_form();
+$issn_s_form = new search_issn_form();
+
 require_once(dirname(__FILE__).'/refworks_managerefs_form.php');
 
 $mform = new refworks_managerefs_form();
@@ -171,6 +177,13 @@ if (refworks_base::check_capabilities('mod/refworks:upload_attachments')) {
     $form->addElement('filepicker', 'newattachment', get_string('attach_file', 'refworks'), null, array('maxbytes' => 20971520, 'accepted_types' => '*'));
 }
 
+//check if we have any search values submitted
+//would be nice if Search defined these?
+$search_doi = optional_param('s_doi','',PARAM_TEXT);
+$search_isbn = optional_param('s_isbn','',PARAM_TEXT);
+$search_issn = optional_param('s_issn','',PARAM_TEXT);
+
+
 //get DOI/ISBN retrive variables
 $getdata = optional_param('get_data','none',PARAM_TEXT);
 $getdataisbn = optional_param('get_data_isbn','none',PARAM_TEXT);
@@ -179,14 +192,6 @@ $snvalue = optional_param('sn','',PARAM_TEXT);
 $hiddensnvalue = optional_param('hiddensn','',PARAM_TEXT);
 $hiddendoivalue = optional_param('hiddendoi','',PARAM_TEXT);
 $rtvalue = optional_param('rt','',PARAM_TEXT);
-//test to see which no_submit button been pressed if one has been pressed?
-$nosubmitpressed = '';
-foreach ($form->_noSubmitButtons as $nosubmitbutton) {
-    if (optional_param($nosubmitbutton, 0, PARAM_RAW)) {
-        $nosubmitpressed = $nosubmitbutton;
-        break;
-    }
-}
 
 if (optional_param('cancel', 0, PARAM_RAW)) {
     //you need this section if you have a cancel button on your form
@@ -195,84 +200,83 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
     redirect($refer, '', 0);
     refworks_base::write_footer();
     exit;
-}else if ($mform->no_submit_button_pressed()) { //One of the 'Get data' buttons has been pressed
-    switch($nosubmitpressed) {
-        case 'get_data_isbn': //population using isbn
-            if ($hiddensnvalue!=='') {
-                $snvalue = $hiddensnvalue; //contingency for browsers with javascript disabled
+} elseif ($search_doi || $search_isbn || $search_issn) { // 'Get data' button has been pressed
+    error_log("Got a search");
+    if ($search_doi) {
+        error_log("Doing DOI search");
+        if ($hiddendoivalue!=='') {
+                $search_doi = $hiddendoivalue; //contingency for browsers with javascript disabled
             }
-            if ($snvalue!=='') {
-                $getrefattempts = '';
-                $getreffromisbn = false;
-                // Try using Primo first (http://www.exlibrisgroup.com/category/PrimoOverview)
-                // Added 05/04/2013 owen@ostephens.com
-                $getreffromisbn = references_getdata::call_primo_api($snvalue,'isbn',$rtvalue);
-                $getrefattempts .= get_string('isbn_primo','refworks').' ';
-                // If Primo fails, try WorldCat
-                if ($getreffromisbn === false) {
-                    $getreffromisbn = references_getdata::call_worldcat_api($snvalue);
-                    $getrefattempts .= get_string('isbn_worldcat','refworks');
-                }
-                if ($getreffromisbn) {
-                    foreach (refworks_managerefs_form::$reffields as $field) {
+        if ($search_doi!=='') {
+            $getreffromdoi = references_getdata::call_crossref_api($search_doi);
+            if ($getreffromdoi) {
+                foreach (refworks_managerefs_form::$reffields as $field) {
+                    //keep the DOI entered
+                    // Amended to keep Reference Type entered for SSU. owen@ostephens.com 28th March 2012
+                    if($field!='do' && $field!='sn' && $field!='rt'){
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
                         } else {
                             $form->setConstant($field,'');
                         }
-                        if ($field=='do') {
-                            if (isset(references_getdata::$retrievedarray[$field])) {
-                                $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
-                                $form->setConstant('searchdoiarray',array('s_do'=>references_getdata::$retrievedarray[$field]));
-                            } else {
-                                $form->setConstant('hiddendoi','');
-                            }
+                    } else if ($field=='sn') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant('hiddensn',references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant('hiddensn','');
                         }
                     }
-                }else if ($getreffromisbn === false) {
-                    refworks_base::write_error(get_string('isbn_getref_empty','refworks'));
+                }
+            } else if ($getreffromdoi === false) {
+                if (references_getdata::$errorflag == 'unrecognised type') {
+                     refworks_base::write_error(get_string('doi_getref_empty','refworks'));
+                } else {
+                    refworks_base::write_error(get_string('doi_getref_error','refworks'));
                 }
             }
-            break;
-        case 'get_data': //population using doi
-            if ($hiddendoivalue!=='') {
-                $doivalue = $hiddendoivalue; //contingency for browsers with javascript disabled
+        }
+    } elseif ($search_isbn) {
+        error_log("Doing ISBN search");
+       if ($search_isbn!=='') {
+           //$search_isbn = $hiddensnvalue; //contingency for browsers with javascript disabled
+       }
+       if ($search_isbn!=='') {
+            $getrefattempts = '';
+            $getreffromisbn = false;
+            // Try using Primo first (http://www.exlibrisgroup.com/category/PrimoOverview)
+            // Added 28/03/2012 owen@ostephens.com
+            $getreffromisbn = references_getdata::call_primo_api($search_isbn,'isbn',$rtvalue);
+            error_log("Get ref from ISBN ".$getreffromisbn);
+            $getrefattempts .= get_string('isbn_primo','refworks').' ';
+            // If Primo fails, try WorldCat
+            if ($getreffromisbn === false) {
+                $getreffromisbn = references_getdata::call_worldcat_api($search_isbn);
+                $getrefattempts .= get_string('isbn_worldcat','refworks');
             }
-            if ($doivalue!=='') {
-                $getreffromdoi = references_getdata::call_crossref_api($doivalue);
-                if ($getreffromdoi) {
-                    foreach (refworks_managerefs_form::$reffields as $field) {
+            if ($getreffromisbn) {
+                foreach (refworks_managerefs_form::$reffields as $field) {
+                //keep the ISBN entered
+                    if ($field!='sn' && $field!='do' && $field!='rt') {
                         if (isset(references_getdata::$retrievedarray[$field])) {
                             $form->setConstant($field,references_getdata::$retrievedarray[$field]);
                         } else {
                             $form->setConstant($field,'');
                         }
-                        if ($field=='sn') {
-                            if (isset(references_getdata::$retrievedarray[$field])) {
-                                $form->setConstant('hiddensn',references_getdata::$retrievedarray[$field]);
-                                $form->setConstant('searchisbnarray',array('s_sn'=>references_getdata::$retrievedarray[$field]));
-                            } else {
-                                $form->setConstant('hiddensn','');
-                            }
+                    } else if ($field=='do') {
+                        if (isset(references_getdata::$retrievedarray[$field])) {
+                            $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
+                        } else {
+                            $form->setConstant('hiddendoi','');
                         }
-                        if ($field=='do') {
-                            if (isset(references_getdata::$retrievedarray[$field])) {
-                                $form->setConstant('hiddendoi',references_getdata::$retrievedarray[$field]);
-                                $form->setConstant('searchdoiarray',array('s_do'=>references_getdata::$retrievedarray[$field]));
-                            }
-                        }
-                    }
-                }else if ($getreffromdoi === false) {
-                    if (references_getdata::$errorflag == 'unrecognised type') {
-                        refworks_base::write_error(get_string('doi_getref_empty','refworks'));
-                    } else {
-                        refworks_base::write_error(get_string('doi_getref_error','refworks'));
                     }
                 }
+            } else if ($getreffromisbn === false) {
+                refworks_base::write_error(get_string('isbn_getref_empty','refworks').' '.$getrefattempts);
             }
-            break;
-        default://TODO
-        break;
+        }
+    } elseif ($search_issn) {
+        error_log("Doing ISSN search");
+        
     }
 }else if ($fromform=$mform->get_data()) {
     //this branch is where you process validated data.
@@ -418,9 +422,14 @@ if (refworks_base::check_capabilities('mod/refworks:upload_attachments')) {
 
 echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
 //put data you want to fill out in the form into array $toform here then :
-
 $mform->set_data($existvals);
 
+// Add reference elements to Search forms
+$doi_s_form->_formref->addElement('hidden','refid', $rid);
+$isbn_s_form->_formref->addElement('hidden','refid', $rid);
+$issn_s_form->_formref->addElement('hidden','refid', $rid);
+
+// Add reference elements to Reference details form
 if (refworks_base::$isinstance) {
     $form->addElement('hidden', 'id', refworks_base::$cm->id);
 }
@@ -428,6 +437,21 @@ $form->addElement('hidden', 'refer', $refer);
 $form->addElement('hidden', 'refid', $rid);
 
 $mform->add_action_buttons(true,get_string('update_ref','refworks'));
+
+//Display search forms
+echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
+
+echo '<div id="searchfields">';
+echo '<div id="searchdoi">';
+$doi_s_form->display();
+echo '</div><div id="searchisbn">';
+$isbn_s_form->display();
+echo '</div><div id="searchissn">';
+$issn_s_form->display();
+echo '</div>';
+echo $OUTPUT->box_end();
+
+//Display reference details form
 echo '<div id="referencedetail">';
 $mform->display();
 echo '</div>';

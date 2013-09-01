@@ -213,6 +213,7 @@ $string['form_lk'] = 'Links';
 //Lookup messages
 $string['isbn_primo'] = 'Tried checking ISBN on Primo.';
 $string['isbn_worldcat'] = 'Tried checking ISBN on WorldCat.';
+$string['issn_primo'] = 'Tried checking ISSN on Primo.';
 
 //Auto Notes
 $string['autonote_1'] = 'Digitised material';
@@ -354,6 +355,8 @@ $string['doi_getref_error'] = 'There was an error when attempting to retrieve th
 $string['doi_getref_empty'] = 'No reference data was found at <a href=\"http://www.crossref.org\" target=\"_blank\" >Crossref</a> for this DOI.';
 //Retrieval of Ref using ISBN
 $string['isbn_getref_empty'] = 'No reference data was found for this ISBN.';
+//Retrieval of Ref using ISSN
+$string['issn_getref_empty'] = 'No reference data was found for this ISSN.';
 
 //Reports
 $string['reports'] = 'Reference reports';
