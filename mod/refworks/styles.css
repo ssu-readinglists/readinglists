@@ -447,6 +447,14 @@ div #view_dormant_switch{
     display: inline;
 }
 
+/*Search Forms*/
+.mform .mrefsearchformcontainer fieldset.hidden{
+    margin-top:1px;
+    margin-bottom:1px;
+    padding-top:1px;
+    padding-bottom:1px;
+}
+
 /* PRINT STYLES */
 @media print{
          #ouheader, #fsvlemenu, #ou-footerf{
