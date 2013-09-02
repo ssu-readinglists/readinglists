@@ -33,6 +33,7 @@ class references_getdata{
         $url='http://www.crossref.org/openurl/?';
         $username = references_lib::get_setting('crossrefuser');
         $password = references_lib::get_setting('crossrefpwd');
+        self::$retrievedarray['do']=$doi;
 
         if ($password != '') {
             $querystring = 'pid='.$username.':'.$password.'&id=doi:'.$doi.'&noredirect=true';
@@ -63,11 +64,6 @@ class references_getdata{
              //build from xml
             $xml = new DOMDocument('1.0','utf-8');
             $xml->loadXML($page);
-            //$document=DOMDocument::loadXML($xml);
-
-            $document=DOMDocument::loadXML($page);
-            $xpath=new DOMXPath($document);
-            $queryxml = $xpath->query('//*');
 
              //build from xml
             $doitags = $xml->getElementsByTagName('doi');
@@ -90,9 +86,8 @@ class references_getdata{
                 $tempsurname = array();
                 $tempgivenname = array();
 
+                self::$retrievedarray['do'] = $doitag->nodeValue;
                 $doitype = $doitag->getAttribute('type');
-				// SSU want to preserve Reference Type from 'Create Reference' form, so following block (which overwrites) commented out
-				/*
                 switch($doitype) {
                     case 'book_title':
                         self::$retrievedarray['rt']='5';
@@ -106,10 +101,9 @@ class references_getdata{
                         self::$retrievedarray['rt']='8';
                     break;
                     default:
-                        self::$retrievedarray['rt']='11';
+                        self::$retrievedarray['rt']='11'; //Defaults to 'Generic'
 
                 }
-				*/
                 //work out titles
                 $titletags = $xml->getElementsByTagName('article_title');
                 foreach ($titletags as $titletag) {
@@ -117,74 +111,77 @@ class references_getdata{
                 }
 
                 $voltags = $xml->getElementsByTagName('volume_title');
-
-                if (empty(self::$retrievedarray['t1'])) {
-                    //Make volume title main title (e.g. books)
+                if ($doitype=='conference_paper') {
+                    // If DOI is for conference proceedings, use volume_title as conference name
                     foreach ($voltags as $titletag) {
-                        self::$retrievedarray['t1']=$titletag->nodeValue;
+                        self::$retrievedarray['t2']=$titletag->nodeValue;
+                    }
+                } else if (empty(self::$retrievedarray['t1'])) {
+                    //Make volume_title main title (e.g. for book)
+                    foreach ($voltags as $titletag) {
+                            self::$retrievedarray['t1']=$titletag->nodeValue;
                     }
                 } else {
-                    //make volume volume
+                    // make volume volume
                     foreach ($voltags as $titletag) {
                         self::$retrievedarray['vo']=$titletag->nodeValue;
                     }
                 }
                 //now load array from tags common to 'book_title' and 'journal_article'
                 //if ($doitype == 'book_title' || 'journal_article') {
-                        $isbntags = $xml->getElementsByTagName('isbn');
-                        foreach ($isbntags as $isbntag) {
-                            self::$retrievedarray['sn']=$isbntag->nodeValue;
-                        }
-                        $issntags = $xml->getElementsByTagName('issn');
-                        foreach ($issntags as $issntag) {
-                            self::$retrievedarray['sn']=$issntag->nodeValue;
-                        }
-                        $journaltags = $xml->getElementsByTagName('journal_title');
-                        foreach ($journaltags as $journaltag) {
-                            self::$retrievedarray['jf']=$journaltag->nodeValue;
-                        }
-                        $volumetags = $xml->getElementsByTagName('volume');
-                        foreach ($volumetags as $volumetag) {
-                            self::$retrievedarray['vo']=$volumetag->nodeValue;
-                        }
-                        $issuetags = $xml->getElementsByTagName('issue');
-                        foreach ($issuetags as $issuetag) {
-                            self::$retrievedarray['is']=$issuetag->nodeValue;
-                        }
-                        $firstptags = $xml->getElementsByTagName('first_page');
-                        foreach ($firstptags as $firstptag) {
-                            self::$retrievedarray['sp']=$firstptag->nodeValue;
-                        }
-                        $lastptags = $xml->getElementsByTagName('last_page');
-                        foreach ($lastptags as $lastptag) {
-                            self::$retrievedarray['op']=$lastptag->nodeValue;
-                        }
-                        $yeartags = $xml->getElementsByTagName('year');
-                        foreach ($yeartags as $yeartag) {
-                            self::$retrievedarray['yr']=$yeartag->nodeValue;
-                        }
+                $isbntags = $xml->getElementsByTagName('isbn');
+                foreach ($isbntags as $isbntag) {
+                    self::$retrievedarray['sn']=$isbntag->nodeValue;
+                }
+                $issntags = $xml->getElementsByTagName('issn');
+                foreach ($issntags as $issntag) {
+                    self::$retrievedarray['sn']=$issntag->nodeValue;
+                }
+                $journaltags = $xml->getElementsByTagName('journal_title');
+                foreach ($journaltags as $journaltag) {
+                    self::$retrievedarray['jf']=$journaltag->nodeValue;
+                }
+                $volumetags = $xml->getElementsByTagName('volume');
+                foreach ($volumetags as $volumetag) {
+                    self::$retrievedarray['vo']=$volumetag->nodeValue;
+                }
+                $issuetags = $xml->getElementsByTagName('issue');
+                foreach ($issuetags as $issuetag) {
+                    self::$retrievedarray['is']=$issuetag->nodeValue;
+                }
+                $firstptags = $xml->getElementsByTagName('first_page');
+                foreach ($firstptags as $firstptag) {
+                    self::$retrievedarray['sp']=$firstptag->nodeValue;
+                }
+                $lastptags = $xml->getElementsByTagName('last_page');
+                foreach ($lastptags as $lastptag) {
+                    self::$retrievedarray['op']=$lastptag->nodeValue;
+                }
+                $yeartags = $xml->getElementsByTagName('year');
+                foreach ($yeartags as $yeartag) {
+                    self::$retrievedarray['yr']=$yeartag->nodeValue;
+                }
 
-                        $surnametags = $xml->getElementsByTagName('surname');
-                        foreach ($surnametags as $surnametag) {
-                            $tempsurname[]=$surnametag->nodeValue;
-                        }
-                        $givennametags = $xml->getElementsByTagName('given_name');
-                        foreach ($givennametags as $givennametag) {
-                            $tempgivenname[]=$givennametag->nodeValue;
-                        }
-                        self::$retrievedarray['a1']='';
-                        for ($i=0;$i<count($tempsurname);$i++) {
-                            if ($i>0) {
-                                self::$retrievedarray['a1'].=' ';
-                            }
-                            self::$retrievedarray['a1'].= trim($tempsurname[$i]);
-                            if ($tempgivenname[$i]!=null && $tempgivenname[$i]!='') {
-                                $tempgivenname[$i] = ', '.str_replace(' ','',trim($tempgivenname[$i]));
-                                self::$retrievedarray['a1'].= $tempgivenname[$i];
-                                self::$retrievedarray['a1'].=';';
-                            }
-                        }
-                //}
+                $surnametags = $xml->getElementsByTagName('surname');
+                foreach ($surnametags as $surnametag) {
+                    $tempsurname[]=$surnametag->nodeValue;
+                }
+                $givennametags = $xml->getElementsByTagName('given_name');
+                foreach ($givennametags as $givennametag) {
+                    $tempgivenname[]=$givennametag->nodeValue;
+                }
+                self::$retrievedarray['a1']='';
+                for ($i=0;$i<count($tempsurname);$i++) {
+                    if ($i>0) {
+                        self::$retrievedarray['a1'].=' ';
+                    }
+                    self::$retrievedarray['a1'].= trim($tempsurname[$i]);
+                    if ($tempgivenname[$i]!=null && $tempgivenname[$i]!='') {
+                        $tempgivenname[$i] = ', '.str_replace(' ','',trim($tempgivenname[$i]));
+                        self::$retrievedarray['a1'].= $tempgivenname[$i];
+                        self::$retrievedarray['a1'].=';';
+                    }
+                }
             }
             return true;
         } else {
@@ -246,8 +243,7 @@ class references_getdata{
                 return false;
             }
 
-            $document=DOMDocument::loadXML($page);
-            $xpath=new DOMXPath($document);
+            $xpath=new DOMXPath($xml);
             $queryxml = $xpath->query('//*');
 
             $editors=''; //set variables
@@ -373,7 +369,19 @@ class references_getdata{
                 $identifier = trim($identifier);
                 $identifier = preg_replace($patterns, $replacements, $identifier);
 				$index = 'isbn';
-            break;        
+            break;
+            case 'issn':
+                $patterns = array();
+                $replacements = array();
+                $patterns[0] = '/\s+/';
+                $replacements[0] = '';
+                $identifier = trim($identifier);
+                $identifier = preg_replace($patterns, $replacements, $identifier);
+                $index = 'issn';
+            break;
+            case 'recordid':
+                $index = 'rid';
+            break;
             default:; 
         }
 
@@ -407,6 +415,7 @@ class references_getdata{
 		// Build full query string and url from parameters
         $querystring = $institution.'&'.$oncampus.'&'.$query.'&'.$index_position.'&'.$bulk;
         $url.= $path.$querystring;
+        error_log($url);
 		
 		$page = download_file_content($url, null, null, true);
 		if ($page->status == 200) {
@@ -429,19 +438,44 @@ class references_getdata{
             if($primotags->length==0){
                 return false;
             }
-
-            $document=DOMDocument::loadXML($page);
-            $xpath=new DOMXPath($document);
        
             //create an array of values from the returned xml which are to populate the reference form
             //$fieldarray = array();
            
             foreach($primotags as $primotag){
                 $tempcontribs = array();
+                $ristypetags = $xml->getElementsByTagName('ristype');
+                foreach($ristypetags as $ristypetag) {
+                    $ristype = $ristypetag->nodeValue;
+                    switch($ristype) {
+                        case 'BOOK':
+                            self::$retrievedarray['rt']='5';
+                        break;
+                        case 'JOUR':
+                            self::$retrievedarray['rt']='14';
+                        break;
+                        case 'VIDEO':
+                            error_log("VIDEO");
+                            self::$retrievedarray['rt']='29';
+                            $risdatetags = $xml->getElementsByTagName('risdate');
+                            foreach($risdatetags as $risdatetag) {
+                                self::$retrievedarray['fd'] = trim($risdatetag->nodeValue,".");
+                            }
+                        break;
+                        default:
+                            self::$retrievedarray['rt']='11'; //Defaults to 'Generic'
+                    }
+                }
                 
                 $isbntags = $xml->getElementsByTagName('isbn');
                 foreach($isbntags as $isbntag){
 					self::$retrievedarray['sn']=$isbntag->nodeValue;    
+                }
+                if(!array_key_exists('sn',self::$retrievedarray)) {
+                    $issntags = $xml->getElementsByTagName('issn');
+                    foreach($issntags as $issntag){
+                        self::$retrievedarray['sn']=$issntag->nodeValue;    
+                    }
                 }
                 $titletags = $xml->getElementsByTagName('btitle');
                 foreach($titletags as $titletag){
@@ -450,7 +484,17 @@ class references_getdata{
 					} else {
 						self::$retrievedarray['t1']=$titletag->nodeValue;    
 					}
-                }  
+                }
+                $jtitletags = $xml->getElementsByTagName('jtitle');
+                foreach($jtitletags as $jtitletag) {
+                    self::$retrievedarray['jf']=$jtitletag->nodeValue;
+                }
+                if(array_key_exists('jf', self::$retrievedarray)) {
+                    $sjtitletags = $xml->getElementsByTagName('stitle');
+                    foreach($sjtitletags as $sjtitletag) {
+                        self::$retrievedarray['jo']=$sjtitletag->nodeValue;
+                    }
+                }
 				$yeartags = $xml->getElementsByTagName('date');
 				foreach($yeartags as $yeartag){
 					self::$retrievedarray['yr']=$yeartag->nodeValue;    

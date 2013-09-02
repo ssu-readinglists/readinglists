@@ -278,7 +278,7 @@
 }
 
 /*FORMS*/
-#refcontent #mform1 input[type=text], #refcontent #mform1 select, #refcontent #mform1 textarea{
+#refcontent .mform input[type=text], #refcontent .mform select, #refcontent .mform textarea{
     width: 85%;
 }
 #refcontent .foldercontainer form input{
@@ -338,7 +338,7 @@ table .sharefolderstable{
     width: 85%;
 }
 .safari #refcontent #mform1 .fitem #id_do, .safari #refcontent #mform1 .fitem #id_sn{
-    width: 150%;
+    width: 85%;
 }
 
 #refcontent #mform1 img{
