@@ -157,21 +157,24 @@ function getcurref($rid) {
     return $result;
 }
 
+// Create Reference form - do this first so it gets id of mform1 otherwise javascript in refworks.js won't work :(
+require_once(dirname(__FILE__).'/refworks_managerefs_form.php');
+//set flag to create the holding div for the display fields control link to true
+refworks_managerefs_form::$showtoggle = true;
+$mform = new refworks_managerefs_form();
+
+// Create Search Forms
 require_once(dirname(__FILE__).'/search_form.php');
 $doi_s_form = new search_doi_form();
 $isbn_s_form = new search_isbn_form();
 $issn_s_form = new search_issn_form();
 $primorid_s_form = new search_primorid_form();
 
-require_once(dirname(__FILE__).'/refworks_managerefs_form.php');
-
-//set flag to create the holding div for the display fields control link to true
-refworks_managerefs_form::$showtoggle = true;
-$mform = new refworks_managerefs_form();
 $form=$mform->_formref;
 //create hidden elements for ibsn and doi retrieval handling
 $form->addElement('hidden', 'hiddensn', '');
 $form->addElement('hidden', 'hiddendoi', '');
+
 
 if (refworks_base::check_capabilities('mod/refworks:upload_attachments')) {
     global $COURSE;
