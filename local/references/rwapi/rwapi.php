@@ -157,6 +157,10 @@ class rwapi {
             //get the users login details so we can make session
             //we need loginname <userLogin>, groupcode , password<userPassword>
             $userlogin=$loginlist->item($useacc)->nodeValue;
+            $passlist = $resxml->getElementsByTagName('userPassword');
+            if ($passlist->length < 1) {
+                return false;
+            }
             $userpass=htmlentities($resxml->getElementsByTagName('userPassword')->item($useacc)->nodeValue);
 
             if (self::create_session($userlogin, $userpass)) {
