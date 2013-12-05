@@ -555,7 +555,7 @@ class references_getdata{
                         }
 						self::$retrievedarray['no'] = 'Location: '.$location;
 					} elseif ($primo_linkback === references_lib::get_setting('primoolinkback')) {
-                        self::$retrievedarray['av'] = 'Online';
+                        self::$retrievedarray['av'] = 'online';
 						self::$retrievedarray['no'] = 'Ebook';
 					}
 				}
@@ -563,7 +563,7 @@ class references_getdata{
                 foreach($linktags as $linktag) {
                     // TODO Check for  "Click here for more information about"
                     $link = $linktag->nodeValue;
-                    if (preg_match('/Click here for more information about (.*)$/',$link, $matches) > 0) {
+                    if (preg_match('/more information about (.*)$/',$link, $matches) > 0) {
                         $link = $matches[1];
                         self::$retrievedarray['db'] = $link;
                         break;

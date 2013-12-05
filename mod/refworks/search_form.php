@@ -19,7 +19,7 @@ class search_doi_form extends moodleform {
                 $this->_formref =& $this->_form;
 
                 //DOI array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchdoi">');
+                $mform->addElement('html', '<div class="mrefsearchformcontainer" id="container_searchdoi">');
                 $searchdoiarray=array();
                 $searchdoiarray[] =& $mform->createElement('text', 's_doi', get_string('form_s_doi', 'refworks'));
                 $searchdoiarray[] =& $mform->createElement('submit','get_doi',get_string('form_doi_get', 'refworks'));
@@ -38,7 +38,7 @@ class search_isbn_form extends moodleform {
                 $this->_formref =& $this->_form;
 
                  //ISBN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchisbn">');
+                $mform->addElement('html', '<div class="mrefsearchformcontainer" id="container_searchisbn">');
                 $searchisbnarray=array();
                 $searchisbnarray[] =& $mform->createElement('text', 's_isbn', get_string('form_s_isbn', 'refworks'));
                 $searchisbnarray[] =& $mform->createElement('submit','get_isbn',get_string('form_isbn_get', 'refworks'));
@@ -57,7 +57,7 @@ class search_issn_form extends moodleform {
                 $this->_formref =& $this->_form;
 
                  //ISSN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchissn">');
+                $mform->addElement('html', '<div class="mrefsearchformcontainer" id="container_searchissn">');
                 $searchissnarray=array();
                 $searchissnarray[] =& $mform->createElement('text', 's_issn', get_string('form_s_issn', 'refworks'));
                 $searchissnarray[] =& $mform->createElement('submit','get_issn',get_string('form_issn_get', 'refworks'));
@@ -75,7 +75,7 @@ class search_primorid_form extends moodleform {
                 $this->_formref =& $this->_form;
 
                  //ISSN array
-                $mform->addElement('html', '<div class="mrefformcontainer" id="container_searchprimorid">');
+                $mform->addElement('html', '<div class="mrefsearchformcontainer" id="container_searchprimorid">');
                 $searchprimoridarray=array();
                 $searchprimoridarray[] =& $mform->createElement('text', 's_primorid', get_string('form_s_primorid', 'refworks'));
                 $searchprimoridarray[] =& $mform->createElement('submit','get_primorid',get_string('form_primorid_get', 'refworks'));
