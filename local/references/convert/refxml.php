@@ -161,7 +161,7 @@ class refxml{
             return false;//always return false if null
         }
 
-        return call_user_func(array($classname,'is_format'),&$data);
+        return call_user_func(array($classname,'is_format'),$data);
     }
 
     /**

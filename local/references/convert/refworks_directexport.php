@@ -38,8 +38,8 @@ class references_convert_refworks_directexport extends references_convert_format
     //Exports to mystuff by calling portfolio/moodel/reference/savetoportfolio.php
     public function export(&$data,$options) {
         //if $data is a string turn into xml dom
-        if (is_string(&$data)) {
-            $data=parent::string_to_dom(&$data);
+        if (is_string($data)) {
+            $data=parent::string_to_dom($data);
         }
 
         //check is DOMDocument
@@ -53,7 +53,7 @@ class references_convert_refworks_directexport extends references_convert_format
 
         //make data in refworks xml format
         $refwxml=new rwxml();
-        $result=$refwxml->export(&$data,null);
+        $result=$refwxml->export($data,null);
         if ($result===false) {
             return false;
         }

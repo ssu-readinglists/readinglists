@@ -164,7 +164,7 @@ class ris extends references_convert_format{
         }
 
         //ris serialise to array (direct 1:1)
-        $risarray=$this->ris_to_array(&$data);
+        $risarray=$this->ris_to_array($data);
 
         //convert from array to dom (converts types etc)
         $doc = new DOMDocument('1.0','utf-8');
@@ -178,7 +178,7 @@ class ris extends references_convert_format{
             foreach ($risarray[$a] as $item) {
                 foreach ($item as $record=>$val) {
                     // (re)set ris format error flag
-                    $this->make_node($record,$val,&$recnode,&$doc);
+                    $this->make_node($record,$val,$recnode,$doc);
                 }
             }
             $newnode->appendChild($recnode);
@@ -191,9 +191,9 @@ class ris extends references_convert_format{
     }
 
     public static function is_format(&$data) {
-        if (is_string(&$data)) {
+        if (is_string($data)) {
 
-            if (strpos(&$data,'TY  -')!==false && strpos(&$data,'ER  -')!=0) {
+            if (strpos($data,'TY  -')!==false && strpos($data,'ER  -')!=0) {
                 return true;
             }
 
@@ -211,8 +211,8 @@ class ris extends references_convert_format{
         $referencetypes = &$this->referencetypes;
 
         //if $data is a string turn into xml dom
-        if (is_string(&$data)) {
-            $data=parent::string_to_dom(&$data);
+        if (is_string($data)) {
+            $data=parent::string_to_dom($data);
         }
         //check is DOMDocument
         if (!$data instanceOf DOMDocument) {

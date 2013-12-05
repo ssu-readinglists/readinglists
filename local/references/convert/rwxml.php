@@ -31,8 +31,8 @@ class rwxml extends references_convert_format{
     public function import(&$data) {
 
         //if $data is a string turn into xml dom
-        if (is_string(&$data)) {
-            $data=parent::string_to_dom(&$data);
+        if (is_string($data)) {
+            $data=parent::string_to_dom($data);
         }
 
         //check is DOMDocument
@@ -68,8 +68,8 @@ class rwxml extends references_convert_format{
     //converts refxml to refworks xml and returns as string
     public function export(&$data,$options) {
         //if $data is a string turn into xml dom
-       if (is_string(&$data)) {
-            $data=parent::string_to_dom(&$data);
+       if (is_string($data)) {
+            $data=parent::string_to_dom($data);
         }
 
         //check is DOMDocument
@@ -133,8 +133,8 @@ class rwxml extends references_convert_format{
     }
 
     public static function is_format(&$data) {
-        if (is_string(&$data)) {
-            if (!$dom=parent::string_to_dom(&$data)) {
+        if (is_string($data)) {
+            if (!$dom=parent::string_to_dom($data)) {
                 return false;
             }
         } else {

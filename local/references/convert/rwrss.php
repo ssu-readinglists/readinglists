@@ -30,8 +30,8 @@ class rwrss extends references_convert_format{
     public function import(&$data,$sorting='') {
 
         //if $data is a string turn into xml dom
-        if (is_string(&$data)) {
-            $data=parent::string_to_dom(&$data);
+        if (is_string($data)) {
+            $data=parent::string_to_dom($data);
         }
 
         //check is DOMDocument
@@ -67,7 +67,7 @@ class rwrss extends references_convert_format{
             $xslt->setParameter('','sorttype','number');
         }
 
-        $results = $xslt->transformToDoc(&$data);
+        $results = $xslt->transformToDoc($data);
 
         return $results;
     }
@@ -78,12 +78,12 @@ class rwrss extends references_convert_format{
      * @return true/false
      */
     public static function is_format(&$data) {
-        if (is_string(&$data)) {
-            if (!$dom=parent::string_to_dom(&$data)) {
+        if (is_string($data)) {
+            if (!$dom=parent::string_to_dom($data)) {
                 return false;
             }
         } else {
-            $dom=&$data;
+            $dom=$data;
         }
 
         //x-path: used to query rss structure
