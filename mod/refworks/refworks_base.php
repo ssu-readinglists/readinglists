@@ -211,6 +211,8 @@ class refworks_base {
             $ac_details = refworks_collab_lib::get_account_details_bylogin($SESSION->rwlogin)->name." (".get_string('team_account','refworks').")";
         } elseif (isset($SESSION->rwuser)) {
             $ac_details = $SESSION->rwuser." (".get_string('personal_account','refworks').")";
+        } else {
+            $ac_details = "Not currently logged into RefWorks";
         }
 
         //div for module side menu (needs own css rules)
