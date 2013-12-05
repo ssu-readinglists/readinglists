@@ -120,7 +120,7 @@ class refworks_collab_lib {
      * @param $accid int: account id
      * @return
      */
-    public function update_login_time($accid) {
+    public static function update_login_time($accid) {
         global $DB;
         $DB->set_field('refworks_collab_accs','lastlogin',time(), array('id' => $accid));
     }
