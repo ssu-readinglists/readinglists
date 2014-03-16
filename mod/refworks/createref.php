@@ -71,6 +71,8 @@ $search_doi = optional_param('s_doi','',PARAM_TEXT);
 $search_isbn = optional_param('s_isbn','',PARAM_TEXT);
 $search_issn = optional_param('s_issn','',PARAM_TEXT);
 $search_primorid = optional_param('s_primorid','',PARAM_TEXT);
+$search_any = optional_param('s_any','',PARAM_TEXT);
+$search_any_type = optional_param('s_type','',PARAM_TEXT);
 
 $doivalue = optional_param('do','',PARAM_TEXT);
 $snvalue = optional_param('sn','',PARAM_TEXT);
@@ -80,8 +82,28 @@ $rtvalue = optional_param('rt','',PARAM_TEXT);
 
 //test to see if we are dealing with a get_data request
 
-if ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get data' button has been pressed
+if ($search_doi || $search_isbn || $search_issn || $search_primorid || $search_any) { // 'Get data' button has been pressed
     error_log("Got a search");
+    if ($search_any) {
+        switch($search_any_type) {
+            case "s_doi":
+                $search_doi = $search_any;
+                break;
+            case "s_issn":
+                $search_issn = $search_any;
+                break;
+            case "s_isbn":
+                $search_isbn = $search_any;
+                break;
+            case "s_primoid":
+                $search_primorid = $search_any;
+                break;
+            default:
+                break;  
+        }
+    error_log($search_any);
+    error_log($search_any_type);
+    }
     if ($search_doi) {
         error_log("Doing DOI search");
         if ($hiddendoivalue!=='') {

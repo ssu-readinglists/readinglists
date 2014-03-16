@@ -165,10 +165,7 @@ $mform = new refworks_managerefs_form();
 
 // Create Search Forms
 require_once(dirname(__FILE__).'/search_form.php');
-$doi_s_form = new search_doi_form();
-$isbn_s_form = new search_isbn_form();
-$issn_s_form = new search_issn_form();
-$primorid_s_form = new search_primorid_form();
+$any_s_form = new search_any_form();
 
 $form=$mform->_formref;
 //create hidden elements for ibsn and doi retrieval handling
@@ -189,6 +186,8 @@ $search_doi = optional_param('s_doi','',PARAM_TEXT);
 $search_isbn = optional_param('s_isbn','',PARAM_TEXT);
 $search_issn = optional_param('s_issn','',PARAM_TEXT);
 $search_primorid = optional_param('s_primorid','',PARAM_TEXT);
+$search_any = optional_param('s_any','',PARAM_TEXT);
+$search_any_type = optional_param('s_type','',PARAM_TEXT);
 
 
 //get DOI/ISBN retrive variables
@@ -207,8 +206,28 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
     redirect($refer, '', 0);
     refworks_base::write_footer();
     exit;
-} elseif ($search_doi || $search_isbn || $search_issn || $search_primorid) { // 'Get data' button has been pressed
+} elseif ($search_doi || $search_isbn || $search_issn || $search_primorid || $search_any) { // 'Get data' button has been pressed
     error_log("Got a search");
+    if ($search_any) {
+        switch($search_any_type) {
+            case "s_doi":
+                $search_doi = $search_any;
+                break;
+            case "s_issn":
+                $search_issn = $search_any;
+                break;
+            case "s_isbn":
+                $search_isbn = $search_any;
+                break;
+            case "s_primoid":
+                $search_primorid = $search_any;
+                break;
+            default:
+                break;  
+        }
+    error_log($search_any);
+    error_log($search_any_type);
+    }
     if ($search_doi) {
         error_log("Doing DOI search");
         if ($hiddendoivalue!=='') {
@@ -481,10 +500,7 @@ echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
 $mform->set_data($existvals);
 
 // Add reference elements to Search forms
-$doi_s_form->_formref->addElement('hidden','refid', $rid);
-$isbn_s_form->_formref->addElement('hidden','refid', $rid);
-$issn_s_form->_formref->addElement('hidden','refid', $rid);
-$primorid_s_form->_formref->addElement('hidden','refid', $rid);
+$any_s_form->_formref->addElement('hidden','refid', $rid);
 
 // Add reference elements to Reference details form
 if (refworks_base::$isinstance) {
@@ -498,15 +514,11 @@ $mform->add_action_buttons(true,get_string('update_ref','refworks'));
 //Display search forms
 echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
 
+// Add search form
 echo '<div id="searchfields">';
-echo '<div id="searchdoi">';
-$doi_s_form->display();
-echo '</div><div id="searchisbn">';
-$isbn_s_form->display();
-echo '</div><div id="searchissn">';
-$issn_s_form->display();
-echo '</div><div id="searchprimorid">';
-$primorid_s_form->display();
+echo '<div id="searchany">';
+$any_s_form->display();
+echo '</div>';
 echo '</div>';
 echo $OUTPUT->box_end();
 
