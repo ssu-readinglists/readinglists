@@ -39,15 +39,20 @@ class search_base {
         global $OUTPUT;
         require_once(dirname(__FILE__).'/../../local/references/getdata.php');
         require_once(dirname(__FILE__).'/search_form.php');
-        $doi_s_form = new search_doi_form();
-        $isbn_s_form = new search_isbn_form();
-        $issn_s_form = new search_issn_form();
-        $primorid_s_form = new search_primorid_form();
+        $any_s_form = new search_any_form();
+        #$doi_s_form = new search_doi_form();
+        #$isbn_s_form = new search_isbn_form();
+        #$issn_s_form = new search_issn_form();
+        #$primorid_s_form = new search_primorid_form();
 
         // Show header
         echo $OUTPUT->box_start('generalbox', 'resourcepage_reference');
 
         echo '<div id="searchfields">';
+        echo '<div id="searchany">';
+        $any_s_form->display();
+        echo '</div>';
+        /*
         echo '<div id="searchdoi">';
         $doi_s_form->display();
         echo '</div><div id="searchisbn">';
@@ -57,6 +62,7 @@ class search_base {
         echo '</div><div id="searchprimorid">';
         $primorid_s_form->display();
         echo '</div>';
+        */
         echo $OUTPUT->box_end();
     }
 
