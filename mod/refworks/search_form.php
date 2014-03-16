@@ -10,6 +10,31 @@
 GLOBAL $CFG;
 require_once($CFG->libdir.'/formslib.php');
 //reference edit base form
+class search_any_form extends moodleform {
+    public $_formref;
+
+            function definition() {
+                require_once(dirname(__FILE__).'/search_base.php');
+                $mform    =& $this->_form;
+                $this->_formref =& $this->_form;
+
+                //any array
+                $mform->addElement('html', '<div class="mrefsearchformcontainer" id="container_searchany">');
+                $searchanyarray=array();
+                $searchanyradio=array();
+                $searchanyarray[] =& $mform->createElement('text', 's_any', get_string('form_s_any', 'refworks'));
+                $searchanyarray[] =& $mform->createElement('submit','get_any',get_string('form_s_any', 'refworks'));
+                $mform->addGroup($searchanyarray, 'searchanyarray', get_string('form_s_any', 'refworks'), '', false);
+                $searchanyradio[] =& $mform->createElement('radio', 's_type', '', get_string('doi', 'refworks'), 's_doi', '');
+                $searchanyradio[] =& $mform->createElement('radio', 's_type', '', get_string('issn', 'refworks'), 's_issn', '');
+                $searchanyradio[] =& $mform->createElement('radio', 's_type', '', get_string('isbn', 'refworks'), 's_isbn', '');
+                $searchanyradio[] =& $mform->createElement('radio', 's_type', '', get_string('primorid',  'refworks'), 's_primoid', '');
+                $mform->addGroup($searchanyradio, 'searchanyradio', '', '', false);
+                $mform->setType('s_any', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
+            }
+}
+
 class search_doi_form extends moodleform {
     public $_formref;
 
