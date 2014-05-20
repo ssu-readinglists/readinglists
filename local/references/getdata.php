@@ -452,7 +452,7 @@ class references_getdata{
                             self::$retrievedarray['rt']='5';
                         break;
                         case 'JOUR':
-                            self::$retrievedarray['rt']='14';
+                            self::$retrievedarray['rt']='11';
                         break;
                         case 'VIDEO':
                             error_log("VIDEO");
