@@ -4,7 +4,8 @@
  *
  * @author owen@ostephens.com
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package filter/refshares
+ * @package filter
+ * @subpackage refshares
  */
 class filter_refshares extends moodle_text_filter {
 	public function filter ($text, array $options = array()) {

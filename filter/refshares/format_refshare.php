@@ -4,7 +4,8 @@
  *
  * @author owen@ostephens.com
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
- * @package filter/refshares
+ * @package filter
+ * @subpackage refshares
  */
 
 /*
