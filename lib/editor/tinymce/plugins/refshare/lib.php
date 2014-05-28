@@ -33,7 +33,7 @@ class tinymce_refshare extends editor_tinymce_plugin {
         if ($this->get_config('requirerefshares', 1)) {
             // If RefShares filter is disabled, do not add button.
             $filters = filter_get_active_in_context($context);
-            if (!array_key_exists('filter/refshares', $filters)) {
+            if (!array_key_exists('refshares', $filters)) {
                 return;
             }
         }
@@ -41,9 +41,8 @@ class tinymce_refshare extends editor_tinymce_plugin {
         if (!has_capability('mod/readinglist:edit',get_context_instance(CONTEXT_SYSTEM))){
             return;
         }
-        // Add button after 'image' in advancedbuttons3.
-        $this->add_button_after($params, 3, 'refshare', 'image');
-
+        // Add button at the end of the first row
+        $this->add_button_after($params, 1, 'refshare');
         // Add JS file, which uses default name.
         $this->add_js_plugin($params);
     }
