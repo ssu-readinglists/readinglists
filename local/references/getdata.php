@@ -450,16 +450,16 @@ class references_getdata{
                     switch($ristype) {
                         case 'BOOK':
                             self::$retrievedarray['rt']='5';
-                            $material_type = "BOOK"
+                            $material_type = "BOOK";
                             break;
                         case 'JOUR':
                             self::$retrievedarray['rt']='11';
-                            $material_type = "JOUR"
+                            $material_type = "JOUR";
                             break;
                         case 'VIDEO':
                             error_log("VIDEO");
                             self::$retrievedarray['rt']='29';
-                            $material_type = "VIDEO"
+                            $material_type = "VIDEO";
                             $risdatetags = $xml->getElementsByTagName('risdate');
                             foreach($risdatetags as $risdatetag) {
                                 self::$retrievedarray['fd'] = trim($risdatetag->nodeValue,".");
