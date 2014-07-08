@@ -109,7 +109,7 @@ function readinglist_add_instance($data, $mform) {
 
     // we need to use context now, so we need to make sure all needed info is already in db
     $DB->set_field('course_modules', 'instance', $data->id, array('id'=>$cmid));
-    $context = get_context_instance(CONTEXT_MODULE, $cmid);
+    $context = context_module::instance($cmid);
 
     if ($draftitemid) {
         $data->content = file_save_draft_area_files($draftitemid, $context->id, 'mod_readinglist', 'content', 0, readinglist_get_editor_options($context), $data->content);
@@ -150,7 +150,7 @@ function readinglist_update_instance($data, $mform) {
 
     $DB->update_record('readinglist', $data);
 
-    $context = get_context_instance(CONTEXT_MODULE, $cmid);
+    $context = context_module::instance($cmid);
     if ($draftitemid) {
         $data->content = file_save_draft_area_files($draftitemid, $context->id, 'mod_readinglist', 'content', 0, readinglist_get_editor_options($context), $data->content);
         $DB->update_record('readinglist', $data);
@@ -423,7 +423,7 @@ function readinglist_page_type_list($pagetype, $parentcontext, $currentcontext) 
 function readinglist_export_contents($cm, $baseurl) {
     global $CFG, $DB;
     $contents = array();
-    $context = get_context_instance(CONTEXT_MODULE, $cm->id);
+    $context = context_module::instance($cm->id);
 
     $readinglist = $DB->get_record('readinglist', array('id'=>$cm->instance), '*', MUST_EXIST);
 

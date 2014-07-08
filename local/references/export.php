@@ -205,7 +205,7 @@ SCRIPT;
         if ($format['name']=='MyStuff') {
             if (file_exists(dirname(__FILE__).'/../../mod/portfolio/index.php')) {
                 global $COURSE;
-                $modcontext = get_context_instance(CONTEXT_COURSE, $COURSE->id);
+                $modcontext = context_course::instance($COURSE->id);
                 if (has_capability('mod/portfolio:doanything', $modcontext, NULL, true, 'portfolio:doanything:false', 'portfolio')) {
                     return true;
                 }

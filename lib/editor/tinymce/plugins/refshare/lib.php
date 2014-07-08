@@ -38,7 +38,7 @@ class tinymce_refshare extends editor_tinymce_plugin {
             }
         }
         // Only show button if users have permssion to edit reading lists
-        if (!has_capability('mod/readinglist:edit',get_context_instance(CONTEXT_SYSTEM))){
+        if (!has_capability('mod/readinglist:edit',context_system::instance())){
             return;
         }
         // Add button at the end of the first row

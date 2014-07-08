@@ -42,7 +42,7 @@ require_once($CFG->libdir.'/csvlib.class.php');
 
 admin_externalpage_setup('managemodules');//This is a hack as this page is 'hidden' and not on menu
 
-$context = get_context_instance(CONTEXT_SYSTEM);
+$context = context_system::instance();
 require_capability('mod/refworks:migrate_collab_accs', $context);
 
 $baseurl = '/mod/refworks/admin_migrate.php';

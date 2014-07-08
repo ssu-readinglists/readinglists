@@ -83,7 +83,7 @@ class refworks_base {
             require_login(self::$course, false, self::$cm);
         } else {
             require_login(0, false);
-            $PAGE->set_context(get_context_instance(CONTEXT_SYSTEM));
+            $PAGE->set_context(context_system::instance());
         }
 
         //set the base folder location of this mod (used in links/css etc so we can have sub-folders)
@@ -420,11 +420,11 @@ class refworks_base {
 
             //Gets the current context, based on required level
             if ($contextlevel == CONTEXT_MODULE && self::$isinstance) {
-                $context=get_context_instance(CONTEXT_MODULE, self::$cm->id);
+                $context=context_module::instance(self::$cm->id);
             }else if ($contextlevel == CONTEXT_COURSE && self::$isinstance) {
-                $context=get_context_instance(CONTEXT_COURSE, self::$course->id);
+                $context=context_course::instance(self::$course->id);
             }else if ($contextlevel == CONTEXT_SYSTEM) {
-                $context=get_context_instance(CONTEXT_SYSTEM);
+                $context=context_system::instance();
             } else {
                 break;
             }
