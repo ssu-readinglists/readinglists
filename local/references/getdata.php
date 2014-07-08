@@ -541,8 +541,7 @@ class references_getdata{
                             $primo_linkback = references_lib::get_setting('primoolinkback'); 
                             $access_online = TRUE;
                             break;
-                        case 'SFX Resource'
-                            // double check linkback behaviour - maybe different?
+                        case 'SFX Resource':
                             $primo_linkback = references_lib::get_setting('primoolinkback'); 
                             $access_online = TRUE;
                             break;
