@@ -450,13 +450,16 @@ class references_getdata{
                     switch($ristype) {
                         case 'BOOK':
                             self::$retrievedarray['rt']='5';
+                            $material_type = "BOOK"
                         break;
                         case 'JOUR':
                             self::$retrievedarray['rt']='11';
+                            $material_type = "JOUR"
                         break;
                         case 'VIDEO':
                             error_log("VIDEO");
                             self::$retrievedarray['rt']='29';
+                            $material_type = "VIDEO"
                             $risdatetags = $xml->getElementsByTagName('risdate');
                             foreach($risdatetags as $risdatetag) {
                                 self::$retrievedarray['fd'] = trim($risdatetag->nodeValue,".");
@@ -527,38 +530,109 @@ class references_getdata{
 				}
 				$deliverytags = $xml->getElementsByTagName('delcategory');
 				foreach($deliverytags as $deliverytag) {
-					if ($deliverytag->nodeValue === 'Online Resource') {
-						$primo_linkback = references_lib::get_setting('primoolinkback'); 
+                    // Use switch
+                    // Looking for "Physical Item", "Online Resource", "SFX Resource"
+                    switch($deliverytag) {
+                        case 'Physical Item': 
+                            $primo_linkback = references_lib::get_setting('primoplinkback');
+                            $access_online = FALSE;
+                            break;
+                        case 'Online Resource':
+                            $primo_linkback = references_lib::get_setting('primoolinkback'); 
+                            $access_online = TRUE;
+                            break;
+                        case 'SFX Resource'
+                            // double check linkback behaviour - maybe different?
+                            $primo_linkback = references_lib::get_setting('primoolinkback'); 
+                            $access_online = TRUE;
+                            break;
+                        default:
+                            $access_online = FALSE;
+                    }
+                    // If we've got online access, stop checking
+					if ($access_online) {
 						break;
-					} else {
-						$primo_linkback = references_lib::get_setting('primoplinkback'); 
 					}
 				}
-				$locationtags = $xml->getElementsByTagName('lds07');
-				foreach($locationtags as $locationtag) {
-					if ($primo_linkback === references_lib::get_setting('primoplinkback')) {
-                        $location = $locationtag->nodeValue;
-						// Primo locations use a code for each library rather than name
-						// Decoding is site specific
-                        // Make setting into JSON (as long as setting formatted correctly)
-                        $primolibs_json = "{".references_lib::get_setting('primolibs')."}";
-                        $librarynames = json_decode($primolibs_json);
-                        switch (json_last_error()) {
-                            case JSON_ERROR_NONE:
-                                foreach ($librarynames as $librarycode => $libraryname) {
-                                    $location = preg_replace('/; '.$librarycode.'/','; '.$libraryname,$location);
-                                }
-                            break;
-                            default:
-                                error_log("Please check the 'primolibs' setting is formatted correctly");
-                            break;
+                // Location can be in lds07 or lds04 depending on material type
+                // test $material_type - can be BOOK, JOUR, VIDEO
+                // Combine $material_type and $online_access to decide on ['av'], ['no'] and location info
+                if ($material_type === "BOOK") {
+                    if ($access_online) {
+                        self::$retrievedarray['av'] = references_lib::get_setting('bk_online_avail');
+                        self::$retrievedarray['no'] = references_lib::get_setting('bk_online_location');
+                    } else {
+                        self::$retrievedarray['av'] = references_lib::get_setting('bk_print_avail');
+                        $locationtags = $xml->getElementsByTagName('lds07');
+                        foreach($locationtags as $locationtag) {
+                            $location = $locationtag->nodeValue;
+                            // Primo locations use a code for each library rather than name
+                            // Decoding is site specific
+                            // Make setting into JSON (as long as setting formatted correctly)
+                            $primolibs_json = "{".references_lib::get_setting('primolibs')."}";
+                            $librarynames = json_decode($primolibs_json);
+                            switch (json_last_error()) {
+                                case JSON_ERROR_NONE:
+                                    foreach ($librarynames as $librarycode => $libraryname) {
+                                        $location = preg_replace('/; '.$librarycode.'/','; '.$libraryname,$location);
+                                    }
+                                break;
+                                default:
+                                    error_log("Please check the 'primolibs' setting is formatted correctly");
+                                break;
+                            }
+                            self::$retrievedarray['no'] = 'Location: '.$location;
                         }
-						self::$retrievedarray['no'] = 'Location: '.$location;
-					} elseif ($primo_linkback === references_lib::get_setting('primoolinkback')) {
-                        self::$retrievedarray['av'] = 'online';
-						self::$retrievedarray['no'] = 'Ebook';
-					}
-				}
+                        if(self::$retrievedarray['no'] === 'Location: ') {
+                            self::$retrievedarray['no'] = references_lib::get_setting('bk_print_location');
+                        }
+                    }
+                } elseif ($material_type === "JOUR") {
+                    if ($access_online) {
+                        self::$retrievedarray['av'] = references_lib::get_setting('jn_online_avail');
+                        self::$retrievedarray['no'] = references_lib::get_setting('jn_online_location');
+                    } else {
+                        self::$retrievedarray['av'] = references_lib::get_setting('jn_print_avail');
+                        $locationtags = $xml->getElementsByTagName('lds04');
+                        foreach($locationtags as $locationtag) {
+                            $location = $locationtag->nodeValue;
+                            self::$retrievedarray['no'] = 'Location: '.$location;
+                        }
+                        if(self::$retrievedarray['no'] === 'Location: ') {
+                            self::$retrievedarray['no'] = references_lib::get_setting('bk_print_location');
+                        }
+                    }
+                } elseif ($material_type === "VIDEO") {
+                    if ($access_online) {
+                        self::$retrievedarray['av'] = references_lib::get_setting('vid_online_avail');
+                        self::$retrievedarray['no'] = references_lib::get_setting('vid_online_location');
+                    } else {
+                        self::$retrievedarray['av'] = references_lib::get_setting('vid_print_avail');
+                        $locationtags = $xml->getElementsByTagName('lds07');
+                        foreach($locationtags as $locationtag) {
+                            $location = $locationtag->nodeValue;
+                            // Primo locations use a code for each library rather than name
+                            // Decoding is site specific
+                            // Make setting into JSON (as long as setting formatted correctly)
+                            $primolibs_json = "{".references_lib::get_setting('primolibs')."}";
+                            $librarynames = json_decode($primolibs_json);
+                            switch (json_last_error()) {
+                                case JSON_ERROR_NONE:
+                                    foreach ($librarynames as $librarycode => $libraryname) {
+                                        $location = preg_replace('/; '.$librarycode.'/','; '.$libraryname,$location);
+                                    }
+                                break;
+                                default:
+                                    error_log("Please check the 'primolibs' setting is formatted correctly");
+                                break;
+                            }
+                            self::$retrievedarray['no'] = 'Location: '.$location;
+                        }
+                        if(self::$retrievedarray['no'] === 'Location: ') {
+                            self::$retrievedarray['no'] = references_lib::get_setting('vid_print_location');
+                        }
+                    }
+                }
                 $linktags = $xml->getElementsByTagName('linktorsrc');
                 foreach($linktags as $linktag) {
                     // TODO Check for  "Click here for more information about"
