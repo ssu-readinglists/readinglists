@@ -451,11 +451,11 @@ class references_getdata{
                         case 'BOOK':
                             self::$retrievedarray['rt']='5';
                             $material_type = "BOOK"
-                        break;
+                            break;
                         case 'JOUR':
                             self::$retrievedarray['rt']='11';
                             $material_type = "JOUR"
-                        break;
+                            break;
                         case 'VIDEO':
                             error_log("VIDEO");
                             self::$retrievedarray['rt']='29';
@@ -464,7 +464,7 @@ class references_getdata{
                             foreach($risdatetags as $risdatetag) {
                                 self::$retrievedarray['fd'] = trim($risdatetag->nodeValue,".");
                             }
-                        break;
+                            break;
                         default:
                             self::$retrievedarray['rt']='11'; //Defaults to 'Generic'
                     }
