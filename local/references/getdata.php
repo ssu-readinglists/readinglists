@@ -457,7 +457,6 @@ class references_getdata{
                             $material_type = "JOUR";
                             break;
                         case 'VIDEO':
-                            error_log("VIDEO");
                             self::$retrievedarray['rt']='29';
                             $material_type = "VIDEO";
                             $risdatetags = $xml->getElementsByTagName('risdate');
@@ -530,9 +529,8 @@ class references_getdata{
 				}
 				$deliverytags = $xml->getElementsByTagName('delcategory');
 				foreach($deliverytags as $deliverytag) {
-                    // Use switch
                     // Looking for "Physical Item", "Online Resource", "SFX Resource"
-                    switch($deliverytag) {
+                    switch($deliverytag->nodeValue) {
                         case 'Physical Item': 
                             $primo_linkback = references_lib::get_setting('primoplinkback');
                             $access_online = FALSE;
