@@ -60,8 +60,18 @@ $string['config_primoolinkback'] = 'Linkback syntax to Primo for online items';
 $string['config_primoolinkback_desc'] = 'Path for forming linkback to Primo for online items. The Primo DocID will be appended to the end of this to form the link';
 $string['config_primolibs'] = 'Map abbreviated library names used by Primo to full names';
 $string['config_primolibs_desc'] = 'A comma separated list of mappings. Each mapping should be of the form: "Abbrevation":"Full name". e.g. "BL":"British Library","NLW":"National Library of Wales"';
-
-
+$string['config_bk_online_avail'] = 'Availability text for ebooks';
+$string['config_bk_online_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for books with an online location"';
+$string['config_jn_online_avail'] = 'Availability text for ejournals';
+$string['config_jn_online_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for journals with an online location"';
+$string['config_vid_online_avail'] = 'Availability text for videos';
+$string['config_vid_online_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for videos with an online location"';
+$string['config_bk_print_avail'] = 'Availability text for ebooks';
+$string['config_bk_print_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for books with an physical location"';
+$string['config_jn_print_avail'] = 'Availability text for ejournals';
+$string['config_jn_print_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for journals with an physical location"';
+$string['config_vid_print_avail'] = 'Availability text for videos';
+$string['config_vid_print_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for videos with an physical location"';
 
 //Plugin strings (from 1.9 version)
 $string['reference_xmlloaderror']='There was an error with the reference xml file';

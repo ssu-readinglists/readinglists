@@ -114,6 +114,30 @@ if ($hassiteconfig) {//Stops errors when tree not available
                 get_string('config_primolibs_desc', 'local_references'), '');
     $configpage->add($primolibs);
 
+    $bk_online_avail = new admin_setting_configtext('local_references/bk_online_avail', get_string('config_bk_online_avail', 'local_references'),
+                get_string('config_bk_online_avail_desc', 'local_references'), '');
+    $configpage->add($bk_online_avail);
+
+    $bk_print_avail = new admin_setting_configtext('local_references/bk_print_avail', get_string('config_bk_print_avail', 'local_references'),
+                get_string('config_bk_print_avail_desc', 'local_references'), '');
+    $configpage->add($bk_print_avail);
+
+    $jn_online_avail = new admin_setting_configtext('local_references/jn_online_avail', get_string('config_jn_online_avail', 'local_references'),
+                get_string('config_jn_online_avail_desc', 'local_references'), '');
+    $configpage->add($jn_online_avail);
+
+    $jn_print_avail = new admin_setting_configtext('local_references/jn_print_avail', get_string('config_jn_print_avail', 'local_references'),
+                get_string('config_jn_print_avail_desc', 'local_references'), '');
+    $configpage->add($jn_print_avail);
+
+    $vid_online_avail = new admin_setting_configtext('local_references/vid_online_avail', get_string('config_vid_online_avail', 'local_references'),
+                get_string('config_vid_online_avail_desc', 'local_references'), '');
+    $configpage->add($vid_online_avail);
+
+    $vid_print_avail = new admin_setting_configtext('local_references/vid_print_avail', get_string('config_vid_print_avail', 'local_references'),
+                get_string('config_vid_print_avail_desc', 'local_references'), '');
+    $configpage->add($vid_print_avail);
+
     $ADMIN->add('localplugins', $configpage);
 
 }
