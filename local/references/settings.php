@@ -138,6 +138,30 @@ if ($hassiteconfig) {//Stops errors when tree not available
                 get_string('config_vid_print_avail_desc', 'local_references'), '');
     $configpage->add($vid_print_avail);
 
+    $bk_online_location = new admin_setting_configtext('local_references/bk_online_location', get_string('config_bk_online_location', 'local_references'),
+                get_string('config_bk_online_location_desc', 'local_references'), '');
+    $configpage->add($bk_online_location);
+
+    $bk_print_location = new admin_setting_configtext('local_references/bk_print_location', get_string('config_bk_print_location', 'local_references'),
+                get_string('config_bk_print_location_desc', 'local_references'), '');
+    $configpage->add($bk_print_location);
+
+    $jn_online_location = new admin_setting_configtext('local_references/jn_online_location', get_string('config_jn_online_location', 'local_references'),
+                get_string('config_jn_online_location_desc', 'local_references'), '');
+    $configpage->add($jn_online_location);
+
+    $jn_print_location = new admin_setting_configtext('local_references/jn_print_location', get_string('config_jn_print_location', 'local_references'),
+                get_string('config_jn_print_location_desc', 'local_references'), '');
+    $configpage->add($jn_print_location);
+
+    $vid_online_location = new admin_setting_configtext('local_references/vid_online_location', get_string('config_vid_online_location', 'local_references'),
+                get_string('config_vid_online_location_desc', 'local_references'), '');
+    $configpage->add($vid_online_location);
+
+    $vid_print_location = new admin_setting_configtext('local_references/vid_print_location', get_string('config_vid_print_location', 'local_references'),
+                get_string('config_vid_print_location_desc', 'local_references'), '');
+    $configpage->add($vid_print_location);
+
     $ADMIN->add('localplugins', $configpage);
 
 }
