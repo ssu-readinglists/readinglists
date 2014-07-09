@@ -306,7 +306,7 @@ class refworks_display {
                         $issel = optional_param($fldname,false,PARAM_BOOL);
                     }
 
-                    $output .= print_checkbox(htmlspecialchars(refworks_base::return_foldername($fldname)), true, $issel, '', get_string('folder_select','refworks').' '.htmlspecialchars(refworks_base::return_foldername($folderarray[$a]['name'],true)), '' , true);
+                    $output .= html_writer::checkbox(htmlspecialchars(refworks_base::return_foldername($fldname)), true, $issel, '');
                     $output .= '</div></td>';
                     break;
                 /////////////////////
