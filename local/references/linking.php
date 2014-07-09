@@ -207,6 +207,8 @@ class linking{
                 }
                 else if (preg_match("|^http(s)??://[a-z0-9-]+(.[a-z0-9-]+)*(:[0-9]+)?(/.*)?$|i",$doc["Override"])) {
                     return array("url"=>$doc["Override"],"type"=>"otherlink");
+                } else {
+                    error_log("Contents of override field didn't match a URL pattern");
                 }
             }else if (strtolower($doc["Override"]) == 'none') {
                 return false;
@@ -333,7 +335,7 @@ class linking{
             }
         }
         // if there is no link in 'remaining type' and no DOI return nothing
-        if (($DocType == 7 || $DocType == 3)&& $matching ==0) {
+        if (($DocType == 7 || $DocType == 3) && $matching == 0) {
             if (!isset($doc["Link"]) && !isset($doc['ul'])) {
 				error_log("Unable to create a URL for linking");
                 return false;
