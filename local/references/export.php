@@ -48,7 +48,7 @@ class references_export extends refxml{
     protected function return_submitted() {
         //loop thru all the available formats and check if a post
         for ($a=0,$max=count($this->formats);$a<$max;$a++) {
-            if ($this->get_format_can_export(&$this->formats[$a])) {
+            if ($this->get_format_can_export($this->formats[$a])) {
                 //see if submit of image button (sends buttonmane_x in post)
                 $didsubmit=optional_param('submit_'.$this->formats[$a]['name'].'_x',NULL,PARAM_INT);
                 if ($didsubmit!==NULL) {
