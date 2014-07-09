@@ -40,7 +40,7 @@ class refworks_folder_api extends rwapi{
 
             self::$folders = array();
             for ($a=0, $max=$folderlist->length; $a<$max; $a++) {
-                if ($folderlist->item($a)->getAttribute('type') == 'user') {
+                if ($folderlist->item($a)->getAttribute('type') == 'user' && strlen($folderlist->item($a)->nodeValue)>0) {
                     self::$folders[] = array('name'=>$folderlist->item($a)->nodeValue, 'numrefs'=>$folderlist->item($a)->getAttribute('nRefs'));
                     error_log("Put following into Folders array: ".$folderlist->item($a)->nodeValue." | ".$folderlist->item($a)->getAttribute('nRefs'));
                 }
