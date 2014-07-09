@@ -8,6 +8,13 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package local/references/getdata
  */
+
+/** TODO
+ * Primo searching needs some refactoring after changes to search for hyphenated and non-hyphenated ISSNs
+    ** check_primo_id_status and get_primo_data contain a large chunk of repeated code
+    ** this not only increases maintenance overhead but also leads to redundant calls to Primo API
+    ** Should refactor to retrieve data from Primo once, and if XML is returned pass to a separate parsing function
+*/
 require_once(dirname(__FILE__).'/references_lib.php');
 
 class references_getdata{
@@ -347,6 +354,7 @@ class references_getdata{
             return false;
         }
     }
+
 	/**
      * Main function that calls the primo api
      * The content is based on the Ex Libris API but is not endorsed or certified by Ex Libris.
@@ -356,7 +364,7 @@ class references_getdata{
      */
 	public static function call_primo_api($identifier,$querytype = 'isbn', $rtvalue){
 	    global $CFG;
-
+        $identifiers = array();
 	        //identifier cleaner
 	    switch($querytype){
             case 'isbn':
@@ -374,9 +382,13 @@ class references_getdata{
                 $patterns = array();
                 $replacements = array();
                 $patterns[0] = '/\s+/';
+                $patterns[1] = '/-/';
+                $replacements[1] = '';
                 $replacements[0] = '';
                 $identifier = trim($identifier);
                 $identifier = preg_replace($patterns, $replacements, $identifier);
+                $identifiers[0] = $identifier;
+                $identifiers[1] = substr($identifier,0,4)."-".substr($identifier,4);
                 $index = 'issn';
             break;
             case 'recordid':
@@ -384,6 +396,148 @@ class references_getdata{
             break;
             default:; 
         }
+        if (count($identifiers)>0) {
+            $id_statuses = array();
+            foreach($identifiers as $id) {
+                $id_status = self::check_primo_id_status($id,$index);
+                if($id_status) {
+                    $id_statuses[$id_status] = $id;
+                }
+            }
+            if(array_key_exists("online", $id_statuses)){
+                $identifier = $id_statuses["online"];
+            } else if (array_key_exists("print",$id_statuses)) {
+                $identifier = $id_statuses["print"];
+            } else {
+                return false;
+            }
+        }
+        //Create array of identifiers
+        //For each identifier:
+        //Check to see if online
+        //For first one that's online retrieve the reference
+        //Else fall back to first non-online reference
+        if (self::get_primo_data($identifier,$index,$rtvalue)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Checks if ID gets a hit on Primo and whether online or print
+     * The content is based on the Ex Libris API but is not endorsed or certified by Ex Libris.
+     * @param $id string:the identifier of the record requested
+     * @param $index string:the primo index to search
+     * @return format (online or print)
+     */
+    public static function check_primo_id_status($identifier,$index) {
+
+        // Separate various URL parameters for ease
+        // Some set from MyReferences configuration as site specific
+        $primobase = references_lib::get_setting('primourl'); 
+        $primoport = references_lib::get_setting('primoport');
+        $path = '/PrimoWebServices/xservice/search/brief?';
+        $primoinstitution = references_lib::get_setting('primoinst');
+        $oncampus = 'onCampus=true';
+        $query = 'query='.$index.',contains,'.$identifier;
+        $index_position = 'indx=1';
+        $bulk = 'bulkSize=1';
+        
+        if($primobase != '') {
+            $url = $primobase;
+        } else {
+            self::$lasterror = 'Primo Base URL not set';
+            return false;
+        }
+        if($primoport != '') {
+            $url .= ':'.$primoport;
+        }
+        if($primoinstitution != '') {
+            $institution = 'institution='.$primoinstitution;
+        } else {
+            self::$lasterror = 'Primo Institution not set';
+            return false;
+        }
+        
+        // Build full query string and url from parameters
+        $querystring = $institution.'&'.$oncampus.'&'.$query.'&'.$index_position.'&'.$bulk;
+        $url.= $path.$querystring;
+        error_log($url);
+        
+        $page = download_file_content($url, null, null, true);
+        if ($page->status == 200) {
+            $page = $page->results;
+            if (strpos($page,'<sear')===false) {
+                self::$lasterror = 'Unexpected message format';
+                return false;
+            }
+        } else {
+            self::$lasterror = $page->error;
+            return false;
+        }
+                
+        if($page){
+             //build from xml
+            $xml = new DOMDocument('1.0','utf-8');
+            $xml->loadXML($page);
+    
+            $primotags = $xml->getElementsByTagNameNS('http://www.exlibrisgroup.com/xsd/jaguar/search','DOC');
+            if($primotags->length==0){
+                return false;
+            }
+       
+            //create an array of values from the returned xml which are to populate the reference form
+            //$fieldarray = array();
+           
+            foreach($primotags as $primotag){
+                $deliverytags = $xml->getElementsByTagName('delcategory');
+                foreach($deliverytags as $deliverytag) {
+                    // Looking for "Physical Item", "Online Resource", "SFX Resource"
+                    switch($deliverytag->nodeValue) {
+                        case 'Physical Item': 
+                            $primo_linkback = references_lib::get_setting('primoplinkback');
+                            $access_online = FALSE;
+                            break;
+                        case 'Online Resource':
+                            $primo_linkback = references_lib::get_setting('primoolinkback'); 
+                            $access_online = TRUE;
+                            break;
+                        case 'SFX Resource':
+                            $primo_linkback = references_lib::get_setting('primoolinkback'); 
+                            $access_online = TRUE;
+                            break;
+                        default:
+                            $access_online = FALSE;
+                    }
+                    // If we've got online access, stop checking
+                    if ($access_online) {
+                        break;
+                    }
+                }
+                // Location can be in lds07 or lds04 depending on material type
+                // test $material_type - can be BOOK, JOUR, VIDEO
+                // Combine $material_type and $online_access to decide on ['av'], ['no'] and location info
+            }
+            if($access_online) {
+                return "online";
+            } else {
+                return "print";
+            }
+        } else {
+            return false;
+        }
+    }
+
+    /**
+     * Retrieves data from Primo
+     * The content is based on the Ex Libris API but is not endorsed or certified by Ex Libris.
+     * @param $identifier string:the identifier of the record requested
+     * @param $index string:the primo index to search
+     * @param $rtvalue string: the Reference Type value from the reference edit form if it has been passed
+     * @return success
+     */
+    public static function get_primo_data($identifier,$index,$rtvalue) {
 
 		// Separate various URL parameters for ease
 		// Some set from MyReferences configuration as site specific
