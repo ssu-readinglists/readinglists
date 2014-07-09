@@ -35,12 +35,14 @@ class refworks_folder_api extends rwapi{
             }
             $resxml=new domDocument();
             $resxml->loadXML($result);
+            error_log("Outcome of 'folders' rwapi call: ".$result);
             $folderlist = $resxml->getElementsByTagName('Folders');
 
             self::$folders = array();
             for ($a=0, $max=$folderlist->length; $a<$max; $a++) {
                 if ($folderlist->item($a)->getAttribute('type') == 'user') {
                     self::$folders[] = array('name'=>$folderlist->item($a)->nodeValue, 'numrefs'=>$folderlist->item($a)->getAttribute('nRefs'));
+                    error_log("Put following into Folders array: ".$folderlist->item($a)->nodeValue." | ".$folderlist->item($a)->getAttribute('nRefs'));
                 }
             }
             return true;
