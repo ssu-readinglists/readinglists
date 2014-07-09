@@ -189,6 +189,8 @@ class references_getdata{
                         self::$retrievedarray['a1'].=';';
                     }
                 }
+                self::$retrievedarray['av'] = references_lib::get_setting('doi_item_avail');
+                self::$retrievedarray['no'] = references_lib::get_setting('doi_item_location');
             }
             return true;
         } else {

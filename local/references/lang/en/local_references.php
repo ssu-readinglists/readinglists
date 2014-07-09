@@ -72,6 +72,8 @@ $string['config_jn_print_avail'] = 'Availability text for printed journals';
 $string['config_jn_print_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for journals with an physical location';
 $string['config_vid_print_avail'] = 'Availability text for videos';
 $string['config_vid_print_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for videos with an physical location';
+$string['config_doi_item_avail'] = 'Availability text for items retrieved via DOI lookup';
+$string['config_doi_item_avail_desc'] = 'Will be used in the \'Availability\' field (\'av\') for items retrieved via DOI lookup';
 $string['config_bk_online_location'] = 'Location note for ebooks';
 $string['config_bk_online_location_desc'] = 'Will be used in the \'Note\' field (\'no\') for books with a online location';
 $string['config_jn_online_location'] = 'Location note for ejournals';
@@ -83,7 +85,9 @@ $string['config_bk_print_location_desc'] = 'Will be used in the \'Note\' field (
 $string['config_jn_print_location'] = 'Location note for printed journals';
 $string['config_jn_print_location_desc'] = 'Will be used in the \'Note\' field (\'no\') for journals with a physical location. Will only be used if a location note cannot be automatically populated';
 $string['config_vid_print_location'] = 'Location note for physical videos';
-$string['config_vid_print_location_desc'] = 'Will be used in the \'Note\' field (\'no\') for videos with a physical location. Will only be used if a location note cannot be automatically populated"';
+$string['config_vid_print_location_desc'] = 'Will be used in the \'Note\' field (\'no\') for videos with a physical location. Will only be used if a location note cannot be automatically populated';
+$string['config_doi_item_location'] = 'Location note for items retrieved via DOI lookup';
+$string['config_doi_item_location_desc'] = 'Will be used in the \'Note\' field (\'no\') for items retrieved via DOI lookup';
 
 //Plugin strings (from 1.9 version)
 $string['reference_xmlloaderror']='There was an error with the reference xml file';

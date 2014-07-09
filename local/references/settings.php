@@ -138,6 +138,10 @@ if ($hassiteconfig) {//Stops errors when tree not available
                 get_string('config_vid_print_avail_desc', 'local_references'), '');
     $configpage->add($vid_print_avail);
 
+    $doi_item_avail = new admin_setting_configtext('local_references/doi_item_avail', get_string('config_doi_item_avail', 'local_references'),
+                get_string('config_doi_item_avail_desc', 'local_references'), '');
+    $configpage->add($doi_item_avail);
+
     $bk_online_location = new admin_setting_configtext('local_references/bk_online_location', get_string('config_bk_online_location', 'local_references'),
                 get_string('config_bk_online_location_desc', 'local_references'), '');
     $configpage->add($bk_online_location);
@@ -161,6 +165,10 @@ if ($hassiteconfig) {//Stops errors when tree not available
     $vid_print_location = new admin_setting_configtext('local_references/vid_print_location', get_string('config_vid_print_location', 'local_references'),
                 get_string('config_vid_print_location_desc', 'local_references'), '');
     $configpage->add($vid_print_location);
+
+    $doi_item_location = new admin_setting_configtext('local_references/doi_item_location', get_string('config_doi_item_location', 'local_references'),
+                get_string('config_doi_item_location_desc', 'local_references'), '');
+    $configpage->add($doi_item_location);
 
     $ADMIN->add('localplugins', $configpage);
 
