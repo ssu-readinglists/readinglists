@@ -54,7 +54,7 @@ if ($attachment!='') {
             refworks_base::write_header();
             refworks_base::write_sidemenu();
             refworks_base::write_error(get_string('attachment_error','refworks',refworks_ref_api::$lasterror));
-            print_continue($refer);
+            $OUTPUT->continue_button($refer);
             refworks_base::write_footer();
         } else {
             send_file($result,$attachment,'default',0,true,true);
