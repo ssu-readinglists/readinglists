@@ -34,7 +34,7 @@ require_course_login($course, true);
 $PAGE->set_pagelayout('incourse');
 
 //add_to_log($course->id, 'readinglist', 'view all', "index.php?id=$course->id", '');
-$event = \readinglist\event\course_module_instance_list_viewed::create(array(
+$event = \mod_readinglist\event\course_module_instance_list_viewed::create(array(
     'context' => context_course::instance($course->id)
 ));
 $event->trigger();

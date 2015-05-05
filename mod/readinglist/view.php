@@ -53,7 +53,7 @@ $context = context_module::instance($cm->id);
 require_capability('mod/readinglist:view', $context);
 
 //add_to_log($course->id, 'readinglist', 'view', 'view.php?id='.$cm->id, $readinglist->id, $cm->id);
-$event = \readinglist\event\course_module_viewed::create(array(
+$event = \mod_readinglist\event\course_module_viewed::create(array(
     'objectid' => $cm->id,
     'context' => $readinglist->id
 ));
