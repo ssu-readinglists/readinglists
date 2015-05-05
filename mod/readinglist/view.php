@@ -52,7 +52,13 @@ require_course_login($course, true, $cm);
 $context = context_module::instance($cm->id);
 require_capability('mod/readinglist:view', $context);
 
-add_to_log($course->id, 'readinglist', 'view', 'view.php?id='.$cm->id, $readinglist->id, $cm->id);
+//add_to_log($course->id, 'readinglist', 'view', 'view.php?id='.$cm->id, $readinglist->id, $cm->id);
+$event = \readinglist\event\course_module_viewed::create(array(
+    'objectid' => $cm->id,
+    'context' => $readinglist->id
+));
+$event->add_record_snapshot('course', $PAGE->course);
+$event->trigger();
 
 // Update 'viewed' state if required by completion system
 require_once($CFG->libdir . '/completionlib.php');
