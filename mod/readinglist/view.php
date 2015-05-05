@@ -53,10 +53,10 @@ $context = context_module::instance($cm->id);
 require_capability('mod/readinglist:view', $context);
 
 //add_to_log($course->id, 'readinglist', 'view', 'view.php?id='.$cm->id, $readinglist->id, $cm->id);
-$event = \mod_readinglist\event\course_module_viewed::create(array(
-    'objectid' => $cm->id,
-    'context' => $readinglist->id
-));
+$eventdata = array();
+$eventdata['objectid'] = $cm->id;
+$eventdata['context'] = $context;
+$event = \mod_readinglist\event\course_module_viewed::create($eventdata);
 $event->add_record_snapshot('course', $PAGE->course);
 $event->trigger();
 
