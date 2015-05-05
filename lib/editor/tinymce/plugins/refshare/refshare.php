@@ -31,14 +31,14 @@
 
 define('NO_MOODLE_COOKIES', true); // Session not used here
 
-require(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/config.php');
+require_once(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/config.php');
 
 $PAGE->set_context(context_system::instance());
 $PAGE->set_url('/lib/editor/tinymce/plugins/refshare/refshare.php');
 $editor = get_texteditor('tinymce');
 $plugin = $editor->get_plugin('refshare');
 
-require(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/local/references/apibib/apibib_lib.php');
+require_once(dirname(dirname(dirname(dirname(dirname(dirname(__FILE__)))))) . '/local/references/apibib/apibib_lib.php');
 $htmllang = get_html_lang();
 header('Content-Type: text/html; charset=utf-8');
 header('X-UA-Compatible: IE=edge');
