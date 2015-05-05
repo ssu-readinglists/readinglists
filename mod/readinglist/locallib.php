@@ -29,6 +29,7 @@ defined('MOODLE_INTERNAL') || die;
 require_once("$CFG->libdir/filelib.php");
 require_once("$CFG->libdir/resourcelib.php");
 require_once("$CFG->dirroot/mod/readinglist/lib.php");
+require_once("$CFG->libdir/eventslib.php");
 
 
 /**
