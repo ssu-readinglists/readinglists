@@ -89,7 +89,14 @@ echo print_string('viewinst', 'refworks', get_docs_url('mod/refworks/view'));
 echo html_writer::end_tag('div');
 
 if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','view.php?id='.refworks_base::$cm->id,'Access RefWorks Module',refworks_base::$cm->id);
+
+    //add_to_log(refworks_base::$course->id,'refworks','view','view.php?id='.refworks_base::$cm->id,'Access RefWorks Module',refworks_base::$cm->id);
+    $eventdata = array();
+    $eventdata['objectid'] = $cm->id;
+    $eventdata['context'] = $PAGE->context;
+    $event = \mod_refworks\event\course_module_viewed::create($eventdata);
+    $event->add_record_snapshot('course', $PAGE->course);
+    $event->trigger();
 }
 
 refworks_base::write_footer();
