@@ -436,4 +436,25 @@ accounts list and they can no longer access it (even if they've bookmarked it).
 <i>Note: removal might take a while to take full effect if the person is currently logged in to the account.</i>
 </p>
 INVI;
+
+$string['eventbibliography_created']='Created bibliography';
+$string['eventbibliography_viewed']='Viewed references for bibliography';
+$string['eventreference_created']='Created reference';
+$string['eventrefcreate_accessed']='Accessed Create Reference';
+$string['eventreferences_exported']='Exported references';
+$string['eventrefexport_viewed']='Viewed references for export';
+$string['eventrefimport_accessed']='Accessed \"RefWorks reference import\"';
+$string['eventreference_updated']='Updated reference';
+$string['eventrefupdate_accessed']='Accessed \"Update Reference\"';
+$string['eventaddreffolder_accessed']='Accessed \"Add reference to folder\"';
+$string['eventremreffolder_accessed']='Accessed \"Remove reference from folder\"';
+$string['eventfolder_viewed']='Viewed folder';
+$string['eventallref_viewed']='Viewed all references';
+$string['eventteamacc_created']='Created a team account';
+$string['eventteamacc_login']='Logged into team account';
+$string['eventteamacc_loginfail']='Failed to log into team account';
+$string['eventteamacc_logout']='Logged out of team account';
+$string['eventteamacc_managed']='Accessed \"Manage access to team account\"';
+$string['eventrefreport_accessed']='Accessed a reference report';
+
 ?>
