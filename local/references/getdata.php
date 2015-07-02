@@ -645,9 +645,9 @@ class references_getdata{
                 }
                 $jtitletags = $xml->getElementsByTagName('jtitle');
                 foreach($jtitletags as $jtitletag) {
-                    self::$retrievedarray['jf']=$jtitletag->nodeValue;
+                    self::$retrievedarray['t1']=$jtitletag->nodeValue;
                 }
-                if(array_key_exists('jf', self::$retrievedarray)) {
+                if($jtitletags->length>0) {
                     $sjtitletags = $xml->getElementsByTagName('stitle');
                     foreach($sjtitletags as $sjtitletag) {
                         self::$retrievedarray['jo']=$sjtitletag->nodeValue;
