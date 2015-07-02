@@ -16,21 +16,22 @@ class refworks_managerefs_form extends moodleform {
 
     public static $showtoggle = false; //flag for link to show/hide extra fields
     //names of all the possible reference types
-	// Added Explicit numbering to this array for the Reference Form (for creation and editing) 
-	// Explicit numbering means order can be controlled without changing the numbering, which is used elsewhere (e.g. by getdata.php)
-	// Order here (5,4,3,14, 30,22,17,29,9,8,23,1...) reflects requirements of Southampton Solent
-	// added by owen@ostephens.com for Southampton Solent University 09/03/2012
+    // Added Explicit numbering to this array for the Reference Form (for creation and editing) 
+    // Explicit numbering means order can be controlled without changing the numbering, which is used elsewhere (e.g. by getdata.php)
+    // Order here (5,4,3,14, 30,22,17,29,9,8,23,1...) reflects requirements of Southampton Solent
+    // added by owen@ostephens.com for Southampton Solent University 09/03/2012
     public static $reftypes = array(
-	        5 => 'Book, Whole',
+            5 => 'Book, Whole',
             4 => 'Book, Section',
-			3 => 'Book, Edited',
+            3 => 'Book, Edited',
             14 => 'Journal Article',
             30 => 'Web Page',
-			22 => 'Newspaper Article',
-			17 => 'Magazine Article',
+            22 => 'Newspaper Article',
+            17 => 'Magazine Article',
             29 => 'Video/DVD',
             9 => 'Dissertation/Thesis',
             8 => 'Conference Proceedings',
+            26 => 'Report',
             23 => 'Online Discussion Forum/Blogs',
             1 => 'Artwork',
             11 => 'Generic',
@@ -48,14 +49,13 @@ class refworks_managerefs_form extends moodleform {
             21 => 'Music Score',
             24 => 'Patent',
             25 => 'Personal Communication',
-            26 => 'Report',
             27 => 'Sound Recording',
             15 => 'Journal, Electronic',
             28 => 'Unpublished Material'
             );
 
      //supported field names (names should match names of fields in form)
-	// Commented out those not required by SSU. Added lk,av,db,jo,k1 required by SSU. owen@ostephens.com. 22nd May 2012
+    // Commented out those not required by SSU. Added lk,av,db,jo,k1 required by SSU. owen@ostephens.com. 22nd May 2012
      public static $reffields = array(
          'rt',
          'a1',
@@ -76,11 +76,11 @@ class refworks_managerefs_form extends moodleform {
          'a2',
          'sn',
          'do',
-		 'lk',
-		 'av',
-		 'db',
-		 'jo',
-		 'k1',
+         'lk',
+         'av',
+         'db',
+         'jo',
+         'k1',
 //         'ul',
 //         'u1',
 //         'u2',
@@ -236,9 +236,9 @@ class refworks_managerefs_form extends moodleform {
                 $mform->setType('ul', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
 */
-				// Commented out OU specific fields as not required by SSU
-				// owen@ostephens.com 28th March 2012
-				/*
+                // Commented out OU specific fields as not required by SSU
+                // owen@ostephens.com 28th March 2012
+                /*
                 //OU specific fields
                 //$mform->addElement('header', 'general', get_string('form_OU', 'refworks'));
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_u1">');
@@ -256,43 +256,43 @@ class refworks_managerefs_form extends moodleform {
                 $mform->setType('u3', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
 */
-				// Additional fields for SSU. owen@ostephens.com 22nd May 2012
-				// Availability (av)
-				$mform->addElement('html', '<div class="mrefformcontainer" id="container_av">');
-				$mform->addElement('text', 'av', get_string('form_av', 'refworks'));
-				$mform->setType('av', PARAM_TEXT);
-				$mform->addElement('html', '</div>');
-				
-				// Link (lk)
-				$mform->addElement('html', '<div class="mrefformcontainer" id="container_lk">');
-				$mform->addElement('text', 'lk', get_string('form_lk', 'refworks'));
-				$mform->setType('lk', PARAM_TEXT);
-				$mform->addElement('html', '</div>');
+                // Additional fields for SSU. owen@ostephens.com 22nd May 2012
+                // Availability (av)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_av">');
+                $mform->addElement('text', 'av', get_string('form_av', 'refworks'));
+                $mform->setType('av', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
+                
+                // Link (lk)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_lk">');
+                $mform->addElement('text', 'lk', get_string('form_lk', 'refworks'));
+                $mform->setType('lk', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
 
-				// Database (db)
-				$mform->addElement('html', '<div class="mrefformcontainer" id="container_db">');
-				$mform->addElement('text', 'db', get_string('form_db', 'refworks'));
-				$mform->setType('db', PARAM_TEXT);
-				$mform->addElement('html', '</div>');
+                // Database (db)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_db">');
+                $mform->addElement('text', 'db', get_string('form_db', 'refworks'));
+                $mform->setType('db', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
 
-				// Journal Abbreviation (jo)
-				$mform->addElement('html', '<div class="mrefformcontainer" id="container_jo">');
-				$mform->addElement('text', 'jo', get_string('form_jo', 'refworks'));
-				$mform->setType('jo', PARAM_TEXT);
-				$mform->addElement('html', '</div>');
+                // Journal Abbreviation (jo)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_jo">');
+                $mform->addElement('text', 'jo', get_string('form_jo', 'refworks'));
+                $mform->setType('jo', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
 
-				// Descriptors (k1)
-				$mform->addElement('html', '<div class="mrefformcontainer" id="container_k1">');
-				$mform->addElement('text', 'k1', get_string('form_k1', 'refworks'));
-				$mform->setType('k1', PARAM_TEXT);
-				$mform->addElement('html', '</div>');
-				
-				//Date retrieved (rd)
+                // Descriptors (k1)
+                $mform->addElement('html', '<div class="mrefformcontainer" id="container_k1">');
+                $mform->addElement('text', 'k1', get_string('form_k1', 'refworks'));
+                $mform->setType('k1', PARAM_TEXT);
+                $mform->addElement('html', '</div>');
+                
+                //Date retrieved (rd)
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_retrieved">');
                 $mform->addElement('text', 'rd', get_string('form_retrieved', 'refworks'));
                 $mform->setType('rd', PARAM_TEXT);
                 $mform->addElement('html', '</div>');
-				// End of Additional fields for SSU
+                // End of Additional fields for SSU
 
                 //u5 - url override (staff cap only)
                 if (refworks_base::check_capabilities('mod/refworks:allow_url_override')) {
@@ -304,28 +304,28 @@ class refworks_managerefs_form extends moodleform {
                     $mform->addElement('hidden', 'u5', '');
                 }
 
-				//Source type
+                //Source type
                 $sourcetypes = array(
-					'Print(0)' => get_string('form_sourcetype0', 'refworks'),
+                    'Print(0)' => get_string('form_sourcetype0', 'refworks'),
                     'Electronic(1)' => get_string('form_sourcetype1', 'refworks')
                 );
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_sourcetype">');
                 $mform->addElement('select', 'sr', get_string('form_sourcetype', 'refworks'), $sourcetypes);
                 $mform->addElement('html', '</div>');
-				
+                
                 //Notes field
                 $mform->addElement('html', '<div class="mrefformcontainer" id="container_no">');
                 $mform->addElement('textarea', 'no', get_string('form_no', 'refworks'));
                 $mform->setType('no', PARAM_TEXT);
-				// Auto notes functionality added for SSU. owen@ostephens.com 21 September 2011
-				// Will only show for those who are also allowed to override URLs in u5
-				if(refworks_base::check_capabilities('mod/refworks:allow_url_override')){
-					$mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_1', 'refworks').'\');return false;">Add Note: '.get_string('autonote_1', 'refworks').'</a>');
-					$mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_2', 'refworks').'\');return false;">Add Note: '.get_string('autonote_2', 'refworks').'</a>');
-					$mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_3', 'refworks').'</a>');
+                // Auto notes functionality added for SSU. owen@ostephens.com 21 September 2011
+                // Will only show for those who are also allowed to override URLs in u5
+                if(refworks_base::check_capabilities('mod/refworks:allow_url_override')){
+                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_1', 'refworks').'\');return false;">Add Note: '.get_string('autonote_1', 'refworks').'</a>');
+                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_2', 'refworks').'\');return false;">Add Note: '.get_string('autonote_2', 'refworks').'</a>');
+                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_3', 'refworks').'</a>');
                     $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_4', 'refworks').'</a>');
                     $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_5', 'refworks').'</a>');
-				}
+                }
                 $mform->addElement('html', '</div>');
             }
 }
