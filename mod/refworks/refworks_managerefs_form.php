@@ -323,8 +323,8 @@ class refworks_managerefs_form extends moodleform {
                     $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_1', 'refworks').'\');return false;">Add Note: '.get_string('autonote_1', 'refworks').'</a>');
                     $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_2', 'refworks').'\');return false;">Add Note: '.get_string('autonote_2', 'refworks').'</a>');
                     $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_3', 'refworks').'</a>');
-                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_4', 'refworks').'</a>');
-                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_3', 'refworks').'\');return false;">Add Note: '.get_string('autonote_5', 'refworks').'</a>');
+                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_4', 'refworks').'\');return false;">Add Note: '.get_string('autonote_4', 'refworks').'</a>');
+                    $mform->addElement('html','<br/><a href="#" onclick="autoNotes(\''.get_string('autonote_5', 'refworks').'\');return false;">Add Note: '.get_string('autonote_5', 'refworks').'</a>');
                 }
                 $mform->addElement('html', '</div>');
             }
