@@ -225,7 +225,9 @@ $string['issn_primo'] = 'Tried checking ISSN on Primo.';
 //Auto Notes
 $string['autonote_1'] = 'Digitised material';
 $string['autonote_2'] = 'Ebook - printed version also available';
-$string['autonote_3'] = 'Ebook only';
+$string['autonote_3'] = 'Ebook';
+$string['autonote_4'] = 'On order';
+$string['autonote_5'] = 'Digitised material requested';
 
 //Collaborative accounts
 $string['team_account'] = 'Shared account';
