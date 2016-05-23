@@ -20,7 +20,7 @@ function local_references_cron() {
     if ($timenow < strtotime('00:00') + 3630) {
         mtrace("Skipping local_references cron as not after 1:30am");
 		return;
-	} elseif ($timenow > strtotime('00:00') + 33720) {
+	} elseif ($timenow > strtotime('00:00') + 3690) {
 		mtrace("Skipping local_references cron as after 2:30am");
 		return;
 	} else {
