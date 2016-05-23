@@ -33,8 +33,6 @@ if ($ADMIN->fulltree) {
     $defaultdisplayoptions = array(RESOURCELIB_DISPLAY_OPEN);
 
     //--- general settings -----------------------------------------------------------------------------------
-    $settings->add(new admin_setting_configcheckbox('readinglist/requiremodintro',
-        get_string('requiremodintro', 'admin'), get_string('configrequiremodintro', 'admin'), 1));
     $settings->add(new admin_setting_configmultiselect('readinglist/displayoptions',
         get_string('displayoptions', 'readinglist'), get_string('configdisplayoptions', 'readinglist'),
         $defaultdisplayoptions, $displayoptions));

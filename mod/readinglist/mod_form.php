@@ -47,7 +47,7 @@ class mod_readinglist_mod_form extends moodleform_mod {
             $mform->setType('name', PARAM_CLEANHTML);
         }
         $mform->addRule('name', null, 'required', null, 'client');
-        $this->standard_intro_elements($config->requiremodintro);
+        $this->standard_intro_elements(get_string('moduleintro'));
 
         //-------------------------------------------------------
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'readinglist'));
