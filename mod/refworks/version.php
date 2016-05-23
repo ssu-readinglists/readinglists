@@ -9,8 +9,9 @@
  * @package mod/refworks
  */
 
-$module->version  = 2013071000;  // The current module version (Date: YYYYMMDDXX)
-$module->requires = 2010080300; //2.0
-$module->cron     = 604800;           // Period for cron to check this module (secs)
+$plugin->version  = 2016052300;  // The current module version (Date: YYYYMMDDXX)
+$plugin->requires = 2010080300; //2.0
+$plugin->cron     = 604800;           // Period for cron to check this module (secs)
+$plugin->component = "mod_refworks";
 
 ?>

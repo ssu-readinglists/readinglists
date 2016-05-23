@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Page module version information
+ * Page plugin version information
  *
  * @package    mod
  * @subpackage readinglist
@@ -25,7 +25,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$module->version   = 2015050500;       // The current module version (Date: YYYYMMDDXX)
-$module->requires  = 2014051200;       // Requires this Moodle version
-$module->component = 'mod_readinglist';       // Full name of the plugin (used for diagnostics)
-$module->cron      = 0;
+$plugin->version   = 2016051300;       // The current module version (Date: YYYYMMDDXX)
+$plugin->requires  = 2014051200;       // Requires this Moodle version
+$plugin->component = 'mod_readinglist';       // Full name of the plugin (used for diagnostics)
+$plugin->cron      = 0;
