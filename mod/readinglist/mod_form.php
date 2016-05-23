@@ -47,13 +47,14 @@ class mod_readinglist_mod_form extends moodleform_mod {
             $mform->setType('name', PARAM_CLEANHTML);
         }
         $mform->addRule('name', null, 'required', null, 'client');
-        $this->add_intro_editor($config->requiremodintro);
+        $this->standard_intro_elements($config->requiremodintro);
 
         //-------------------------------------------------------
         $mform->addElement('header', 'contentsection', get_string('contentheader', 'readinglist'));
         $mform->addElement('editor', 'readinglist', get_string('content', 'readinglist'), null, readinglist_get_editor_options($this->context));
         $mform->addRule('readinglist', get_string('required'), 'required', null, 'client');
 		$mform->addElement('text', 'footer', get_string('footer', 'readinglist'), array('size'=>100));
+        $mform->setType('footer', PARAM_CLEANHTML);
 		$mform->setDefault('footer', get_string('defaultfooter','readinglist'));
         //-------------------------------------------------------
         $mform->addElement('header', 'optionssection', get_string('optionsheader', 'readinglist'));
