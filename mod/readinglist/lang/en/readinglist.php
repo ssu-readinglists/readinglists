@@ -24,7 +24,6 @@
  */
 
 $string['configdisplayoptions'] = 'Select all options that should be available, existing settings are not modified. Hold CTRL key to select multiple fields.';
-$string['configrequiremodintro'] = 'Disable this option if you do not want to force users to enter description of each activity.';
 $string['content'] = 'Reading list';
 $string['contentheader'] = 'Content';
 $string['displayoptions'] = 'Available display options';
@@ -39,7 +38,6 @@ $string['page-mod-readinglist-x'] = 'Any reading list module page';
 $string['readinglist:view'] = 'View reading list content';
 $string['readinglist:edit'] = 'Permission to see and use R button in html editor';
 $string['readinglist:manage'] = 'Permission to see and use Refresh link';
-$string['requiremodintro'] = 'Require activity description';
 $string['pluginadministration'] = 'Reading list module administration';
 $string['pluginname'] = 'Reading List';
 $string['popupheight'] = 'Popup height (in pixels)';
