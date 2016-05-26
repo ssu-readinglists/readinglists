@@ -15,7 +15,7 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Displays the TinyMCE popup window to insert a Moodle emoticon
+ * Displays the TinyMCE popup window to insert a Refworks RefShare URL with headings
  *
  * @package    tinymceplugin
  * @subpackage insertrefshare
