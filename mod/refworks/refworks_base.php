@@ -100,7 +100,7 @@ class refworks_base {
      */
     public static function write_header($breadcrumbs=array(), $curfile = '') {
         GLOBAL $CFG, $OUTPUT, $PAGE;
-		$PAGE->set_pagelayout('refworks');
+		$PAGE->set_pagelayout('standard');
         // Breadcrumb module title - always try and use title from admin settings, if not use lang file
         if (!empty(self::$config->refworks_name)) {
             $strrefworks  = self::$config->refworks_name;
@@ -292,7 +292,7 @@ class refworks_base {
             //Collaboration - Check if user can access any accounts + add to menu
             if (count(refworks_collab_lib::get_user_accounts($USER->id))>0) {
                 array_push($menuarray[3]['items'], array('title' => get_string('team_login','refworks')));
-				array_push($menuarray[3]['items'], array('title' => 'Filter:', 'input' => 'ac-input', 'type' => 'text'));
+				array_push($menuarray[3]['items'], array('title' => 'Filter:', 'input' => 'ac-input','type' => 'text','size'=>'16'));
                 foreach (refworks_collab_lib::$accsavail as $acc) {
                     array_push($menuarray[3]['items'], array('title' => stripslashes($acc->name), 'link'=>'collab/collab_login.php?accid='.$acc->id, 'style'=>'account'));
                 }
@@ -361,7 +361,7 @@ class refworks_base {
 					// Is it an input? If so set type and use title as label
 					} else if (isset($menuarray[$a]['items'][$b]['input']) && $menuarray[$a]['items'][$b]['input']!='') {
 						$blockcontent .= '<label for="'.$menuarray[$a]['items'][$b]['input'].'">'.htmlspecialchars($menuarray[$a]['items'][$b]['title']).'</label>';
-						$blockcontent .= '<input id="'.$menuarray[$a]['items'][$b]['input'].'" type="'.$menuarray[$a]['items'][$b]['type'].'">';
+						$blockcontent .= '<input id="'.$menuarray[$a]['items'][$b]['input'].'" type="'.$menuarray[$a]['items'][$b]['type'].'" size="'.$menuarray[$a]['items'][$b]['size'].'">';
                     } else {
                         $blockcontent .= '<span>'.htmlspecialchars($menuarray[$a]['items'][$b]['title']).'</span>';
                     }
