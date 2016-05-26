@@ -877,7 +877,9 @@ class refworks_display {
                 $issel = optional_param('r_'.$id,false,PARAM_BOOL);
             }
         }
-        $output .= print_checkbox('r_'.$id, true, $issel, '', get_string('ref_select','refworks').' '.$reftitle, '' , true);
+        #$output .= print_checkbox('r_'.$id, true, $issel, '', get_string('ref_select','refworks').' '.$reftitle, '' , true);
+        #$output .= html_writer::checkbox(htmlspecialchars(refworks_base::return_foldername($fldname)), true, $issel, '');
+        $output .= html_writer::checkbox(htmlspecialchars('r_'.$id), true, $issel, '');
         $output .= '</td>';
         return $output;
     }
