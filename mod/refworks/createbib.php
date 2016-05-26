@@ -125,20 +125,6 @@ if ($selcreatebib!='no') {
     $prelim = strip_tags($citations,'<p><em><strong><u><div>');
     echo('<div class="citation_list">'.$prelim.'');
 
-
-    //PORTFOLIO BUTTON
-    require_once($CFG->libdir . '/portfoliolib.php');
-    $button = new portfolio_add_button();
-    $args = array('result' => htmlentities($prelim, ENT_QUOTES, 'utf-8', false));
-    if (refworks_base::$isinstance) {
-        $args['id'] = refworks_base::$instance->id;
-    } else {
-        $args['id'] = 0;
-    }
-    $button->set_callback_options('refworks_portfolio_caller', $args, '/mod/refworks/refworks_portfolio.php');
-    //$button->set_format_by_file($file);
-
-    echo $button->to_html(PORTFOLIO_ADD_FULL_FORM);
     echo '</div>';
 
     if (refworks_base::$isinstance) {
