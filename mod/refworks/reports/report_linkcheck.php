@@ -8,7 +8,7 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package refworks/reports/
  */
-
+require_once(dirname(__FILE__).'/../refworks_base.php');
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/references/linking.php');;
 
 class refworks_report_linkcheck extends refworks_report{
@@ -73,11 +73,11 @@ class refworks_report_linkcheck extends refworks_report{
         //show total number of links 404 errors
         //Show what links errored (intial + final dest) + link to edit ref?
         echo '<div class="linklist">'.get_string('report_linkcheck_totalhttperrors','refworks',count($httperrors)).'</div>';
-        self::write_list(&$httperrors,&$checked,&$reflist,'response');
+        self::write_list($httperrors,$checked,$reflist,'response');
         //Show total number of links that SFX could not resolve
         //Show what links (intial + final dest) + link to edit ref?
         echo '<div>'.get_string('report_linkcheck_totalerrorlinks','refworks',count($sfxerrors)).'</div>';
-        self::write_list(&$sfxerrors,&$checked,&$reflist,'final');
+        self::write_list($sfxerrors,$checked,$reflist,'final');
         echo '</div>';
     }
 
@@ -89,7 +89,7 @@ class refworks_report_linkcheck extends refworks_report{
      * @param $param string: 'final'=show any links that went to error pages, "response" show errors due to http response
      * @return unknown_type
      */
-    private static function write_list(&$array, &$checked, &$reflist, $param) {
+    private static function write_list($array, $checked, $reflist, $param) {
         global $CFG;
 
         echo '<ol>';
@@ -167,7 +167,7 @@ class refworks_report_linkcheck extends refworks_report{
         }
         //before running the curl look for sfx urls and tranform into an api call
         //result will populate the array elements with actual/final link
-        self::add_url_from_sfx_api(&$curls, &$cm);
+        self::add_url_from_sfx_api($curls, $cm);
         //run curl multi + wait
         $running=null;
         $t1 = time();
@@ -258,7 +258,7 @@ class refworks_report_linkcheck extends refworks_report{
     * @param $cm
     * @return unknown_type
     */
-    private static function add_url_from_sfx_api(&$curls, &$cm) {
+    private static function add_url_from_sfx_api($curls, $cm) {
         //concerns over sfx api handling lots of openurls per call, split into blocks of 25
         $chunks = array_chunk($curls,25,true);
         $curlobjs = array();
