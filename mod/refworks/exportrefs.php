@@ -46,7 +46,7 @@ $folderlist = refworks_base::return_foldername(optional_param('folderlist','',PA
 
 //Nasty class used to access reference_export as has protected functions
 class refworks_exportrefs extends references_export{
-    public function return_export_menu($options) {
+    public function return_export_menu(&$options) {
         return parent::return_export_menu($options);
     }
     public function return_submitted() {
