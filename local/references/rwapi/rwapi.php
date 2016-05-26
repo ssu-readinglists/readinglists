@@ -520,7 +520,7 @@ class rwapi {
                 $cururl .= '?'.$_SERVER['QUERY_STRING'];
             }
             $cururl = substr($cururl, 0, 100);
-            add_to_log($courseid,'rwapi','error',$cururl,$text);
+            //add_to_log($courseid,'rwapi','error',$cururl,$text);
         }
     }
 

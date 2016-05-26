@@ -430,9 +430,9 @@ if (optional_param('cancel', 0, PARAM_RAW)) {
                 }
             }
         }
-        if (refworks_base::$isinstance) {
-            add_to_log(refworks_base::$course->id,'refworks','manageref','managerefs.php?id='.refworks_base::$cm->id,'Made reference update.',refworks_base::$cm->id);
-        }
+        //if (refworks_base::$isinstance) {
+        //    add_to_log(refworks_base::$course->id,'refworks','manageref','managerefs.php?id='.refworks_base::$cm->id,'Made reference update.',refworks_base::$cm->id);
+        //}
     }
     //now display form as usual...
 }
@@ -529,8 +529,8 @@ echo '</div>';
 
 echo $OUTPUT->box_end();
 refworks_base::write_footer();
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','managerefs.php?id='.refworks_base::$cm->id,'Access reference update.',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','managerefs.php?id='.refworks_base::$cm->id,'Access reference update.',refworks_base::$cm->id);
+//}
 
 ?>

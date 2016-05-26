@@ -41,9 +41,9 @@ notify(get_string('team_logoutsuccess','refworks'),'notifysuccess');
 
 refworks_connect::write_login_errors();
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_logout.php?id='.refworks_base::$cm->id,'Log out of team account',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_logout.php?id='.refworks_base::$cm->id,'Log out of team account',refworks_base::$cm->id);
+//}
 
 refworks_base::write_footer();
 ?>

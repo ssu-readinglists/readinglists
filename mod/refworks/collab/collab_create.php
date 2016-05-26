@@ -156,9 +156,9 @@ if (refworks_base::$isinstance) {
 $mform->display();
 
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_create.php?id='.refworks_base::$cm->id,'Create a team account',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_create.php?id='.refworks_base::$cm->id,'Create a team account',refworks_base::$cm->id);
+//}
 
 refworks_base::write_footer();
 ?>

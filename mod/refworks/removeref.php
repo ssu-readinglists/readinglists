@@ -101,8 +101,8 @@ if ($userok == 0) {
 }
 refworks_base::write_footer();
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','removeref.php?id='.refworks_base::$cm->id,'Access RefWorks reference remove from folder',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','removeref.php?id='.refworks_base::$cm->id,'Access RefWorks reference remove from folder',refworks_base::$cm->id);
+//}
 
 ?>

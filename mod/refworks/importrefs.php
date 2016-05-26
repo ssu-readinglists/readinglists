@@ -160,8 +160,8 @@ refworks_base::write_footer();
 //add_to_log($course->id,'resourcepage','view','','Import references form',$id);
 
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','importrefs.php?id='.refworks_base::$cm->id,'Access RefWorks reference import',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','importrefs.php?id='.refworks_base::$cm->id,'Access RefWorks reference import',refworks_base::$cm->id);
+//}
 
 ?>

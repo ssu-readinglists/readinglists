@@ -209,9 +209,9 @@ if ($idlist!='' || $folderlist!='') {
         refworks_connect::write_login_errors();
     }
     //log an export
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','exportref','exportrefs.php?id='.refworks_base::$cm->id.'&all='.$showall,$submitted,refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','exportref','exportrefs.php?id='.refworks_base::$cm->id.'&all='.$showall,$submitted,refworks_base::$cm->id);
+    //}
 
     //call export function
     if ($exportmen->start_export_action($submitted,$data,$options)===false) {
@@ -312,9 +312,9 @@ refworks_display::write_ref_list($allrefs, refworks_display::selectaction);
 
 echo('</form>');//end of main ref_sel_form
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','exportrefs.php?id='.refworks_base::$cm->id.'&all='.$showall,'View references for export',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','exportrefs.php?id='.refworks_base::$cm->id.'&all='.$showall,'View references for export',refworks_base::$cm->id);
+//}
 $curpage = refworks_display::write_page_list($sorting, $curpage, $count, $showall, refworks_base::return_link('exportrefs.php?&amp;sort='.$sorting), $numperpage, false);
 refworks_base::write_footer();
 

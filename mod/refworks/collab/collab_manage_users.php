@@ -54,9 +54,9 @@ if (!refworks_collab_lib::can_user_own_account($accid) && !refworks_base::check_
 //Include the invite code
 require_once(dirname(__FILE__).'/collab_manage_invite.php');
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_manage_users.php?id='.refworks_base::$cm->id,'Manage acess to team account',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_manage_users.php?id='.refworks_base::$cm->id,'Manage acess to team account',refworks_base::$cm->id);
+//}
 
 refworks_base::write_footer();
 ?>

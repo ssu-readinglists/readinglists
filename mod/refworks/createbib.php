@@ -127,9 +127,9 @@ if ($selcreatebib!='no') {
 
     echo '</div>';
 
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','createbib','createbib.php?id='.refworks_base::$cm->id.'&all='.$showall,'Created Bibliography',refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','createbib','createbib.php?id='.refworks_base::$cm->id.'&all='.$showall,'Created Bibliography',refworks_base::$cm->id);
+    //}
 }
 else{//Default view
     //Main content goes here
@@ -216,9 +216,9 @@ else{//Default view
 
     echo('</form>');//end of main ref_sel_form
 
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','view','createbib.php?id='.refworks_base::$cm->id.'&all='.$showall,'View references for Bibliography',refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','view','createbib.php?id='.refworks_base::$cm->id.'&all='.$showall,'View references for Bibliography',refworks_base::$cm->id);
+    //}
 	$curpage = refworks_display::write_page_list($sorting, $curpage, $count, $showall, refworks_base::return_link('createbib.php?&amp;sort='.$sorting), $numperpage, false);
 }
 

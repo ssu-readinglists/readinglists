@@ -139,8 +139,8 @@ if ($mform->is_cancelled()) {
 
     echo $OUTPUT->box_end();
     refworks_base::write_footer();
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','view','moveref.php?id='.refworks_base::$cm->id,'Access RefWorks reference add to folder',refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','view','moveref.php?id='.refworks_base::$cm->id,'Access RefWorks reference add to folder',refworks_base::$cm->id);
+    //}
 }
 ?>

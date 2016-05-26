@@ -71,9 +71,9 @@ refworks_base::write_heading(get_string('team_loggingin', 'refworks'));
 //show result
 if ($result) {
     notify(get_string('team_loginsuccess','refworks'),'notifysuccess');
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_login.php?id='.refworks_base::$cm->id.'&accid='.$accid,'Logged into team account',refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_login.php?id='.refworks_base::$cm->id.'&accid='.$accid,'Logged into team account',refworks_base::$cm->id);
+    //}
 
     //update db with login time
     refworks_collab_lib::update_login_time($accid);
@@ -81,9 +81,9 @@ if ($result) {
 } else {
     //error creating session
     refworks_base::write_error(get_string('team_loginerror','refworks'));
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_login.php?id='.refworks_base::$cm->id.'&accid='.$accid,'Failure to log into team account',refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','view','collab/collab_login.php?id='.refworks_base::$cm->id.'&accid='.$accid,'Failure to log into team account',refworks_base::$cm->id);
+    //}
 }
 
 refworks_connect::write_login_errors();

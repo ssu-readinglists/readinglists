@@ -117,9 +117,9 @@ $allrefs = refworks_ref_api::get_all_refs($curpage, $numperpage, $sorting, 0, 'h
 //send refs returned to display class to create items
 refworks_display::write_ref_list($allrefs, refworks_display::folderviewaction);
 
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','viewfolder.php?id='.refworks_base::$cm->id.'&all='.$showall,'View folder',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','viewfolder.php?id='.refworks_base::$cm->id.'&all='.$showall,'View folder',refworks_base::$cm->id);
+//}
 $curpage = refworks_display::write_page_list($sorting, $curpage, $count, $showall, refworks_base::return_link('viewfolder.php?&amp;sort='.$sorting.'&amp;folder='.urlencode($fld)), $numperpage);
 refworks_base::write_footer();
 ?>

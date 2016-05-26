@@ -302,9 +302,9 @@ if ($search_doi || $search_isbn || $search_issn || $search_primorid || $search_a
             }
 
         }
-        if (refworks_base::$isinstance) {
-            add_to_log(refworks_base::$course->id,'refworks','createref','createrefs.php?id='.refworks_base::$cm->id,'Create reference.',refworks_base::$cm->id);
-        }
+        //if (refworks_base::$isinstance) {
+        //    add_to_log(refworks_base::$course->id,'refworks','createref','createrefs.php?id='.refworks_base::$cm->id,'Create reference.',refworks_base::$cm->id);
+        //}
     }
     //now display form as usual...
 }
@@ -358,7 +358,7 @@ echo '</div>';
 //print_simple_box_end();
 echo $OUTPUT->box_end();
 refworks_base::write_footer();
-if (refworks_base::$isinstance) {
-    add_to_log(refworks_base::$course->id,'refworks','view','createrefs.php?id='.refworks_base::$cm->id,'Create reference.',refworks_base::$cm->id);
-}
+//if (refworks_base::$isinstance) {
+//    add_to_log(refworks_base::$course->id,'refworks','view','createrefs.php?id='.refworks_base::$cm->id,'Create reference.',refworks_base::$cm->id);
+//}
 ?>
