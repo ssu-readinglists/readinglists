@@ -18,7 +18,9 @@ abstract class refworks_report{
      * Runs a report
      * @param $data string: xml of references
      */
-    abstract public static function run_report($data);
+    public static function run_report($data) {
+        false;
+    }
 
     //shared methods
 
