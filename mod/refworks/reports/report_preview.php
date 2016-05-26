@@ -9,16 +9,14 @@
  * @license http://www.gnu.org/copyleft/gpl.html GNU Public License
  * @package refworks/reports/
  */
-
+require_once(dirname(__FILE__).'/../refworks_base.php');
+require_once(dirname(__FILE__).'/../refworks_ref_api.php');
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/references/linking.php');
 require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/references/convert/refxml.php');
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/references/apibib/apibib_lib.php');
-
 
 class refworks_report_preview extends refworks_report{
 
     public static function run_report($data) {
-
         //turn data string into an xml dom object
         if (!$refxml = self::string_to_dom($data)) {
             return;
@@ -41,7 +39,7 @@ class refworks_report_preview extends refworks_report{
 
             //convert refstyle from refworks mod quikbib str into apibib string text
             $returnedstyle = required_param('refstyleselect',PARAM_TEXT);
-            $referencestyles = apibib::get_referencestyles();
+            $referencestyles = refworks_ref_api::get_reference_styles();
             $refstyle=$referencestyles[0]['string'];
             foreach ($referencestyles as $style) {
                 if ($style['string'] == $returnedstyle) {
@@ -49,22 +47,16 @@ class refworks_report_preview extends refworks_report{
                 }
             }
 
+            //TODO: Want to avoid apibib call here?
             //get reference titles from quikbib
-            $titles=apibib::getbib($data,$refstyle,'RefWorks XML');
-            if (!is_array($titles)) {
-                $titles=array();
-            }
+            //$titles=apibib::getbib($data,$refstyle,'RefWorks XML');
+
 
             //get all the links
             $linking = linking::create_link($refxml);
 
             $refs = $refxml->getElementsByTagName('reference');
             for ($a=0,$max=$refs->length;$a<$max;$a++) {
-
-                $title='';
-                if (array_key_exists($a,$titles)) {
-                    $title=$titles[$a];
-                }
                 //description
                 $desc = '';
                 $notes = $refs->item($a)->getElementsByTagName('no');
@@ -78,6 +70,10 @@ class refworks_report_preview extends refworks_report{
                     $refidval = $refid->item(0)->nodeValue;
                     $id = clean_param($refidval, PARAM_INT);
                 }
+                $title_doc = refworks_ref_api::get_citations(array($id), $refstyle);
+                error_log($title_doc);
+                $title_xml = self::string_to_dom($title_doc);
+                $title = $title_xml->getElementsByTagName('FormattedBib')->item(0)->nodeValue;
                 $weblink = $linking[$a]["url"];
 
                 //create "reference" item
@@ -96,7 +92,7 @@ class refworks_report_preview extends refworks_report{
      * @param $id int - reference id
      * @return unknown_type
      */
-    private function add_ref_item($title,$weblink=null,$desc,$id,$type) {
+    private static function add_ref_item($title,$weblink=null,$desc,$id,$type) {
 
         global $CFG;
 
@@ -111,17 +107,19 @@ class refworks_report_preview extends refworks_report{
         //edit ref form
         $output.= '<form id="ref_updates_'.$id.'" method="post" action="../managerefs.php"><input type="image" name="update" src="'.refworks_display::get_image_paths()->edit.'" alt="'.get_string('ref_update','refworks').'" title="'.get_string('ref_update','refworks').' '.$alttitle.'" /> ';
 
-        $output.= '<input type="hidden" name="refid" value="'.$id.'" />';
-        $output.= '<input name="sesskey" type="hidden" value="'.sesskey().'" />';
+        $output .= '<div style="display: none;">';
+        $output .= '<input type="hidden" name="refid" value="'.$id.'" />';
+        $output .= '<input name="sesskey" type="hidden" value="'.sesskey().'" />';
         if (refworks_base::$isinstance) {
             //if in instance also need id to be sent
-            $output.= '<input type="hidden" name="id" value="'.refworks_base::$cm->id.'" />';
+            $output .= '<input type="hidden" name="id" value="'.refworks_base::$cm->id.'" />';
         }
+        $output .= '</div></form>';
         //create "reference" item
         if ($type=='preview_rp') {
 
             if ($weblink) {
-                $output.= '<a href="'.$weblink.'">'.$title.'</a></form></div>';
+                $output.= '</form><a href="'.$weblink.'">'.$title.'</a></div>';
             } else {
                 $output.= $title.'</form></div>';
             }
