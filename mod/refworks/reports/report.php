@@ -11,14 +11,14 @@
 require_once(dirname(__FILE__).'/../refworks_base.php');
 require_once(dirname(__FILE__).'/../refworks_ref_api.php');
 require_once(dirname(__FILE__).'/../refworks_display.php');
-require_once(dirname(dirname(dirname(dirname(__FILE__)))).'/local/references/apibib/apibib_lib.php');
 
+refworks_base::init();
 //Add reports here, the class must extend refworks_report
 require_once(dirname(__FILE__).'/report_abstract.php');
 require_once(dirname(__FILE__).'/report_linkcheck.php');
 require_once(dirname(__FILE__).'/report_preview.php');
 
-refworks_base::init();
+
 
 //get if optional sorting param set by user
 $sorting = optional_param('sort',9,PARAM_INT);
@@ -158,7 +158,8 @@ if ($reporttorun!='none') {
 
     //add the reference style options to the user select
     $stylenamearray = array();//styles available
-    foreach (apibib::get_referencestyles() as $styleindex) {
+    $stylesarray = refworks_ref_api::get_reference_styles(); //get the styles available
+    foreach ($stylesarray as $styleindex) {
         $stylenamearray[$styleindex['string']] = htmlspecialchars($styleindex['quikbib']);
     }
     $output = '<form id="ref_sel_form" action="" method="post">';
@@ -212,9 +213,9 @@ if ($reporttorun!='none') {
 
     echo('</form>');//end of main ref_sel_form
 
-    if (refworks_base::$isinstance) {
-        add_to_log(refworks_base::$course->id,'refworks','view','reports/report.php?id='.refworks_base::$cm->id.'&all='.$showall,'Make a reference report',refworks_base::$cm->id);
-    }
+    //if (refworks_base::$isinstance) {
+    //    add_to_log(refworks_base::$course->id,'refworks','view','reports/report.php?id='.refworks_base::$cm->id.'&all='.$showall,'Make a reference report',refworks_base::$cm->id);
+    //}
     $curpage = refworks_display::write_page_list($sorting, $curpage, $count, $showall, refworks_base::return_link('reports/report.php?&amp;sort='.$sorting), $numperpage, false);
 }
 refworks_base::write_footer();
