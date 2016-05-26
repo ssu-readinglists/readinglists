@@ -11,13 +11,19 @@
 abstract class references_convert_format{
 
     //shared abstract functions (overwritten by classes)
-    abstract public static function can_import();
+    public static function can_import() {
+        return false;
+    }
 
-    abstract public static function can_export();
+    public static function can_export() {
+        return false;
+    }
 
     abstract public function import(&$data);
 
-    abstract public static function is_format(&$data);
+    public static function is_format(&$data) {
+        return false;
+    }
 
     abstract public function export(&$data,$options);
 
