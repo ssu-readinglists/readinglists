@@ -133,3 +133,4 @@ $string['refexport_rwxml']='RefWorks XML';
 $string['refexport_rwxmldesc']='Download the references in XML file format.<br/>This format can be imported into a RefWorks/MyReferences account.';
 
 $string['linktorefworks'] = '[http://refworks.com]';
+$string['crontask'] = 'References Local maintenance jobs (tidy up RefWorks temp accounts)';
