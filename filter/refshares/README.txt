@@ -67,6 +67,8 @@ The refshares_cron function does the following:
 3) extracts the RefShare RSS URL and the style from the rawtext string (this is stored in a span id - see "Styling" below)
 4) creates a refreshed cached version
 
+Because this task can run for some time, there is a setting in the Filter settings called 'timeout' which allows you to specify a limit to how long this job will run before stopping. If it hasn't refreshed all cached lists in this time it will pick up the remaining lists on the next run.
+
 N.B. THE FREQUENCY WITH WHICH THE SCHEDULED JOB RUNS WILL DICTATE THE MAXIMUM POSSIBLE FREQUENCY FOR UPDATING CACHED VERSIONS OF REFSHARES
 IF THE FILTER OPTION IS SET TO EXPIRE THE CACHE AFTER 1 MINUTE BUT THE SCHEDULED JOB RUNS EVERY 5 MINUTES THERE WILL BE A FOUR MINUTE WINDOW DURING WHICH CACHES ARE OUT OF DATE
 THIS MEANS THAT IF A USER REQUESTS THE PAGE DURING THESE FOUR MINUTES THE CACHE WOULD BE REFRESHED 'ON THE FLY' WHICH WILL RESULT IN SLOW
