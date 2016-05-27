@@ -15,15 +15,24 @@
 // along with Moodle.  If not, see <http://www.gnu.org/licenses/>.
 
 /**
- * Version details
+ * Definition of Forum scheduled tasks.
  *
- * @package    filter
- * @subpackage refshares
+ * @package   filter_refshares
+ * @category  task
+ * @copyright  2016 Owen Stephens
  * @license    http://www.gnu.org/copyleft/gpl.html GNU GPL v3 or later
  */
 
 defined('MOODLE_INTERNAL') || die();
 
-$plugin->version   = 2016052712;        // The current plugin version (Date: YYYYMMDDXX)
-$plugin->requires  = 2015111000;        // Requires this Moodle version
-$plugin->component = 'filter_refshares'; // Full name of the plugin (used for diagnostics)
+$tasks = array(
+    array(
+        'classname' => 'filter_refshares\task\cron_task',
+        'blocking' => 0,
+        'minute' => '*',
+        'hour' => '1',
+        'day' => '*',
+        'month' => '*',
+        'dayofweek' => '*'
+    )
+);

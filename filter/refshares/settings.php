@@ -16,9 +16,4 @@ $usejs = array('no' => 'Use original filter, no javascript', 'yes' => 'Use javas
 $settings->add(new admin_setting_configselect('filter_refshares_usejs', get_string('usejs', 'filter_refshares'), 
 											get_string('usejsconfig', 'filter_refshares'), 'no', $usejs));
 
-$cronwindow = array('1' => 'Run once a day, at approx 1am','0' => 'Never run');
-$settings->add(new admin_setting_configselect('filter_refshares_cronwindow', get_string('cronwindow', 'filter_refshares'), 
-											get_string('cronwindowconfig', 'filter_refshares'), 'none', $cronwindow));
-
-
 }

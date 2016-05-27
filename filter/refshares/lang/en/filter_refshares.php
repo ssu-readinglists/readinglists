@@ -14,6 +14,7 @@ $string['earliestcron'] = 'Earliest cron. The start time each day when the cron 
 $string['earliestcronconfig'] = 'This setting works together with the "Cron Window" configuration setting. The cron job to refresh cached filters will only run if it is after this time, and the length of time specified in the Window has not yet passed. For example if the settings are "01:00" and "1 hour", the cron job will only run if it is between 1am and 2am. If set to "none" there is no restriction.';
 $string['cronwindow'] = 'Run cron?'; 
 $string['cronwindowconfig'] = 'Set if the cron job for this filter runs or not';
+$string['crontask'] = 'Refshare Filter maintenance jobs';
 $string['userloadingmsg'] = 'The references are being fetched from Refworks, please be patient<br />';
 $string['javascriptoff'] = 'Your browser does not support javascript, or support for javascript has been switched off. You can try viewing the list by clicking the link below. Contact [local data - email address] for more information.<br />';
 
