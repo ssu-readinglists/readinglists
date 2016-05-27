@@ -47,21 +47,19 @@ If this amount of time has passed since the cached version was last updated, whe
 If the cache cannot be updated at that time (e.g. the RefWorks API does not respond, or the RSS feed cannot be retrieved) the existing 
 version will be served instead and an error logged.
 
-N.B. SEE NOTE BELOW ON INTERACTION BETWEEN CACHE EXPIRES INTERVAL AND CRON FREQUENCY
-ALSO NOTE THAT THERE IS AN OPTION TO SET A MOODLE-WIDE 'TEXT CACHE LIFETIME' FOR FILTERS.
-THIS OPTION TAKE PRECEDENCE OVER THE FILTER SPECIFIC CACHE SETTING, AS THE FILTER CODE IS NOT CALLED UNLESS THE TEXT CACHE HAS EXPIRED
+N.B. SEE NOTE BELOW ON INTERACTION BETWEEN CACHE EXPIRES INTERVAL AND SCHEDULED TASK FREQUENCY
 
 If this filter is used in conjunction with the 'ReadingList' Resource type, a user with appropriate permissions can force a refresh of cached versions.
 This happens automatically when a Readinglist resource is saved, and when viewing the reading list, a user with permissions can trigger a refresh.
 In both cases this refreshes the cache for all RefShares included in the page.
 
-Cron
-----
+Scheduled tasks
+---------------
 
-A cron job can be run to update the cached versions.
-There are two settings for the cron job - either to run once a day (approx. 1am), or to never run.
+A scheduled task can be run (via Moodle cron) to update the cached versions of reading lists.
+The frequency with which the job runs can be set via the Administration->Site Administration->Server->Scheduled Tasks options. The default is to run this once a day at 1am.
 
-Never running the cron increases the chances of slow loading lists in the UI as it increases the chances of a user requesting a list for which the cache has expired.
+Never running this scheduled task increases the chances of slow loading lists in the UI as it increases the chances of a user requesting a list for which the cache has expired.
 
 The refshares_cron function does the following:
 1) retrieves all cached filters
@@ -69,12 +67,11 @@ The refshares_cron function does the following:
 3) extracts the RefShare RSS URL and the style from the rawtext string (this is stored in a span id - see "Styling" below)
 4) creates a refreshed cached version
 
-N.B. THE FREQUENCY WITH WHICH THE MOODLE CRON RUNS WILL DICTATE THE MAXIMUM POSSIBLE FREQUENCY FOR UPDATING CACHED VERSIONS OF REFSHARES
-IF THE FILTER OPTION IS SET TO EXPIRE THE CACHE AFTER 1 MINUTE BUT THE CRON JOB RUNS EVERY 5 MINUTES THERE WILL BE A FOUR MINUTE WINDOW
-DURING WHICH CACHES ARE OUT OF DATE
+N.B. THE FREQUENCY WITH WHICH THE SCHEDULED JOB RUNS WILL DICTATE THE MAXIMUM POSSIBLE FREQUENCY FOR UPDATING CACHED VERSIONS OF REFSHARES
+IF THE FILTER OPTION IS SET TO EXPIRE THE CACHE AFTER 1 MINUTE BUT THE SCHEDULED JOB RUNS EVERY 5 MINUTES THERE WILL BE A FOUR MINUTE WINDOW DURING WHICH CACHES ARE OUT OF DATE
 THIS MEANS THAT IF A USER REQUESTS THE PAGE DURING THESE FOUR MINUTES THE CACHE WOULD BE REFRESHED 'ON THE FLY' WHICH WILL RESULT IN SLOW
 RESPONSE TIMES FOR THE USER.
-THEREFORE IT IS BETTER FOR THE CACHE EXPIRY TIME IN THE FILTER OPTION TO BE LARGER THAN THE INTERVAL BETWEEN CRON RUNS
+THEREFORE IT IS BETTER FOR THE CACHE EXPIRY TIME IN THE FILTER OPTION TO BE LARGER THAN THE INTERVAL BETWEEN SCHEDULED JOB RUNS
 
 Styling
 -------
