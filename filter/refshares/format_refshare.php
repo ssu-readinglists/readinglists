@@ -287,11 +287,18 @@ function format_refshare($refshare_url, $refshare_style) {
 	$count = count($alldata);
 	for ($i=0;$i<$count;$i++){
 		$data = $alldata[$i];
-		$document=DOMDocument::loadXML($data); //prepare for creation of weblink
-		$linking = linking::create_link($document, $coursename); //create weblink
+		$dom = new DOMDocument();
+		$dom->preserveWhiteSpace = false;
+		$dom->formatOutput = false;
+		if(!$dom->loadXML($data)){
+			$debug = 'Cannot parse create styled references with link (cannot load data into DOM)';
+			error_log($debug);
+			return false;
+		}
+		$linking = linking::create_link($dom, $coursename); //create weblink
 		$title = $titles[$i];
 		$desc = '';
-		$notes = $document->getElementsByTagName('no');
+		$notes = $dom->getElementsByTagName('no');
 		if($notes->length >0){
 			$noteval = $notes->item(0)->nodeValue;
 			$desc = clean_text($noteval, FORMAT_HTML).'<br>';
@@ -310,6 +317,7 @@ function format_refshare($refshare_url, $refshare_style) {
 			$formatted_refs .= $title;
 		}
 		$formatted_refs .= '</span><br><span class="reference_note">'.$desc.'</span><br>';
+		unset($dom);
 	}
 	
 	$formatted_refs .= '</span>';
