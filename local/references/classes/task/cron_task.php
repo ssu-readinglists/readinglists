@@ -31,16 +31,13 @@ class cron_task extends \core\task\scheduled_task {
     }
 
     public function execute() {
-    global $CFG;
-    require_once(dirname(__FILE__).'/apibib/apibib_lib.php');
-    if ($cleartemp = apibib::cleartemp()) {
-        mtrace($cleartemp);
-    } else {
-        mtrace('Unable to run clear temp successfully');
-        return;
+        global $CFG;
+        require_once(dirname(__FILE__).'/apibib/apibib_lib.php');
+        if ($cleartemp = apibib::cleartemp()) {
+            mtrace($cleartemp);
+        } else {
+            mtrace('Unable to run clear temp successfully');
+            return;
+        }
     }
-    // Update the lastcron time
-    set_config('lastcroncompleted', time(), 'local_references');
-    }
-        
 }

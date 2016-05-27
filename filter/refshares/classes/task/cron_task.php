@@ -77,7 +77,5 @@ class cron_task extends \core\task\scheduled_task {
         } else {
             mtrace("No cached RefShares needed updating");
         }
-    // Update the lastcroncompleted time representing last successful completion of cron job
-    set_config('lastcroncompleted', time(), 'filter_refshares');  
     }
 }
