@@ -16,4 +16,6 @@ $usejs = array('no' => 'Use original filter, no javascript', 'yes' => 'Use javas
 $settings->add(new admin_setting_configselect('filter_refshares_usejs', get_string('usejs', 'filter_refshares'), 
 											get_string('usejsconfig', 'filter_refshares'), 'no', $usejs));
 
+$settings->add(new admin_setting_configduration('filter_refshares_timeout', get_string('timeout', 'filter_refshares'), 
+                                                    get_string('timeoutdesc', 'filter_refshares'), 1800, 60));
 }

@@ -13,5 +13,7 @@ $string['usejsconfig'] = 'Control whether the filter is javascript based, or rel
 $string['crontask'] = 'Refshare Filter maintenance jobs';
 $string['userloadingmsg'] = 'The references are being fetched from Refworks, please be patient<br />';
 $string['javascriptoff'] = 'Your browser does not support javascript, or support for javascript has been switched off. You can try viewing the list by clicking the link below. Contact [local data - email address] for more information.<br />';
+$string['timeout'] = 'Scheduled Task Timeout';
+$string['timeoutdesc'] = 'The scheduled task re-caches reading lists periodically. This can take some time. This setting allows you to set a limit on how long the task will run for after being triggered as a scheduled task.'
 
 ?>

@@ -36,6 +36,10 @@ class cron_task extends \core\task\scheduled_task {
         $table = 'cache_filters';
         $refshare_records = $DB->get_records($table, array('filter' => 'refshares'));
         $refshares_updated = 0;
+        if(!$timeout = $CFG->filter_refshares_timeout) {
+            $timeout = 1800;
+        }
+        mtrace("TIMEOUT: ".$timeout);
         foreach ($refshare_records as $rec) {
             if (time()-$rec->timemodified > $CFG->filter_refshares_cacheexpires) {
                 mtrace("Cache expired, needs refreshing. ID in cache_filters table = ".$rec->id);
@@ -64,8 +68,8 @@ class cron_task extends \core\task\scheduled_task {
                 }
             }
             $timer = microtime(true) - $start_time;
-            if ($timer > 300) {
-                mtrace("RefShares filter cron has been executing for more than 5 minutes. Exiting to avoid taking too much time. Any expired caches that have not been refreshed will be picked up in the next run");
+            if ($timer > $timeout) {
+                mtrace("RefShares filter cron has been executing for more than ".$timeout." seconds. Exiting to avoid taking too much time. Any expired caches that have not been refreshed will be picked up in the next run");
                 break;
             }
         }
