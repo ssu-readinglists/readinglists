@@ -39,7 +39,6 @@ class cron_task extends \core\task\scheduled_task {
         if(!$timeout = $CFG->filter_refshares_timeout) {
             $timeout = 1800;
         }
-        mtrace("TIMEOUT: ".$timeout);
         foreach ($refshare_records as $rec) {
             if (time()-$rec->timemodified > $CFG->filter_refshares_cacheexpires) {
                 mtrace("Cache expired, needs refreshing. ID in cache_filters table = ".$rec->id);
