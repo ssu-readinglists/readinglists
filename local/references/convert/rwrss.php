@@ -41,7 +41,7 @@ class rwrss extends references_convert_format{
 
         //RSS feed text is all in cdata, refxml is not.
         //There may be illegal chars in text, so go thru every node and make sure
-        $allitems=&$data->getElementsByTagName('item');
+        $allitems=$data->getElementsByTagName('item');
         foreach ($allitems as $item) {
             foreach ($item->childNodes as $child) {
                 $child->nodeValue=htmlspecialchars($child->nodeValue,ENT_NOQUOTES,'UTF-8',false);
