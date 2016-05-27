@@ -154,7 +154,9 @@ function format_refshare($refshare_url, $refshare_style) {
     curl_setopt($c, CURLOPT_HTTPGET, true);
 
     curl_setopt($c, CURLOPT_RETURNTRANSFER, true);
-    curl_setopt($c, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+    if(array_key_exists('HTTP_USER_AGENT',$_SERVER)){
+    	curl_setopt($c, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']);
+    }
     curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 15);
 	// If '/' is omitted between 'http://www.refworks.com/refshare' and '?' then there is a redirect to the correct URL, so enable CURL to follow redirects
 	curl_setopt($c, CURLOPT_FOLLOWLOCATION, true);
