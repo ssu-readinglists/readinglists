@@ -32,8 +32,10 @@ class cron_task extends \core\task\scheduled_task {
 
     public function execute() {
         global $CFG;
-        require_once(dirname(__FILE__).'/apibib/apibib_lib.php');
-        if ($cleartemp = apibib::cleartemp()) {
+        require_once($CFG->dirroot.'/local/references/apibib/apibib_lib.php');
+
+        if ($cleartemp = \apibib::cleartemp()) {
+            mtrace('Starting cleartemp');
             mtrace($cleartemp);
         } else {
             mtrace('Unable to run clear temp successfully');
